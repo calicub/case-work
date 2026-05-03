@@ -12,7 +12,7 @@ tags: [active]
 created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE
 ---
 
-# 🎫 $FOAM_TITLE - ${1}
+# 📝 $FOAM_TITLE - ${1}
 
 === "📋 Notes"
 
@@ -28,12 +28,8 @@ created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUT
 
     ## 🔄 Follow-up
 
-
     ## 🛠️ Steps Taken
 
 === "📎 Customer Files"
 
-    $0
-
 === "📸 Screenshots"
-

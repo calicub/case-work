@@ -49,17 +49,33 @@ def already_referenced(note_path):
         return set()
     idx = text.index(SECTION)
     section_text = text[idx:]
-    next_h = re.search(r'\n=== "', section_text[len(SECTION):])
+    next_h = re.search(r'\n=== "|\n#', section_text[len(SECTION):])
     if next_h:
         section_text = section_text[:next_h.start() + len(SECTION)]
     return set(re.findall(r"files/([^)\s]+)", section_text))
 
 
+ICONS = {
+    ".pdf":  ":fontawesome-regular-file-pdf:",
+    ".doc":  ":fontawesome-regular-file-word:",  ".docx": ":fontawesome-regular-file-word:",
+    ".xls":  ":fontawesome-regular-file-excel:", ".xlsx": ":fontawesome-regular-file-excel:", ".csv": ":fontawesome-regular-file-excel:",
+    ".png":  ":fontawesome-regular-file-image:", ".jpg":  ":fontawesome-regular-file-image:",
+    ".jpeg": ":fontawesome-regular-file-image:", ".gif":  ":fontawesome-regular-file-image:", ".webp": ":fontawesome-regular-file-image:",
+    ".zip":  ":fontawesome-solid-file-zipper:",  ".tar":  ":fontawesome-solid-file-zipper:",
+    ".gz":   ":fontawesome-solid-file-zipper:",  ".7z":   ":fontawesome-solid-file-zipper:",
+    ".txt":  ":fontawesome-regular-file-lines:", ".log":  ":fontawesome-regular-file-lines:",
+    ".json": ":fontawesome-regular-file-code:",  ".yaml": ":fontawesome-regular-file-code:",
+    ".yml":  ":fontawesome-regular-file-code:",  ".py":   ":fontawesome-regular-file-code:",
+    ".sh":   ":fontawesome-regular-file-code:",
+}
+
+
 def build_file_block(files):
     lines = []
     for f in files:
+        icon = ICONS.get(f.suffix.lower(), ":fontawesome-regular-file:")
         encoded = quote(f.name)
-        lines.append(f"    [{f.name}](../files/{encoded}){{target=_blank}}")
+        lines.append(f"    - {icon} [{f.name}](../files/{encoded}){{target=_blank}}")
     lines.append("")
     return lines
 
@@ -76,7 +92,7 @@ def update_note(note_path, file_lines):
 
     idx = text.index(SECTION)
     after = text[idx + len(SECTION):]
-    next_h = re.search(r'\n=== "', after)
+    next_h = re.search(r'\n=== "|\n#', after)
     tail = after[next_h.start():] if next_h else ""
     note_path.write_text(
         text[:idx] + SECTION + "\n\n" + block + "\n" + tail,

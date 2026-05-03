@@ -53,19 +53,28 @@ def already_referenced(note_path):
         return set()
     idx = text.index(SECTION)
     section_text = text[idx:]
-    next_h = re.search(r'\n=== "', section_text[len(SECTION):])
+    next_h = re.search(r'\n=== "|\n#', section_text[len(SECTION):])
     if next_h:
         section_text = section_text[:next_h.start() + len(SECTION)]
     return set(re.findall(r"screenshots/([^)\s]+)", section_text))
 
 
+IMG_STYLE = "width:100%;height:180px;object-fit:cover;border-radius:4px;display:block;"
+CAP_STYLE = "text-align:center;font-size:0.75rem;opacity:0.6;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+GRID_STYLE = "display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;"
+
+
 def build_image_block(images):
-    lines = []
+    lines = [f'    <div style="{GRID_STYLE}">']
     for img in images:
         encoded = quote(img.name)
-        lines.append(f"    [![{img.stem}](../screenshots/{encoded}){{ loading=lazy }}](../screenshots/{encoded}){{target=_blank}}")
-        lines.append(f"    /// caption\n    {img.stem}\n    ///")
-        lines.append("")
+        lines.append(
+            f'    <figure style="margin:0">'
+            f'<a href="../screenshots/{encoded}" target="_blank">'
+            f'<img src="../screenshots/{encoded}" loading="lazy" alt="{img.stem}" style="{IMG_STYLE}"></a>'
+            f'<figcaption style="{CAP_STYLE}">{img.stem}</figcaption></figure>'
+        )
+    lines += ["    </div>", ""]
     return lines
 
 
@@ -81,7 +90,7 @@ def update_note(note_path, image_lines):
 
     idx = text.index(SECTION)
     after = text[idx + len(SECTION):]
-    next_h = re.search(r'\n=== "', after)
+    next_h = re.search(r'\n=== "|\n#', after)
     tail = after[next_h.start():] if next_h else ""
     note_path.write_text(
         text[:idx] + SECTION + "\n\n" + block + "\n" + tail,

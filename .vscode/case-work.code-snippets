@@ -6,13 +6,6 @@
     ],
     "description": "Inserts date like 'March 3'"
   },
-  "Update Case Status": {
-    "prefix": "ustatus",
-    "body": [
-      "${1|Open,In-Progress,Waiting-for-Customer,Resolved,Closed|}"
-    ],
-    "description": "Insert a Salesforce case status value"
-  },
   "Keyboard Key Tag": {
     "prefix": "kbi",
     "body": ["<kbd>${1:key}</kbd>"],
@@ -21,30 +14,30 @@
   "Case Description": {
     "prefix": "casedesc",
     "body": [
-      "!!! quote \"Case Description\"",
+      "    !!! quote \"Case Description\"",
       "",
-      "    $1"
+      "        $1"
     ],
     "description": "Insert case description admonition"
   },
   "Remote Support Notes": {
     "prefix": "remotenote",
     "body": [
-      "### 📓 Remote Support ${CURRENT_MONTH}/${CURRENT_DATE}",
+      "    ### 📓 Remote Support ${CURRENT_MONTH}/${CURRENT_DATE}",
       "",
-      "!!! abstract \"<br>\"",
+      "    !!! abstract \"<br>\"",
       "",
-      "    **Remote support via** ${1|Zoom,Teams,Webex,Phone|}<br>",
-      "    **Attendees:** $2",
+      "        **Remote support via** ${1|Zoom,Teams,Webex,Phone|}<br>",
+      "        **Attendees:** $2",
       "",
-      "    ---",
-      "    **Details**",
+      "        ---",
+      "        **Details**",
       "",
-      "    - $3",
+      "        - $3",
       "",
-      "    **Action Plan**",
+      "        **Action Plan**",
       "",
-      "    - $4"
+      "        - $4"
     ],
     "description": "Insert remote support session notes"
   }

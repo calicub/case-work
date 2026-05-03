@@ -101,7 +101,8 @@ Then `Tab` through each field.
     | **6** | Next action | First action item |
     | done | Customer Files tab | Cursor lands here; run Insert Customer Files task when ready |
 
-    **Page tabs:** 📋 Notes · 📎 Customer Files · 📸 Screenshots
+    **Page sections:** 🔍 Description · ▶️ Next Action · 🔄 Follow-up · 🛠️ Steps Taken
+    **Attachment tabs (below Steps Taken):** 📎 Customer Files · 📸 Screenshots
 
 === "🔄 Follow-up"
 
