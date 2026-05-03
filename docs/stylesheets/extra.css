@@ -1,0 +1,4 @@
+/* Widen the content grid */
+.md-grid {
+  max-width: 1600px;
+}

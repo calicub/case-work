@@ -1,0 +1,11 @@
+.venv
+.claude
+.DS_store
+site
+*__pycache__*
+docs/active/*.md
+docs/archive/*.md
+docs/followup/*.md
+docs/kb-updates/*.md
+docs/files/*
+docs/screenshots/*

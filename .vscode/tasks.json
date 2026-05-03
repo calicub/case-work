@@ -1,0 +1,129 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Rebuild Dashboards",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python3 scripts/dashboard.py",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": true
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "🖥️ Start Session Log",
+      "type": "shell",
+      "command": "case_number=$(grep -m1 '^case_number:' '${file}' | sed 's/^case_number:[[:space:]]*//' | tr -d '\\r') && mkdir -p '${workspaceFolder}/docs/files' && script -q '${workspaceFolder}/docs/files/'\"${case_number}\"-terminal-session-$(date +%Y-%m-%d).txt",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "showReuseMessage": false,
+        "close": true
+      }
+    },
+    {
+      "label": "📌 Append Terminal Block",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python3 scripts/append_terminal_block.py '${file}'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": true
+      }
+    },
+    {
+      "label": "📋 Copy Support Notes (Salesforce)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python3 scripts/copy_salesforce_notes.py '${file}' ${lineNumber}",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": true
+      }
+    },
+    {
+      "label": "📎 Insert Customer Files",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python3 scripts/insert_files.py '${file}'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": true
+      }
+    },
+    {
+      "label": "📸 Insert Screenshots",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python3 scripts/insert_screenshots.py '${file}'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": true
+      }
+    },
+    {
+      "label": "📙 Zensical",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/zensical serve",
+      "dependsOn": ["🛑 Stop Zensical"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "🛑 Stop Zensical",
+      "type": "shell",
+      "command": "pkill -f 'zensical serve' || true",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": true
+      }
+    }
+  ]
+}
