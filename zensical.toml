@@ -47,15 +47,9 @@ copyright = """
 nav = [
   { "🏠 Home" = "index.md" },
   { "📊 Dashboard" = "dashboard.md" },
-  { "📁 Cases" = [
-    { "🟢 Active" = "dashboards/active.md" },
-    { "🗄️ Archive" = "dashboards/archive.md" },
-  ]},
-  { "📅 Meetings" = [
-    { "🤝 1-on-1s" = "meetings/1on1/index.md" },
-    { "👥 Team" = "meetings/team/index.md" },
-    { "📋 General" = "meetings/general/index.md" },
-  ]},
+  { "📅 Meetings" = "meetings.md" },
+  { "📓 Knowledge Base" = "pkb.md" },
+  { "🏷️ Tags" = "tags.md" },
   { "📖 Guide" = "guide.md" },
 ]
 

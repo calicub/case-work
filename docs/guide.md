@@ -128,6 +128,78 @@ Then `Tab` through each field.
     | **4** | Overview (fills frontmatter `note` and `## 📖 Overview` simultaneously) |
     | **5** | Details body |
 
+=== "🤝 1-on-1 Meeting"
+
+    Saved to `docs/meetings/1on1/MM-DD-YY.md`
+
+    | Section | Notes |
+    |---------|-------|
+    | **1** | First discussion topic |
+    | **2** | First action item |
+
+=== "👥 Team Meeting"
+
+    Saved to `docs/meetings/team/MM-DD-YY.md`
+
+    | Section | Notes |
+    |---------|-------|
+    | **1** | First attendee |
+    | **2** | First discussion topic |
+    | **3** | First action item |
+
+=== "📋 General Meeting"
+
+    Saved to `docs/meetings/general/MM-DD-YY.md`
+
+    | Section | Notes |
+    |---------|-------|
+    | **1** | First discussion topic |
+    | **2** | First action item |
+
+=== "📓 PKB Note"
+
+    Saved to `docs/pkb/<slug>.md` — type a short descriptive name when prompted (e.g. `ldap-auth-troubleshooting`).
+
+    | # | Field | Notes |
+    |---|-------|-------|
+    | **1** | `title` | Full readable title |
+    | **2** | `category` | Dropdown: Tools · Troubleshooting |
+    | **3** | `tags` | Comma-separated: `[kubernetes, ldap]` — see tag conventions below |
+    | **4** | Overview | Freeform notes and context |
+    | **5–13** | Table rows | KB link · Engineering ticket · Confluence · Doc ref rows |
+
+    **Page sections:** 📝 Overview · 📋 KB Articles · 🔧 Engineering Tickets · 📘 Confluence · 📄 Doc References
+
+---
+
+## 🏷️ Tag Conventions
+
+Tags are set in frontmatter as a YAML list: `tags: [kubernetes, ldap, ssl]`
+
+Apply **both** a product tag and one or more topic tags so notes are findable from either angle.
+
+**Product tags**
+
+| Tag | Covers |
+| --- | ------ |
+| `kubernetes` | Kubernetes clusters and workloads |
+| `linux` | Linux hosts and distributions |
+| `tools` | Internal or third-party tools |
+
+**Topic tags (examples — add your own)**
+
+| Tag | Covers |
+| --- | ------ |
+| `ldap` | LDAP / Active Directory auth |
+| `ssl` | SSL / TLS / certificates |
+| `high-availability` | HA, clustering, failover |
+| `backup` | Backup and restore |
+| `api` | REST API usage or issues |
+| `performance` | Slow queries, resource usage |
+| `upgrade` | Version upgrade procedures |
+
+The **🏷️ Tags** page in the nav aggregates every tagged note across the whole site — PKB notes, cases, and meetings — grouped by tag.
+
 ---
 
 ## 📎 Customer Files Workflow
@@ -176,6 +248,10 @@ Type any prefix in a markdown file and select from the suggestion list (`Ctrl+Sp
 | `kbi` | Keyboard Key | `<kbd>key</kbd>` inline tag |
 | `casedesc` | Case Description | Quote admonition block for pasting the Salesforce case description |
 | `remotenote` | Remote Support Notes | Full remote support session block with via · attendees · details · action plan |
+| `codeblock` | Code Block with Title | Fenced code block with language and title bar — tab stops: language → title → body |
+
+!!! tip "Log file language"
+    Use `log` or `text` as the language for log snippets — both skip syntax highlighting. `log` may subtly colorize timestamps and error levels depending on the theme.
 
 ---
 
@@ -213,8 +289,10 @@ Type any prefix in a markdown file and select from the suggestion list (`Ctrl+Sp
 | 🔄 Follow-up | `docs/followup/` | P1 → P4 |
 | 📚 KB Updates | `docs/kb-updates/` | Filename order |
 | 🗄️ Archive | `docs/archive/` | P1 → P4 |
+| 📅 Meetings | `docs/meetings/*/` | Newest first per type |
+| 📓 Knowledge Base | `docs/pkb/` | Newest first per category |
 
-Rebuild dashboards after: creating a note · editing frontmatter · archiving a case.
+Rebuild dashboards after: creating a note · editing frontmatter · archiving a case · adding a PKB note.
 
 ---
 
@@ -223,7 +301,7 @@ Rebuild dashboards after: creating a note · editing frontmatter · archiving a 
 ```
 case-work/
 ├── zensical.toml          ← site config (TOML format — not mkdocs.yml)
-├── .foam/templates/       ← case.md · followup.md · kb-update.md
+├── .foam/templates/       ← case.md · followup.md · kb-update.md · meeting-1on1.md · meeting-team.md · meeting-general.md · pkb.md
 ├── .vscode/
 │   ├── settings.json           ← Foam config, editor settings, markdown snippet support
 │   ├── tasks.json              ← all runnable tasks defined here
@@ -238,7 +316,12 @@ case-work/
 │   ├── kb-updates/        ← KB article notes
 │   ├── archive/           ← resolved case notes
 │   ├── files/             ← customer-provided files (moved here by script)
-│   └── screenshots/       ← case screenshots (moved here by script)
+│   ├── screenshots/       ← case screenshots (moved here by script)
+│   ├── pkb/               ← personal KB notes (flat, category in frontmatter)
+│   └── meetings/
+│       ├── 1on1/          ← 1-on-1 meeting notes (index auto-generated)
+│       ├── team/          ← team meeting notes (index auto-generated)
+│       └── general/       ← general meeting notes (index auto-generated)
 └── scripts/
     ├── dashboard.py              ← regenerates all dashboards
     ├── insert_screenshots.py     ← finds & inserts screenshots

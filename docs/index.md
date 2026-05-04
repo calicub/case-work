@@ -20,10 +20,10 @@ icon: lucide/layout-dashboard
 ## ⚡ Quick Reference
 
 **🆕 New note from template**
-: `Ctrl+Shift+P` → `Foam: Create New Note From Template` → pick `New Case`, `Follow-up`, or `KB Update`
+: <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>P</kbd> → `Foam: Create New Note From Template` → pick `New Case`, `Follow-up`, or `KB Update`
 
 **🔄 Rebuild dashboards**
-: `Ctrl+Shift+B` — runs after saving a case file to refresh all tables
+: <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>B</kbd> — runs after saving a case file to refresh all tables
 
 **⌨️ Tab order in case template**
 : Case# → Customer → Priority → Status → Contact → Note → 🔍 Issue body → ▶️ Next action

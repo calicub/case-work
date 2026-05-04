@@ -52,13 +52,30 @@ Ordered:
 ```
 
 ## Code blocks
+
+Basic fenced block with language:
+
 ````
-```javascript
-function hello() {
-  console.log("Hello, world!");
-}
+```python
+print("Hello, world!")
 ```
 ````
+
+With a title bar (use the `codeblock` snippet):
+
+````
+```python title="example.py"
+print("Hello, world!")
+```
+````
+
+For log files use `log` or `text` to skip syntax highlighting:
+
+`````markdown
+```log title="error.log"
+2026-05-03 14:32:01 ERROR Connection timed out
+```
+`````
 
 ## Tables
 ```
@@ -85,14 +102,84 @@ ___
 ```
 
 ## Escaping characters
-```
+
+```text
 Use backslash to escape: \* \_ \# \`
 ```
 
 ## Line breaks
-```
+
+```text
 End a line with two spaces  
 to create a line break.
 
 Or use a blank line for a new paragraph.
 ```
+
+---
+
+## Admonitions
+
+Admonitions are colored callout boxes rendered by Zensical. The type controls the color and icon.
+
+```markdown
+!!! note "Optional custom title"
+    Indented content goes here.
+    All lines must be indented 4 spaces.
+```
+
+| Type | Color | Use for |
+| ---- | ----- | ------- |
+| `note` | Blue | General info |
+| `tip` | Green | Helpful hints |
+| `warning` | Orange | Caution / watch out |
+| `danger` | Red | Destructive or irreversible actions |
+| `info` | Teal | Context or background |
+| `abstract` | Light blue | Summaries, remote support notes |
+
+Collapsible admonition (closed by default):
+
+```markdown
+??? warning "Click to expand"
+    Hidden content here.
+```
+
+Collapsible but open by default:
+
+```markdown
+???+ tip "Expanded by default"
+    Visible content here.
+```
+
+---
+
+## Icons & Emojis
+
+Zensical supports icons from Lucide, FontAwesome, and Material icon sets using `:set/name:` syntax.
+
+**Emojis** (shortcode format):
+
+```markdown
+:smile:   :warning:   :white_check_mark:   :x:
+```
+
+**Lucide icons:**
+
+```markdown
+:lucide-circle-check:   :lucide-alert-triangle:   :lucide-file-text:
+```
+
+**FontAwesome icons:**
+
+```markdown
+:fontawesome-solid-star:   :fontawesome-regular-file-pdf:   :fontawesome-brands-github:
+```
+
+**Material Design icons:**
+
+```markdown
+:material-check:   :material-close:   :material-alert:
+```
+
+!!! tip "Finding icons"
+    Browse available icons at [lucide.dev](https://lucide.dev) for Lucide, or search [fontawesome.com/icons](https://fontawesome.com/icons) for FontAwesome. Replace spaces with hyphens in the icon name.

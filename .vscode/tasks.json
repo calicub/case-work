@@ -96,7 +96,7 @@
       }
     },
     {
-      "label": "📙 Zensical",
+      "label": "🟢 Start Zensical",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/bin/zensical serve",
       "dependsOn": ["🛑 Stop Zensical"],
