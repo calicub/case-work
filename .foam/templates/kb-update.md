@@ -6,7 +6,7 @@ foam_template:
 kb_number: ${1:KB-XXXX}
 title: ${2:Article Title}
 category: ${3:Category}
-status: ${4|Draft,Review,Published|}
+status: ${4|Draft,Review,Published,Not-Started|}
 note: ${5:Brief overview}
 tags: [kb-updates]
 created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE
@@ -14,7 +14,7 @@ created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE
 
 # 📚 ${1} — ${2}
 
-## 📖 Overview
+## 📖 Problem Statement
 
 ${5}
 
@@ -25,3 +25,7 @@ ${6:Detailed description}
 ## 🔗 Related Cases
 
 $0
+
+## Solution
+
+${7:Detailed description}
