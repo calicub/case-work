@@ -57,17 +57,19 @@ Install the **Foam** extension:
 
 ### 4. Clone / Copy the Workspace
 
-```bash
-# If starting from a git repo:
-git clone <repo-url> ~/case-work
+`git clone` always creates a subfolder named after the repo inside the current directory. To put the workspace exactly where you want it, pass the target path as the second argument:
 
-# Or copy your existing workspace folder to ~/case-work
+```bash
+git clone <repo-url> ~/case-work-2.0
 ```
+
+!!! warning "Don't nest the folder"
+    Running `git clone <repo-url>` inside an existing folder (e.g. `~/case-work-2.0/`) will create `~/case-work-2.0/case-work/` — one level deeper than intended. Always specify the full destination path.
 
 Open the workspace in VS Code:
 
 ```bash
-code ~/case-work
+code ~/case-work-2.0
 ```
 
 ### 5. Create the Python Virtual Environment
