@@ -11,6 +11,9 @@ icon: lucide/layout-dashboard
 | [🔄 Follow-up](dashboards/followup.md) | Cases awaiting action or response |
 | [📚 KB Updates](dashboards/kb-updates.md) | Knowledge base articles in progress |
 | [🗄️ Archive](dashboards/archive.md) | Resolved and closed cases |
+| [🤝 1-on-1 Meetings](meetings/1on1/) | Notes from manager 1-on-1s |
+| [👥 Team Meetings](meetings/team/) | Notes from team meetings |
+| [📋 General Meetings](meetings/general/) | Notes from all other meetings |
 
 ---
 

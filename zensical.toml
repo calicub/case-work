@@ -51,6 +51,11 @@ nav = [
     { "🟢 Active" = "dashboards/active.md" },
     { "🗄️ Archive" = "dashboards/archive.md" },
   ]},
+  { "📅 Meetings" = [
+    { "🤝 1-on-1s" = "meetings/1on1/index.md" },
+    { "👥 Team" = "meetings/team/index.md" },
+    { "📋 General" = "meetings/general/index.md" },
+  ]},
   { "📖 Guide" = "guide.md" },
 ]
 

@@ -113,6 +113,30 @@ def write_section_dashboard(filename, title, header, rows):
     print(f"  {filename}: {len(rows)} entries")
 
 
+MEETING_SECTIONS = [
+    ("1on1",   "🤝 1-on-1 Meetings"),
+    ("team",   "👥 Team Meetings"),
+    ("general","📋 General Meetings"),
+]
+
+
+def write_meeting_index(subdir, title):
+    folder = BASE / "meetings" / subdir
+    folder.mkdir(parents=True, exist_ok=True)
+    notes = sorted(folder.glob("*.md"), reverse=True)
+    notes = [n for n in notes if n.name != "index.md"]
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+    lines = [f"# {title}\n", f"*🕐 Updated: {timestamp}*\n"]
+    if notes:
+        for note in notes:
+            stem = note.stem  # e.g. 05-03-26
+            lines.append(f"- [{stem}]({note.name})")
+    else:
+        lines.append("*No notes yet.*")
+    (folder / "index.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"  meetings/{subdir}/index.md: {len(notes)} note(s)")
+
+
 if __name__ == "__main__":
     print("Rebuilding dashboards...")
 
@@ -129,5 +153,9 @@ if __name__ == "__main__":
     write_section_dashboard("followup.md", "🔄 Follow-up Cases", CASE_HEADER, case_rows("followup"))
     write_section_dashboard("archive.md", "🗄️ Archived Cases", CASE_HEADER, case_rows("archive"))
     write_section_dashboard("kb-updates.md", "📚 KB Updates", KB_HEADER, kb_rows())
+
+    print("Rebuilding meeting indexes...")
+    for subdir, title in MEETING_SECTIONS:
+        write_meeting_index(subdir, title)
 
     print("Done.")
