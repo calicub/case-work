@@ -5,7 +5,9 @@ foam_template:
   filepath: "docs/pkb/$FOAM_SLUG.md"
 title: ${1:Title}
 category: ${2|Tools,Troubleshooting|}
-tags: ["${3:product-tag, topic-tag}"]
+tags:
+  - ${3:product-tag}
+  - ${4:topic-tag}
 created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE
 ---
 

@@ -8,7 +8,8 @@ title: ${2:Article Title}
 category: ${3:Category}
 status: ${4|Draft,Review,Published,Not-Started|}
 note: ${5:Brief overview}
-tags: [kb-updates]
+tags:
+  - kb-updates
 created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE
 ---
 

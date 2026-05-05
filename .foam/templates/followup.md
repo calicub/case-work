@@ -9,7 +9,8 @@ priority: ${2|P1,P2,P3,P4|}
 status: ${3|Pending Customer,Awaiting Escalation,Scheduled,Monitoring|}
 follow_up_date: ${4:YYYY-MM-DD}
 note: ${5:Follow-up reason}
-tags: [followup]
+tags:
+  - followup
 created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE
 ---
 

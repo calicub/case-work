@@ -50,8 +50,8 @@ nav = [
   { "📅 Meetings" = "meetings.md" },
   { "📓 Knowledge Base" = "pkb.md" },
   { "🏷️ Tags" = "tags.md" },
-  { "📖 Guide" = "guide.md" },
-  { "🚀 Setup" = "setup.md" },
+  { "Guide" = "guide.md" },
+  { "Setup" = "setup.md" },
 ]
 
 # With the "extra_css" option you can add your own CSS styling to customize

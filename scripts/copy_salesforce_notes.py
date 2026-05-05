@@ -6,7 +6,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-HEADING_PAT = re.compile(r"^### 📓 Remote Support \d{1,2}/\d{1,2}")
+HEADING_PAT = re.compile(r"^\s*### 📓 Remote Support \d{1,2}/\d{1,2}")
 
 
 def find_section(lines, cursor_line):
@@ -26,7 +26,7 @@ def find_section(lines, cursor_line):
 
     section_end = len(lines)
     for i in range(section_start + 1, len(lines)):
-        if re.match(r"^#{1,3} ", lines[i]):
+        if re.match(r"^\s*#{1,3} ", lines[i]):
             section_end = i
             break
 

@@ -25,10 +25,24 @@ def parse_frontmatter(path):
     if not match:
         return {}
     fm = {}
+    current_key = None
+    current_list = None
     for line in match.group(1).splitlines():
-        if ": " in line and not line.startswith(" "):
+        if line.startswith("  - ") and current_list is not None:
+            current_list.append(line[4:].strip().strip('"').strip("'"))
+        elif ": " in line and not line.startswith(" "):
+            current_list = None
             key, _, val = line.partition(": ")
             fm[key.strip()] = val.strip().strip('"').strip("'")
+            current_key = key.strip()
+        elif line.rstrip().endswith(":") and not line.startswith(" "):
+            current_key = line.strip().rstrip(":")
+            current_list = []
+            fm[current_key] = current_list
+    # flatten lists to comma-separated strings for compatibility
+    for k, v in fm.items():
+        if isinstance(v, list):
+            fm[k] = ", ".join(v)
     return fm
 
 

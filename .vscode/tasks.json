@@ -4,7 +4,7 @@
     {
       "label": "🚀Rebuild Dashboards",
       "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python3 scripts/dashboard.py",
+      "command": "${workspaceFolder}/.venv/bin/python3 scripts/dashboard.py && (pkill -f 'zensical serve' || true) && nohup ${workspaceFolder}/.venv/bin/zensical serve > /tmp/zensical.log 2>&1 &",
       "options": {
         "cwd": "${workspaceFolder}"
       },

@@ -4,7 +4,9 @@ foam_template:
   description: "Meeting notes for 1-on-1 with manager"
   filepath: "docs/meetings/1on1/$FOAM_DATE_MONTH-$FOAM_DATE_DATE-$FOAM_DATE_YEAR_SHORT.md"
 date: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE
-tags: [meetings, 1on1]
+tags:
+  - meetings
+  - 1on1
 ---
 
 # 🤝 1-on-1 — $CURRENT_MONTH/$CURRENT_DATE/$CURRENT_YEAR_SHORT
