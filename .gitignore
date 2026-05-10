@@ -24,3 +24,7 @@ docs/dashboard.md
 docs/meetings.md
 docs/pkb.md
 docs/tags.md
+docs/files/*
+!docs/files/.gitkeep
+docs/screenshots/*
+!docs/screenshots/.gitkeep
