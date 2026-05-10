@@ -9,7 +9,7 @@ icon: lucide/layout-dashboard
 | [📊 Dashboard](dashboard.md) | All cases in one tabbed view |
 | [🟢 Active](dashboards/active.md) | Open cases in progress |
 | [🔄 Follow-up](dashboards/followup.md) | Cases awaiting action or response |
-| [🗄️ Archive](archive.md) | Resolved and closed cases |
+| [🗄️ Archive](dashboards/archive.md) | Resolved and closed cases |
 | [🤝 1-on-1 Meetings](meetings/1on1/) | Notes from manager 1-on-1s |
 | [👥 Team Meetings](meetings/team/) | Notes from team meetings |
 | [📋 General Meetings](meetings/general/) | Notes from all other meetings |
