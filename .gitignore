@@ -18,3 +18,9 @@ docs/meetings/team/*.md
 !docs/meetings/team/.gitkeep
 docs/pkb/*.md
 !docs/pkb/markdown.md
+docs/dashboards/*.md
+!docs/dashboards/.gitkeep
+docs/dashboard.md
+docs/meetings.md
+docs/pkb.md
+docs/tags.md

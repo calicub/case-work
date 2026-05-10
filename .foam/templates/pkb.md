@@ -4,7 +4,7 @@ foam_template:
   description: "Personal knowledge base note"
   filepath: "docs/pkb/$FOAM_SLUG.md"
 title: ${1:Title}
-category: ${2|Tools,Troubleshooting|}
+category: ${2|Tools,Troubleshooting,Kubernetes|}
 tags:
   - ${3:product-tag}
   - ${4:topic-tag}
