@@ -9,8 +9,7 @@ icon: lucide/layout-dashboard
 | [📊 Dashboard](dashboard.md) | All cases in one tabbed view |
 | [🟢 Active](dashboards/active.md) | Open cases in progress |
 | [🔄 Follow-up](dashboards/followup.md) | Cases awaiting action or response |
-| [📚 KB Updates](dashboards/kb-updates.md) | Knowledge base articles in progress |
-| [🗄️ Archive](dashboards/archive.md) | Resolved and closed cases |
+| [🗄️ Archive](archive.md) | Resolved and closed cases |
 | [🤝 1-on-1 Meetings](meetings/1on1/) | Notes from manager 1-on-1s |
 | [👥 Team Meetings](meetings/team/) | Notes from team meetings |
 | [📋 General Meetings](meetings/general/) | Notes from all other meetings |
@@ -20,7 +19,7 @@ icon: lucide/layout-dashboard
 ## ⚡ Quick Reference
 
 **🆕 New note from template**
-: <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>P</kbd> → `Foam: Create New Note From Template` → pick `New Case`, `Follow-up`, or `KB Update`
+: <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>P</kbd> → `Foam: Create New Note From Template` → pick `New Case` or `Follow-up`
 
 **🔄 Rebuild dashboards**
 : <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>B</kbd> — runs after saving a case file to refresh all tables

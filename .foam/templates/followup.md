@@ -2,7 +2,7 @@
 foam_template:
   name: "Follow-up"
   description: "Create a follow-up note for an existing case"
-  filepath: "docs/followup/$FOAM_TITLE.md"
+  filepath: "docs/cases/followup/$FOAM_TITLE.md"
 case_number: $FOAM_TITLE
 customer: ${1:Customer Name}
 priority: ${2|P1,P2,P3,P4|}

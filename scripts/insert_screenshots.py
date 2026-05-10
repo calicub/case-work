@@ -7,7 +7,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 ROOT = Path(__file__).parent.parent
-SCREENSHOTS_DIR = ROOT / "docs" / "screenshots"
+SCREENSHOTS_DIR = ROOT / "docs" / "assets" / "screenshots"
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".webp"}
 SECTION = '=== "📸 Screenshots"'
 
@@ -70,8 +70,8 @@ def build_image_block(images):
         encoded = quote(img.name)
         lines.append(
             f'    <figure style="margin:0">'
-            f'<a href="../screenshots/{encoded}" target="_blank">'
-            f'<img src="../screenshots/{encoded}" loading="lazy" alt="{img.stem}" style="{IMG_STYLE}"></a>'
+            f'<a href="../../assets/screenshots/{encoded}" target="_blank">'
+            f'<img src="../../assets/screenshots/{encoded}" loading="lazy" alt="{img.stem}" style="{IMG_STYLE}"></a>'
             f'<figcaption style="{CAP_STYLE}">{img.stem}</figcaption></figure>'
         )
     lines += ["    </div>", ""]

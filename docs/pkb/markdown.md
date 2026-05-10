@@ -1,5 +1,10 @@
 ---
-icon: simple/markdown
+title: Markdown-in-5-minutes
+category: Markdown
+tags:
+  - markdown
+  - how-to-guide
+created: 2026-05-09
 ---
 
 # Markdown in 5min

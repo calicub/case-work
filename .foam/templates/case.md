@@ -2,7 +2,7 @@
 foam_template:
   name: "New Case"
   description: "Create a new support case note"
-  filepath: "docs/active/$FOAM_TITLE.md"
+  filepath: "docs/cases/active/$FOAM_TITLE.md"
 case_number: $FOAM_TITLE
 customer: ${1:Customer Name}
 priority: ${2|P1,P2,P3,P4|}

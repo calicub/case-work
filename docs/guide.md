@@ -24,11 +24,12 @@ Keep this tab open in your browser while working in VS Code.
 | Task | How to run | What it does |
 |------|-----------|--------------|
 | **Rebuild Dashboards** | `Ctrl+Shift+B` | Regenerates `dashboard.md` and all four section tables from your note frontmatter |
-| **📎 Insert Customer Files** | `Ctrl+Shift+P` → Run Task | Finds files at workspace root matching the case number, moves them to `docs/files/`, inserts links into `## 📎 Customer Files` |
-| **📸 Insert Screenshots** | `Ctrl+Shift+P` → Run Task | Finds screenshots at workspace root matching the case number, moves them to `docs/screenshots/`, inserts image blocks into `## 📸 Screenshots` |
+| **📎 Insert Customer Files** | `Ctrl+Shift+P` → Run Task | Finds files at workspace root matching the case number, moves them to `docs/assets/files/`, inserts links into `## 📎 Customer Files` |
+| **📸 Insert Screenshots** | `Ctrl+Shift+P` → Run Task | Finds screenshots at workspace root matching the case number, moves them to `docs/assets/screenshots/`, inserts image blocks into `## 📸 Screenshots` |
 | **📌 Append Terminal Block** | `Ctrl+Shift+;` | Reads clipboard and appends a timestamped code block to **🛠️ Steps Taken** in the active case note |
-| **🖥️ Start Session Log** | `Ctrl+Shift+P` → Run Task | Starts a `script` recording session — saves everything to `docs/files/casenumber-terminal-session-date.txt` |
+| **🖥️ Start Session Log** | `Ctrl+Shift+P` → Run Task | Starts a `script` recording session — saves everything to `docs/assets/files/casenumber-terminal-session-date.txt` |
 | **📋 Copy Support Notes (Salesforce)** | `Ctrl+Shift+P` → Run Task | Converts the Remote Support Note at the cursor to Salesforce plain text and copies it to clipboard |
+| **📋 Copy Prior Actions (Salesforce)** | `Ctrl+Shift+P` → Run Task | Copies the steps performed from the Remote Support Note at the cursor, formatted as `--- Month Nth ---` + `+ step` lines |
 | **📙 Zensical** | `Ctrl+Shift+P` → Run Task | Starts local server at `http://127.0.0.1:8000` — run once per session, leave it open |
 | **🛑 Stop Zensical** | `Ctrl+Shift+P` → Run Task | Kills the Zensical server process |
 
@@ -72,7 +73,7 @@ Record an entire terminal session (useful for long cluster investigations):
 3. Do your work — everything typed and output is captured
 
 4. Type exit to stop recording
-   File saved to: docs/files/casenumber-terminal-session-date.txt
+   File saved to: docs/assets/files/casenumber-terminal-session-date.txt
 
 5. Run 📎 Insert Customer Files to link the log to the case note
 ```
@@ -116,17 +117,6 @@ Then `Tab` through each field.
     | **5** | `note` |
     | **6** | Context body |
     | **7** | First action item |
-
-=== "📚 KB Update"
-
-    | # | Field |
-    |---|-------|
-    | auto | `kb_number` |
-    | **1** | `title` |
-    | **2** | `category` |
-    | **3** | `status` (Draft · Review · Published) |
-    | **4** | Overview (fills frontmatter `note` and `## 📖 Overview` simultaneously) |
-    | **5** | Details body |
 
 === "🤝 1-on-1 Meeting"
 
@@ -213,9 +203,9 @@ The **🏷️ Tags** page in the nav aggregates every tagged note across the who
 
 3. Ctrl+Shift+P → Run Task → 📎 Insert Customer Files
 
-4. Script moves the file to docs/files/ and writes this into the note:
+4. Script moves the file to docs/assets/files/ and writes this into the note:
 
-      [123456 - export.csv](../files/123456-export.csv)
+      [123456 - export.csv](../../assets/files/123456-export.csv)
 
 5. Ctrl+Shift+B → rebuild dashboards → browser auto-reloads
 ```
@@ -255,6 +245,80 @@ Type any prefix in a markdown file and select from the suggestion list (`Ctrl+Sp
 
 ---
 
+## 🎨 Custom Icons
+
+Icons from any registered set can be used inline in notes with `:set-name:` syntax.
+Zensical renders them as inline SVGs — they scale with text and respect the current theme.
+
+### Using icons in notes
+
+```markdown
+:k8s-pod: This pod is failing to schedule.
+:k8s-svc: Service is exposed on port 443.
+
+| Component | Status |
+|-----------|--------|
+| :k8s-api: API Server | Healthy |
+| :k8s-etcd: etcd | Healthy |
+| :k8s-node: Node | NotReady |
+```
+
+### Available icon sets
+
+=== ":k8s: Kubernetes"
+
+    | Icon | Name | Syntax |
+    |------|------|--------|
+    | :k8s-pod: | Pod | `:k8s-pod:` |
+    | :k8s-deploy: | Deployment | `:k8s-deploy:` |
+    | :k8s-svc: | Service | `:k8s-svc:` |
+    | :k8s-ns: | Namespace | `:k8s-ns:` |
+    | :k8s-node: | Node | `:k8s-node:` |
+    | :k8s-etcd: | etcd | `:k8s-etcd:` |
+    | :k8s-api: | API Server | `:k8s-api:` |
+    | :k8s-kubelet: | Kubelet | `:k8s-kubelet:` |
+    | :k8s-sched: | Scheduler | `:k8s-sched:` |
+    | :k8s-cm: | ConfigMap | `:k8s-cm:` |
+    | :k8s-secret: | Secret | `:k8s-secret:` |
+    | :k8s-pv: | PersistentVolume | `:k8s-pv:` |
+    | :k8s-pvc: | PersistentVolumeClaim | `:k8s-pvc:` |
+    | :k8s-ing: | Ingress | `:k8s-ing:` |
+    | :k8s-sa: | ServiceAccount | `:k8s-sa:` |
+    | :k8s-ds: | DaemonSet | `:k8s-ds:` |
+    | :k8s-sts: | StatefulSet | `:k8s-sts:` |
+    | :k8s-rs: | ReplicaSet | `:k8s-rs:` |
+    | :k8s-hpa: | HorizontalPodAutoscaler | `:k8s-hpa:` |
+    | :k8s-job: | Job | `:k8s-job:` |
+    | :k8s-cronjob: | CronJob | `:k8s-cronjob:` |
+    | :k8s-sc: | StorageClass | `:k8s-sc:` |
+    | :k8s-netpol: | NetworkPolicy | `:k8s-netpol:` |
+    | :k8s-crd: | CustomResourceDefinition | `:k8s-crd:` |
+    | :k8s-role: | Role | `:k8s-role:` |
+    | :k8s-c-role: | ClusterRole | `:k8s-c-role:` |
+    | :k8s-rb: | RoleBinding | `:k8s-rb:` |
+    | :k8s-crb: | ClusterRoleBinding | `:k8s-crb:` |
+    | :k8s-control-plane: | Control Plane | `:k8s-control-plane:` |
+    | :k8s-c-m: | Controller Manager | `:k8s-c-m:` |
+    | :k8s-c-c-m: | Cloud Controller Manager | `:k8s-c-c-m:` |
+    | :k8s-k-proxy: | kube-proxy | `:k8s-k-proxy:` |
+    | :k8s-ep: | Endpoint | `:k8s-ep:` |
+    | :k8s-vol: | Volume | `:k8s-vol:` |
+    | :k8s-quota: | ResourceQuota | `:k8s-quota:` |
+    | :k8s-limits: | LimitRange | `:k8s-limits:` |
+    | :k8s-psp: | PodSecurityPolicy | `:k8s-psp:` |
+    | :k8s-group: | Group | `:k8s-group:` |
+    | :k8s-user: | User | `:k8s-user:` |
+    | :k8s-logo: | Kubernetes Logo | `:k8s-logo:` |
+
+### Adding a new icon pack
+
+1. Place SVG files in `overrides/.icons/<set-name>/`
+   — subdirectories are supported: `overrides/.icons/<set-name>/<sub>/icon.svg` → `:set-name-sub-icon:`
+2. Symlinks work — point them at the source SVGs to avoid duplication
+3. Restart Zensical (`Ctrl+Shift+B`) — no config changes needed
+
+---
+
 ## 📸 Screenshot Workflow
 
 ```
@@ -265,9 +329,9 @@ Type any prefix in a markdown file and select from the suggestion list (`Ctrl+Sp
 
 3. Ctrl+Shift+P → Run Task → 📸 Insert Screenshots
 
-4. Script moves image to docs/screenshots/ and writes this into the note:
+4. Script moves image to docs/assets/screenshots/ and writes this into the note:
 
-   ![123456 - description](../screenshots/123456-description.png){ loading=lazy }
+   ![123456 - description](../../assets/screenshots/123456-description.png){ loading=lazy }
    /// caption
    123456 - description
    ///
@@ -285,10 +349,9 @@ Type any prefix in a markdown file and select from the suggestion list (`Ctrl+Sp
 
 | Dashboard | Source folder | Sort order |
 |-----------|--------------|------------|
-| 🟢 Active | `docs/active/` | P1 → P4 |
-| 🔄 Follow-up | `docs/followup/` | P1 → P4 |
-| 📚 KB Updates | `docs/kb-updates/` | Filename order |
-| 🗄️ Archive | `docs/archive/` | P1 → P4 |
+| 🟢 Active | `docs/cases/active/` | P1 → P4 |
+| 🔄 Follow-up | `docs/cases/followup/` | Newest first |
+| 🗄️ Archive | `docs/cases/archive/` | Newest first |
 | 📅 Meetings | `docs/meetings/*/` | Newest first per type |
 | 📓 Knowledge Base | `docs/pkb/` | Newest first per category |
 
@@ -300,33 +363,57 @@ Rebuild dashboards after: creating a note · editing frontmatter · archiving a 
 
 ```
 case-work/
-├── zensical.toml          ← site config (TOML format — not mkdocs.yml)
-├── .foam/templates/       ← case.md · followup.md · kb-update.md · meeting-1on1.md · meeting-team.md · meeting-general.md · pkb.md
+├── zensical.toml                        ← site config (TOML — not mkdocs.yml)
+├── overrides/                           ← Zensical theme overrides
+│   └── .icons/                          ← custom icon sets (use as :set-name: in notes)
+│       └── k8s/                         ← Kubernetes icons — symlinked from docs/assets/images/kubernetes/
+├── .foam/
+│   └── templates/                       ← Foam note templates (one per note type)
+│       ├── case.md                      ← new support case
+│       ├── followup.md                  ← follow-up for an existing case
+│       ├── meeting-1on1.md              ← 1-on-1 meeting notes
+│       ├── meeting-team.md              ← team meeting notes
+│       ├── meeting-general.md           ← general meeting notes
+│       └── pkb.md                       ← personal knowledge base article
 ├── .vscode/
-│   ├── settings.json           ← Foam config, editor settings, markdown snippet support
-│   ├── tasks.json              ← all runnable tasks defined here
-│   └── case-work.code-snippets ← workspace snippets (remotenote, casedesc, etc.)
-├── docs/                  ← Zensical serves everything from here
-│   ├── index.md           ← home page
-│   ├── dashboard.md       ← tabbed dashboard (auto-generated)
-│   ├── guide.md           ← this page
-│   ├── dashboards/        ← section tables (auto-generated)
-│   ├── active/            ← active case notes
-│   ├── followup/          ← follow-up notes
-│   ├── kb-updates/        ← KB article notes
-│   ├── archive/           ← resolved case notes
-│   ├── files/             ← customer-provided files (moved here by script)
-│   ├── screenshots/       ← case screenshots (moved here by script)
-│   ├── pkb/               ← personal KB notes (flat, category in frontmatter)
-│   └── meetings/
-│       ├── 1on1/          ← 1-on-1 meeting notes (index auto-generated)
-│       ├── team/          ← team meeting notes (index auto-generated)
-│       └── general/       ← general meeting notes (index auto-generated)
-└── scripts/
-    ├── dashboard.py              ← regenerates all dashboards
-    ├── insert_screenshots.py     ← finds & inserts screenshots
-    ├── insert_files.py           ← finds & inserts customer files
-    └── copy_salesforce_notes.py  ← converts remote support note to Salesforce plain text
+│   ├── settings.json                    ← Foam config, editor settings, snippet support
+│   ├── tasks.json                       ← all Ctrl+Shift+P runnable tasks
+│   └── case-work.code-snippets          ← workspace snippets (remotenote, casedesc, etc.)
+├── scripts/
+│   ├── dashboard.py                     ← regenerates all dashboards and index pages
+│   ├── insert_screenshots.py            ← moves & inserts screenshots into case notes
+│   ├── insert_files.py                  ← moves & inserts customer files into case notes
+│   ├── append_terminal_block.py         ← appends clipboard as timestamped code block
+│   ├── copy_salesforce_notes.py         ← converts remote support note to Salesforce plain text
+│   └── copy_remote_steps.py             ← copies steps performed from remote support note to clipboard
+└── docs/                                ← Zensical serves everything from here
+    ├── index.md                         ← home page
+    ├── dashboard.md                     ← tabbed case dashboard (auto-generated)
+    ├── meetings.md                      ← meetings index page (auto-generated)
+    ├── pkb.md                           ← knowledge base index (auto-generated)
+    ├── tags.md                          ← tag index across all notes (auto-generated)
+    ├── guide.md                         ← this page
+    ├── setup.md                         ← setup and upgrade instructions
+    ├── markdown.md                      ← markdown syntax reference
+    ├── cases/                           ← all case lifecycle notes
+    │   ├── active/                      ← open cases in progress
+    │   ├── followup/                    ← cases awaiting action or response
+    │   └── archive/                     ← resolved and closed cases
+    ├── dashboards/                      ← per-section dashboard pages (auto-generated)
+    │   ├── active.md
+    │   ├── followup.md
+    │   └── archive.md
+    ├── meetings/                        ← meeting notes organised by type
+    │   ├── 1on1/                        ← 1-on-1 notes with manager
+    │   ├── team/                        ← team meeting notes
+    │   └── general/                     ← all other meeting notes
+    ├── pkb/                             ← personal KB articles (category set in frontmatter)
+    ├── assets/                          ← static assets served by Zensical
+    │   ├── files/                       ← customer-provided files (moved here by script)
+    │   ├── screenshots/                 ← case screenshots (moved here by script)
+    │   ├── images/                      ← site images
+    │   └── stylesheets/                 ← custom CSS (extra.css)
+    └── javascripts/                     ← custom JavaScript (tabs.js)
 ```
 
 ---
@@ -359,5 +446,5 @@ Foam supports both `[[wikilinks]]` and standard `[text](path)` markdown links �
 
 - **`zensical.toml`** — Zensical's config is TOML, not the YAML `mkdocs.yml` used by plain MkDocs
 - **Files outside `docs/`** — not served by Zensical; always create case notes via the Foam template so they land in the right folder
-- **Screenshots outside `docs/`** — not served; the Insert Screenshots task moves them automatically
+- **Screenshots outside `docs/`** — not served; the Insert Screenshots task moves them to `docs/assets/screenshots/` automatically
 - **`${file}` in tasks** — always refers to the active VS Code editor tab, not the last-saved file

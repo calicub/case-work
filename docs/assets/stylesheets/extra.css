@@ -1,0 +1,155 @@
+/* Widen the content grid */
+.md-grid {
+  max-width: 1600px;
+}
+
+/* Screenshot grid: 3 columns, uniform thumbnail height */
+.screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.screenshot-grid img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.screenshot-grid figure {
+  margin: 0;
+}
+
+.screenshot-grid figcaption {
+  text-align: center;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── PDF Export Button (fixed top-right) ───────────────────── */
+#pdf-export-btn {
+  position: fixed;
+  top: 0.6rem;
+  right: 1rem;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  color: var(--md-primary-bg-color, #fff);
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.15s;
+}
+
+#pdf-export-btn:hover {
+  opacity: 1;
+}
+
+/* ── Print / PDF output styles ─────────────────────────────── */
+@media print {
+  @page {
+    margin: 1in 1in;
+    size: letter portrait;
+  }
+
+  /* Hide chrome */
+  .md-header,
+  .md-sidebar,
+  .md-sidebar--primary,
+  .md-sidebar--secondary,
+  .md-footer,
+  .md-tabs,
+  .md-search,
+  .pdf-export-btn,
+  #pdf-export-btn,
+  .tabbed-set > input,
+  .tabbed-set > .tabbed-labels,
+  [data-md-component="announce"],
+  [data-md-component="skip"] {
+    display: none !important;
+  }
+
+  /* Break Material's flex shell — root cause of single-line pages */
+  *,
+  *::before,
+  *::after {
+    float: none !important;
+    overflow: visible !important;
+  }
+
+  html, body {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  body,
+  .md-container,
+  .md-main,
+  .md-main__inner,
+  .md-content,
+  .md-content__inner {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: none !important;
+  }
+
+  /* Every element must stay within page width */
+  img, pre, table, figure, svg {
+    max-width: 100% !important;
+  }
+
+  /* Code blocks: wrap instead of scroll */
+  pre, pre code {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Show all tab panels */
+  .tabbed-content {
+    display: block !important;
+    height: auto !important;
+  }
+
+  .tabbed-block {
+    display: block !important;
+    height: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* Screenshot grid: 2 columns, auto height */
+  .screenshot-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .screenshot-grid img {
+    height: auto !important;
+    max-height: 180px;
+    object-fit: contain !important;
+  }
+
+  /* Avoid orphaned headings and broken blocks */
+  h1, h2, h3, h4 { break-after: avoid; }
+
+  pre, .admonition, blockquote, table, figure, .screenshot-grid {
+    break-inside: avoid;
+  }
+
+  a[href]::after { content: none; }
+}

@@ -75,12 +75,9 @@ def build_salesforce(via, attendees, details, actions):
     sep = "------------------------------------"
     out = [
         "REMOTE SUPPORT NOTES",
-        "",
         sep,
-        "",
         f"Remote support via {via}",
         f"Attendees: {attendees}",
-        "",
         "",
         "DETAILS",
         sep,

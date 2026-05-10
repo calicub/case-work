@@ -23,7 +23,7 @@
     {
       "label": "🖥️ Start Session Log",
       "type": "shell",
-      "command": "case_number=$(grep -m1 '^case_number:' '${file}' | sed 's/^case_number:[[:space:]]*//' | tr -d '\\r') && mkdir -p '${workspaceFolder}/docs/files' && script -q '${workspaceFolder}/docs/files/'\"${case_number}\"-terminal-session-$(date +%Y-%m-%d).txt",
+      "command": "case_number=$(grep -m1 '^case_number:' '${file}' | sed 's/^case_number:[[:space:]]*//' | tr -d '\\r') && mkdir -p '${workspaceFolder}/docs/assets/files' && script -q '${workspaceFolder}/docs/assets/files/'\"${case_number}\"-terminal-session-$(date +%Y-%m-%d).txt",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -45,6 +45,21 @@
       "problemMatcher": [],
       "presentation": {
         "reveal": "silent",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": true
+      }
+    },
+    {
+      "label": "📋 Copy Prior Actions (Salesforce)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python3 scripts/copy_remote_steps.py '${file}' ${lineNumber}",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
         "panel": "shared",
         "showReuseMessage": false,
         "close": true

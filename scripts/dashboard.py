@@ -13,11 +13,6 @@ CASE_HEADER = (
     "| Priority | Case # | Customer | Status | Note |\n"
     "|----------|--------|----------|--------|------|\n"
 )
-KB_HEADER = (
-    "| Status | KB # | Title | Category | Note |\n"
-    "|--------|------|-------|----------|------|\n"
-)
-
 
 def parse_frontmatter(path):
     text = path.read_text(encoding="utf-8")
@@ -50,7 +45,7 @@ def priority_key(entry):
     return PRIORITY_RANK.get(entry.get("priority", ""), 9)
 
 
-def case_rows(section, link_prefix="../"):
+def case_rows(section, link_prefix="../", sort="priority"):
     folder = BASE / section
     if not folder.exists():
         return []
@@ -60,7 +55,10 @@ def case_rows(section, link_prefix="../"):
         if fm.get("case_number"):
             fm["_file"] = f.name
             entries.append(fm)
-    entries.sort(key=priority_key)
+    if sort == "newest":
+        entries.sort(key=lambda e: e.get("created", ""), reverse=True)
+    else:
+        entries.sort(key=priority_key)
     rows = []
     for e in entries:
         num = e.get("case_number", "—")
@@ -72,26 +70,6 @@ def case_rows(section, link_prefix="../"):
     return rows
 
 
-def kb_rows(link_prefix="../"):
-    folder = BASE / "kb-updates"
-    if not folder.exists():
-        return []
-    entries = []
-    for f in sorted(folder.glob("*.md")):
-        fm = parse_frontmatter(f)
-        if fm.get("kb_number"):
-            fm["_file"] = f.name
-            entries.append(fm)
-    rows = []
-    for e in entries:
-        num = e.get("kb_number", "—")
-        link = f"[{num}]({link_prefix}kb-updates/{e['_file']})"
-        rows.append(
-            f"| {e.get('status','—')} | {link} | {e.get('title','—')} "
-            f"| {e.get('category','—')} | {e.get('note','—')} |"
-        )
-    return rows
-
 
 def _tab_block(header, rows):
     if rows:
@@ -101,19 +79,18 @@ def _tab_block(header, rows):
     return "\n".join("    " + line for line in lines)
 
 
-def write_combined_dashboard(active, followup, kb, archive):
+def write_combined_dashboard(active, followup, archive):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
     tabs = [
         (f"🟢 Active ({len(active)})", CASE_HEADER, active),
         (f"🔄 Follow-up ({len(followup)})", CASE_HEADER, followup),
-        (f"📚 KB Updates ({len(kb)})", KB_HEADER, kb),
         ("🗄️ Archive", CASE_HEADER, archive),
     ]
     parts = [f"# 📊 Case Dashboard\n\n*🕐 Updated: {timestamp}*\n"]
     for label, header, rows in tabs:
         parts.append(f'=== "{label}"\n\n{_tab_block(header, rows)}\n')
     (BASE / "dashboard.md").write_text("\n".join(parts), encoding="utf-8")
-    total = len(active) + len(followup) + len(kb) + len(archive)
+    total = len(active) + len(followup) + len(archive)
     print(f"  dashboard.md: {total} total entries")
 
 
@@ -127,7 +104,11 @@ def write_section_dashboard(filename, title, header, rows):
     print(f"  {filename}: {len(rows)} entries")
 
 
-PKB_CATEGORIES = ["Tools", "Troubleshooting"]
+PKB_CATEGORIES = ["Tools", "Troubleshooting", "Kubernetes", "Other"]
+
+PKB_TAB_LABELS = {
+    "Kubernetes": '<img src="assets/images/kubernetes/logo.svg" style="height:1em;vertical-align:middle;margin-right:4px;"> Kubernetes',
+}
 
 PKB_HEADER = (
     "| Title | Tags | Created |\n"
@@ -139,10 +120,16 @@ def pkb_rows(category):
     folder = BASE / "pkb"
     if not folder.exists():
         return []
+    known = {c.lower() for c in PKB_CATEGORIES if c != "Other"}
     entries = []
     for f in sorted(folder.glob("*.md")):
         fm = parse_frontmatter(f)
-        if fm.get("category", "").lower() == category.lower():
+        file_cat = fm.get("category", "").lower()
+        if category == "Other":
+            if file_cat not in known:
+                fm["_file"] = f.name
+                entries.append(fm)
+        elif file_cat == category.lower():
             fm["_file"] = f.name
             entries.append(fm)
     entries.sort(key=lambda e: e.get("created", ""), reverse=True)
@@ -164,17 +151,17 @@ def write_pkb_dashboard():
         rows = pkb_rows(category)
         total += len(rows)
         block = _tab_block(PKB_HEADER, rows)
-        parts.append(f'=== "{category} ({len(rows)})"\n\n{block}\n')
+        label = PKB_TAB_LABELS.get(category, category)
+        parts.append(f'=== "{label} ({len(rows)})"\n\n{block}\n')
     (BASE / "pkb.md").write_text("\n".join(parts), encoding="utf-8")
     print(f"  pkb.md: {total} total entries")
 
 
 TAG_SCAN_DIRS = [
-    ("active",    "active"),
-    ("followup",  "followup"),
-    ("kb-updates","kb-updates"),
-    ("archive",   "archive"),
-    ("pkb",       "pkb"),
+    ("cases/active",   "cases/active"),
+    ("cases/followup", "cases/followup"),
+    ("cases/archive",  "cases/archive"),
+    ("pkb",            "pkb"),
     ("meetings/1on1",    "meetings/1on1"),
     ("meetings/team",    "meetings/team"),
     ("meetings/general", "meetings/general"),
@@ -250,17 +237,15 @@ if __name__ == "__main__":
 
     # Combined tabbed dashboard — links relative to docs/
     write_combined_dashboard(
-        active=case_rows("active", link_prefix=""),
-        followup=case_rows("followup", link_prefix=""),
-        kb=kb_rows(link_prefix=""),
-        archive=case_rows("archive", link_prefix=""),
+        active=case_rows("cases/active", link_prefix=""),
+        followup=case_rows("cases/followup", link_prefix="", sort="newest"),
+        archive=case_rows("cases/archive", link_prefix="", sort="newest"),
     )
 
     # Individual section pages — links relative to docs/dashboards/
-    write_section_dashboard("active.md", "🟢 Active Cases", CASE_HEADER, case_rows("active"))
-    write_section_dashboard("followup.md", "🔄 Follow-up Cases", CASE_HEADER, case_rows("followup"))
-    write_section_dashboard("archive.md", "🗄️ Archived Cases", CASE_HEADER, case_rows("archive"))
-    write_section_dashboard("kb-updates.md", "📚 KB Updates", KB_HEADER, kb_rows())
+    write_section_dashboard("active.md", "🟢 Active Cases", CASE_HEADER, case_rows("cases/active"))
+    write_section_dashboard("followup.md", "🔄 Follow-up Cases", CASE_HEADER, case_rows("cases/followup", sort="newest"))
+    write_section_dashboard("archive.md", "🗄️ Archived Cases", CASE_HEADER, case_rows("cases/archive", sort="newest"))
 
     print("Rebuilding meetings page...")
     write_meetings_page()

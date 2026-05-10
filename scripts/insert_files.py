@@ -7,7 +7,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 ROOT = Path(__file__).parent.parent
-FILES_DIR = ROOT / "docs" / "files"
+FILES_DIR = ROOT / "docs" / "assets" / "files"
 SECTION = '=== "📎 Customer Files"'
 
 
@@ -75,7 +75,7 @@ def build_file_block(files):
     for f in files:
         icon = ICONS.get(f.suffix.lower(), ":fontawesome-regular-file:")
         encoded = quote(f.name)
-        lines.append(f"    - {icon} [{f.name}](../files/{encoded}){{target=_blank}}")
+        lines.append(f"    - {icon} [{f.name}](../../assets/files/{encoded}){{target=_blank}}")
     lines.append("")
     return lines
 
