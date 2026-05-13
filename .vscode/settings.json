@@ -20,6 +20,14 @@
   "telemetry.telemetryLevel": "off",
   "update.mode": "none",
   "editor.wordWrap": "on",
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "docs/cases/(active|followup)/.+\\.md$",
+        "cmd": "bash ${workspaceFolder}/scripts/sync_reminders.sh ${file}"
+      }
+    ]
+  },
   "editor.tabSize": 2,
   "terminal.integrated.scrollback": 10000,
   "[markdown]": {

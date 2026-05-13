@@ -32,9 +32,52 @@ Keep this tab open in your browser while working in VS Code.
 | **📋 Copy Prior Actions (Salesforce)** | `Ctrl+Shift+P` → Run Task | Copies the steps performed from the Remote Support Note at the cursor, formatted as `--- Month Nth ---` + `+ step` lines |
 | **📙 Zensical** | `Ctrl+Shift+P` → Run Task | Starts local server at `http://127.0.0.1:8000` — run once per session, leave it open |
 | **🛑 Stop Zensical** | `Ctrl+Shift+P` → Run Task | Kills the Zensical server process |
+| **🔔 Sync to Reminders** | Auto on `Cmd+S` | Pushes `▶️ Next Action` tasks to the macOS Reminders "Case Actions" list — active and followup only |
 
 !!! warning "Active tab tip"
     The **case note tab must be focused** in VS Code (not the terminal) when running Insert Screenshots, Insert Customer Files, Copy Support Notes, or Append Terminal Block — VS Code passes whichever file is currently active.
+
+---
+
+## 🔔 Reminders Sync
+
+Action items in the **▶️ Next Action** section of any active or follow-up case note are automatically synced to the macOS **Reminders** app whenever you save the file.
+
+```
+1. Add tasks under ## ▶️ Next Action using standard checkboxes:
+
+      - [ ] Call customer to confirm reproduction steps
+      - [ ] Open engineering ticket
+      - [ ] Follow up with customer @5/15          ← due May 15 at 08:00
+      - [ ] Submit engineering ticket @5/15-14:30          ← due May 15 at 14:30 (24-hour)
+
+2. Save the file (Cmd+S)
+   Tasks appear in a "Case Actions" list in Reminders, prefixed with the case number:
+      [02468] Call customer to confirm reproduction steps
+      [02468] Follow up with customer              ← due date set; @annotation stripped from title
+
+3. Mark a task done in the note:
+
+      - [x] Call customer to confirm reproduction steps
+
+4. Save again — the matching reminder is marked complete in Reminders
+```
+
+**Due date syntax**
+
+| Format | Example | Result |
+|--------|---------|--------|
+| `@M/D` | `@5/15` | Due May 15, no time set |
+| `@M/D-HH:MM` | `@5/15-14:30` | Due May 15 at 14:30 (24-hour) |
+
+The `@` annotation is stripped from the Reminders title — only the task text is shown there. Year is always assumed to be the current year.
+
+!!! info "Scope"
+    Only files in `docs/cases/active/` and `docs/cases/followup/` are processed.
+    Archive is never touched, regardless of how large it grows.
+
+!!! tip "Duplicate prevention"
+    Saving multiple times is safe — the script checks for existing reminders before creating new ones.
 
 ---
 
@@ -385,7 +428,8 @@ case-work/
 │   ├── insert_files.py                  ← moves & inserts customer files into case notes
 │   ├── append_terminal_block.py         ← appends clipboard as timestamped code block
 │   ├── copy_salesforce_notes.py         ← converts remote support note to Salesforce plain text
-│   └── copy_remote_steps.py             ← copies steps performed from remote support note to clipboard
+│   ├── copy_remote_steps.py             ← copies steps performed from remote support note to clipboard
+│   └── sync_reminders.sh               ← syncs ▶️ Next Action tasks to macOS Reminders on save
 └── docs/                                ← Zensical serves everything from here
     ├── index.md                         ← home page
     ├── dashboard.md                     ← tabbed case dashboard (auto-generated)
