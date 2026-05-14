@@ -74,7 +74,7 @@ def build_image_block(images):
             f'<img src="../../assets/screenshots/{encoded}" loading="lazy" alt="{img.stem}" style="{IMG_STYLE}"></a>'
             f'<figcaption style="{CAP_STYLE}">{img.stem}</figcaption></figure>'
         )
-    lines += ["    </div>", ""]
+    lines.append("    </div>")
     return lines
 
 

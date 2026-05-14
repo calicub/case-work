@@ -76,7 +76,6 @@ def build_file_block(files):
         icon = ICONS.get(f.suffix.lower(), ":fontawesome-regular-file:")
         encoded = quote(f.name)
         lines.append(f"    - {icon} [{f.name}](../../assets/files/{encoded}){{target=_blank}}")
-    lines.append("")
     return lines
 
 
