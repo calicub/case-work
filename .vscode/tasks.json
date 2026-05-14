@@ -23,7 +23,7 @@
     {
       "label": "🖥️ Start Session Log",
       "type": "shell",
-      "command": "case_number=$(grep -m1 '^case_number:' '${file}' | sed 's/^case_number:[[:space:]]*//' | tr -d '\\r') && mkdir -p '${workspaceFolder}/docs/assets/files' && script -q '${workspaceFolder}/docs/assets/files/'\"${case_number}\"-terminal-session-$(date +%Y-%m-%d).txt",
+      "command": "case_number=$(grep -m1 '^case_number:' '${file}' | sed 's/^case_number:[[:space:]]*//' | tr -d '\\r') && mkdir -p '${workspaceFolder}/docs/assets/files' && script -q '${workspaceFolder}/docs/assets/files/'\"${case_number}\"-terminal-session-$(date +%Y-%m-%d).txt && ${workspaceFolder}/.venv/bin/python3 '${workspaceFolder}/scripts/insert_files.py' '${file}'",
       "options": {
         "cwd": "${workspaceFolder}"
       },
