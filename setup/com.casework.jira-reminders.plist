@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+
+  <key>Label</key>
+  <string>com.casework.jira-reminders</string>
+
+  <!-- Working directory is replaced at install time by install_schedule.sh -->
+  <key>WorkingDirectory</key>
+  <string>REPO_PATH</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>-c</string>
+    <string>source ~/.zprofile 2>/dev/null; source ~/.zshrc 2>/dev/null; python3 REPO_PATH/scripts/jira_reminders.py >> /tmp/jira-reminders.log 2>&1</string>
+  </array>
+
+  <!-- Run at 09:30 and 12:30 every day -->
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict>
+      <key>Hour</key>   <integer>9</integer>
+      <key>Minute</key> <integer>30</integer>
+    </dict>
+    <dict>
+      <key>Hour</key>   <integer>12</integer>
+      <key>Minute</key> <integer>30</integer>
+    </dict>
+  </array>
+
+  <key>RunAtLoad</key>
+  <false/>
+
+</dict>
+</plist>

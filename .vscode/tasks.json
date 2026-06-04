@@ -111,6 +111,36 @@
       }
     },
     {
+      "label": "⏰ Install Jira Reminders Schedule",
+      "type": "shell",
+      "command": "zsh '${workspaceFolder}/setup/install_schedule.sh'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": false
+      }
+    },
+    {
+      "label": "🔄 Run Jira Reminders Now",
+      "type": "shell",
+      "command": "python3 '${workspaceFolder}/scripts/jira_reminders.py'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": false
+      }
+    },
+    {
       "label": "🟢 Start Zensical",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/bin/zensical serve",

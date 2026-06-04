@@ -33,6 +33,8 @@ Keep this tab open in your browser while working in VS Code.
 | **📙 Zensical** | `Ctrl+Shift+P` → Run Task | Starts local server at `http://127.0.0.1:8000` — run once per session, leave it open |
 | **🛑 Stop Zensical** | `Ctrl+Shift+P` → Run Task | Kills the Zensical server process |
 | **🔔 Sync to Reminders** | Auto on `Cmd+S` | Pushes `▶️ Next Action` tasks to the macOS Reminders "Case Actions" list — active and followup only |
+| **⏰ Install Jira Reminders Schedule** | `Ctrl+Shift+P` → Run Task | One-time setup — installs a background schedule that syncs Jira KB/Docs tasks to Reminders at 09:30 and 12:30 daily |
+| **🔄 Run Jira Reminders Now** | `Ctrl+Shift+P` → Run Task | Manually triggers the Jira → Reminders sync without waiting for the schedule |
 
 !!! warning "Active tab tip"
     The **case note tab must be focused** in VS Code (not the terminal) when running Insert Screenshots, Insert Customer Files, Copy Support Notes, or Append Terminal Block — VS Code passes whichever file is currently active.
@@ -78,6 +80,100 @@ The `@` annotation is stripped from the Reminders title — only the task text i
 
 !!! tip "Duplicate prevention"
     Saving multiple times is safe — the script checks for existing reminders before creating new ones.
+
+---
+
+## 🎫 Jira Reminders
+
+Open KB/Docs tasks assigned to you in Jira are automatically synced to the macOS **Reminders** app twice a day (09:30 and 12:30). Each reminder repeats every 4 days until you mark it complete.
+
+### First-time setup (once per machine)
+
+```
+1. Open scripts/jira_reminders.py and fill in the two constants at the top:
+
+      SERVER_URL = "https://your-jira-instance"
+      TOKEN      = "your-personal-access-token"
+
+2. Ctrl+Shift+P → Run Task → ⏰ Install Jira Reminders Schedule
+   You should see: ✅  Schedule installed.
+
+That's it — the schedule survives reboots and runs without VS Code open.
+```
+
+!!! warning "Token is stored in plain text"
+    Do not commit `jira_reminders.py` with a real token in it. Either keep the file in `.gitignore` or use a local environment variable and read it with `os.environ["JIRA_TOKEN"]`.
+
+### What gets synced
+
+Each reminder lands in a **"Jira Tasks"** list in Reminders (created automatically) with:
+
+| Field | Source |
+|-------|--------|
+| Title | `[KEY-123] Ticket summary` |
+| Body note | Key · Created date · Due date · Browse URL |
+| Due date | Jira `duedate` field (omitted if not set in Jira) |
+| Recurrence | Every 4 days |
+
+### Confirming it works
+
+**Check the log after a scheduled run:**
+
+```bash
+cat /tmp/jira-reminders.log
+```
+
+A successful run looks like:
+
+```
+Fetching Jira tickets…
+Found 3 ticket(s). Creating reminders…
+
+  [KB-101] (In Progress) Update LDAP auth guide
+    Created: 2026-05-10  |  Due: 2026-06-15
+  [KB-88]  (Open) Document new cluster upgrade path
+    Created: 2026-04-28  |  Due: not set
+  ...
+Done — 3 reminder(s) synced to "Jira Tasks".
+```
+
+**Check that the schedule is loaded:**
+
+```bash
+launchctl list | grep jira-reminders
+```
+
+You should see a line like:
+
+```
+-   0   com.casework.jira-reminders
+```
+
+The middle number is the last exit code — `0` means the last run succeeded. Any non-zero value means it errored; check the log above.
+
+**Trigger a test run immediately:**
+
+```
+Ctrl+Shift+P → Run Task → 🔄 Run Jira Reminders Now
+```
+
+Output appears in the VS Code terminal panel. Check Reminders.app for a "Jira Tasks" list afterward.
+
+**Common failure reasons:**
+
+| Symptom | Likely cause |
+|---------|-------------|
+| `HTTP 401` in log | TOKEN is wrong or expired — generate a new PAT in Jira |
+| `Failed to reach the server` | Wrong `SERVER_URL` or VPN not connected |
+| No log file at all | Schedule not loaded — re-run the Install task |
+| Schedule loaded but not firing | Mac was asleep at 09:30/12:30 — launchd will run it at next wake if the window was missed |
+
+**To uninstall the schedule:**
+
+```bash
+launchctl unload ~/Library/LaunchAgents/com.casework.jira-reminders.plist
+rm ~/Library/LaunchAgents/com.casework.jira-reminders.plist
+```
 
 ---
 
