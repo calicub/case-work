@@ -20,6 +20,15 @@
     ],
     "description": "Insert case description admonition"
   },
+  "Customer's email response": {
+    "prefix": "emailresponse",
+    "body": [
+      "???+ quote \"Customers email response ${CURRENT_MONTH_NAME} ${CURRENT_DATE}\"",
+      "",
+      "        $1"
+    ],
+    "description": "Insert case description admonition"
+  },
   "Remote Support Notes": {
     "prefix": "remotenote",
     "body": [

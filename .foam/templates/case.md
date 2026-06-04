@@ -25,8 +25,6 @@ created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUT
 
     ## ▶️ Next Action
 
-    - [ ] ${6:Action item}
-
     ## 🔄 Follow-up
 
     ## 🛠️ Steps Taken
