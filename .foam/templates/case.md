@@ -23,7 +23,7 @@ created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUT
 
         ${5:Describe the issue}
 
-    ## ▶️ Next Action
+    ## 🔔 Next Action
 
     ## 🔄 Follow-up
 

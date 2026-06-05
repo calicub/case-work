@@ -59,7 +59,7 @@ OPEN_DATES=()
 DONE_TASKS=()
 
 while IFS= read -r line; do
-  if [[ "$line" =~ ^[[:space:]]*##[[:space:]].*▶.*Next[[:space:]]Action ]]; then
+  if [[ "$line" =~ ^[[:space:]]*##[[:space:]].*(🔔|▶).*Next[[:space:]]Action ]]; then
     IN_SECTION=1
     continue
   fi
