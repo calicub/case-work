@@ -129,12 +129,14 @@ def build_applescript(tickets: list[dict]) -> str:
                 f"    set month of dueDate to {mo}",
                 f"    set day of dueDate to {d}",
                 "    set time of dueDate to 28800",   # 08:00
-                f'    make new reminder in jiraList with properties {{name:t, body:"{body}", completed:false, due date:dueDate, recurrence:"{RECURRENCE}"}}',
+                f'    set newReminder to make new reminder in jiraList with properties {{name:t, body:"{body}", completed:false, due date:dueDate}}',
+                f'    set recurrence of newReminder to "{RECURRENCE}"',
             ]
         else:
-            lines.append(
-                f'    make new reminder in jiraList with properties {{name:t, body:"{body}", completed:false, recurrence:"{RECURRENCE}"}}'
-            )
+            lines += [
+                f'    set newReminder to make new reminder in jiraList with properties {{name:t, body:"{body}", completed:false}}',
+                f'    set recurrence of newReminder to "{RECURRENCE}"',
+            ]
 
         lines.append("  end if")
 
