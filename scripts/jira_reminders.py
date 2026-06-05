@@ -19,6 +19,7 @@ import subprocess
 import urllib.parse
 import urllib.request
 from datetime import datetime
+from typing import Optional
 from urllib.error import HTTPError, URLError
 
 # --- CONFIGURATION ---
@@ -50,7 +51,7 @@ def jira_get(path: str) -> dict:
         return json.loads(resp.read().decode())
 
 
-def parse_jira_date(date_str: str | None) -> datetime | None:
+def parse_jira_date(date_str: Optional[str]) -> Optional[datetime]:
     """Accept 'YYYY-MM-DD' or 'YYYY-MM-DDTHH:MM:SS.mmm+ZZZZ'."""
     if not date_str:
         return None
@@ -62,7 +63,7 @@ def parse_jira_date(date_str: str | None) -> datetime | None:
     return None
 
 
-def fmt_display(dt: datetime | None) -> str:
+def fmt_display(dt: Optional[datetime]) -> str:
     return dt.strftime("%Y-%m-%d") if dt else "not set"
 
 
