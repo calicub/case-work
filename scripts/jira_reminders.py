@@ -5,8 +5,6 @@ Fetch open Jira KB/Docs tasks and create macOS Reminders for each one.
 Each reminder is placed in the "Jira Tasks" list with:
   - Due date pulled from the Jira duedate field (or omitted if unset)
   - Body note showing the ticket key, created date, due date, and URL
-  - Repeating recurrence every 4 days (FREQ=DAILY;INTERVAL=4) so you
-    get a nudge until the ticket is marked complete in Reminders
 
 Usage:
     python3 scripts/jira_reminders.py
@@ -54,8 +52,7 @@ JQL = os.environ.get(
     'assignee = currentUser() AND type = Task AND (status = Open OR status = "In Progress")',
 )
 
-LIST_NAME  = "Jira Tasks"
-RECURRENCE = "FREQ=DAILY;INTERVAL=4"   # nudge every 4 days
+LIST_NAME = "Jira Tasks"
 
 
 # ---------------------------------------------------------------------------
@@ -129,14 +126,12 @@ def build_applescript(tickets: list[dict]) -> str:
                 f"    set month of dueDate to {mo}",
                 f"    set day of dueDate to {d}",
                 "    set time of dueDate to 28800",   # 08:00
-                f'    set newReminder to make new reminder in jiraList with properties {{name:t, body:"{body}", completed:false, due date:dueDate}}',
-                f'    set recurrence of newReminder to "{RECURRENCE}"',
+                f'    make new reminder in jiraList with properties {{name:t, body:"{body}", completed:false, due date:dueDate}}',
             ]
         else:
-            lines += [
-                f'    set newReminder to make new reminder in jiraList with properties {{name:t, body:"{body}", completed:false}}',
-                f'    set recurrence of newReminder to "{RECURRENCE}"',
-            ]
+            lines.append(
+                f'    make new reminder in jiraList with properties {{name:t, body:"{body}", completed:false}}'
+            )
 
         lines.append("  end if")
 
