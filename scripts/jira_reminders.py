@@ -71,19 +71,21 @@ def jira_get(path: str) -> dict:
 
 
 def parse_jira_date(date_str: Optional[str]) -> Optional[datetime]:
-    """Accept 'YYYY-MM-DD' or 'YYYY-MM-DDTHH:MM:SS.mmm+ZZZZ'."""
     if not date_str:
         return None
-    for fmt in ("%Y-%m-%dT%H:%M:%S.%f%z", "%Y-%m-%d"):
+    for fmt in ("%Y-%m-%dT%H:%M:%S.%f%z", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d"):
         try:
-            return datetime.strptime(date_str[:len(fmt) + 5].strip(), fmt)
+            return datetime.strptime(date_str.strip(), fmt)
         except ValueError:
             continue
     return None
 
 
 def fmt_display(dt: Optional[datetime]) -> str:
-    return dt.strftime("%Y-%m-%d") if dt else "not set"
+    if not dt:
+        return "not set"
+    hour = dt.strftime("%I").lstrip("0") or "12"
+    return dt.strftime(f"%d/%b/%y {hour}:%M %p")
 
 
 def build_applescript(tickets: list[dict]) -> str:
@@ -125,7 +127,7 @@ def build_applescript(tickets: list[dict]) -> str:
                 f"    set year of dueDate to {y}",
                 f"    set month of dueDate to {mo}",
                 f"    set day of dueDate to {d}",
-                "    set time of dueDate to 28800",   # 08:00
+                "    set time of dueDate to 0",
                 f'    make new reminder in jiraList with properties {{name:t, body:"{body}", completed:false, due date:dueDate}}',
             ]
         else:
