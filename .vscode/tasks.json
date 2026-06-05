@@ -137,7 +137,7 @@
         "reveal": "always",
         "panel": "shared",
         "showReuseMessage": false,
-        "close": false
+        "close": true
       }
     },
     {
