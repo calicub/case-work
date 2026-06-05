@@ -75,7 +75,8 @@ def parse_jira_date(date_str: Optional[str]) -> Optional[datetime]:
         return None
     for fmt in ("%Y-%m-%dT%H:%M:%S.%f%z", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d"):
         try:
-            return datetime.strptime(date_str.strip(), fmt)
+            dt = datetime.strptime(date_str.strip(), fmt)
+            return dt.astimezone() if dt.tzinfo else dt
         except ValueError:
             continue
     return None
@@ -127,7 +128,7 @@ def build_applescript(tickets: list[dict]) -> str:
                 f"    set year of dueDate to {y}",
                 f"    set month of dueDate to {mo}",
                 f"    set day of dueDate to {d}",
-                "    set time of dueDate to 0",
+                "    set time of dueDate to 61200",
                 f'    make new reminder in jiraList with properties {{name:t, body:"{body}", completed:false, due date:dueDate}}',
             ]
         else:
