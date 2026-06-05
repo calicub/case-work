@@ -29,16 +29,16 @@ completed_tasks=$(osascript << OSEOF
 tell application "Reminders"
   if not (exists list "$LIST_NAME") then return ""
   set caseList to list "$LIST_NAME"
-  set result to ""
+  set output to ""
   set prefix to "[$CASE_NUM] "
   repeat with r in (reminders of caseList whose completed is true)
     set n to name of r
     if n starts with prefix then
       set taskName to text ((length of prefix) + 1) thru -1 of n
-      set result to result & taskName & "\n"
+      set output to output & taskName & "\n"
     end if
   end repeat
-  return result
+  return output
 end tell
 OSEOF
 )
