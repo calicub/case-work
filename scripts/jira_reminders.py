@@ -27,10 +27,7 @@ SERVER_URL = "https://Jira-url"   # Your on-prem Jira base URL (no trailing slas
 TOKEN      = "PAT"                 # Your Personal Access Token
 
 # --- JIRA QUERY ---
-JQL = (
-    'assignee = currentUser() AND type = Task AND component = "KB/Docs" '
-    'AND (status = Open OR status = "In Progress")'
-)
+JQL = 'assignee = currentUser() AND type = Task AND (status = Open OR status = "In Progress")'
 
 LIST_NAME  = "Jira Tasks"
 RECURRENCE = "FREQ=DAILY;INTERVAL=4"   # nudge every 4 days
