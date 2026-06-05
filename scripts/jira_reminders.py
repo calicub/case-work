@@ -15,19 +15,44 @@ Edit the CONFIGURATION block below before first run.
 """
 
 import json
+import os
 import subprocess
 import urllib.parse
 import urllib.request
 from datetime import datetime
+from pathlib import Path
 from typing import Optional
 from urllib.error import HTTPError, URLError
 
+
+def _load_env() -> None:
+    env_path = Path(__file__).parent.parent / ".env"
+    if not env_path.exists():
+        return
+    with open(env_path) as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            os.environ.setdefault(key.strip(), value.strip())
+
+_load_env()
+
 # --- CONFIGURATION ---
-SERVER_URL = "https://Jira-url"   # Your on-prem Jira base URL (no trailing slash)
-TOKEN      = "PAT"                 # Your Personal Access Token
+SERVER_URL = os.environ.get("JIRA_URL", "")
+TOKEN      = os.environ.get("JIRA_TOKEN", "")
+
+if not SERVER_URL or not TOKEN:
+    raise SystemExit(
+        "Missing config — copy .env.example to .env and fill in JIRA_URL, JIRA_TOKEN, and JIRA_JQL."
+    )
 
 # --- JIRA QUERY ---
-JQL = 'assignee = currentUser() AND type = Task AND (status = Open OR status = "In Progress")'
+JQL = os.environ.get(
+    "JIRA_JQL",
+    'assignee = currentUser() AND type = Task AND (status = Open OR status = "In Progress")',
+)
 
 LIST_NAME  = "Jira Tasks"
 RECURRENCE = "FREQ=DAILY;INTERVAL=4"   # nudge every 4 days

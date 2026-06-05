@@ -1,4 +1,5 @@
 .venv
+.env
 .claude
 .DS_store
 site

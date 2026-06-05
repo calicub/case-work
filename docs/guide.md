@@ -90,10 +90,16 @@ Open KB/Docs tasks assigned to you in Jira are automatically synced to the macOS
 ### First-time setup (once per machine)
 
 ```
-1. Open scripts/jira_reminders.py and fill in the two constants at the top:
+1. Copy the env template and fill in your details:
 
-      SERVER_URL = "https://your-jira-instance"
-      TOKEN      = "your-personal-access-token"
+      cp .env.example .env
+      # then open .env and set:
+      JIRA_URL=https://your-jira-instance
+      JIRA_TOKEN=your-personal-access-token
+      JIRA_JQL=assignee = currentUser() AND type = Task AND (status = Open OR status = "In Progress")
+
+   JIRA_JQL is optional — the default query above is used if you leave it out.
+   Adjust it if you want to filter by component, project, or other criteria.
 
 2. Ctrl+Shift+P → Run Task → ⏰ Install Jira Reminders Schedule
    You should see: ✅  Schedule installed.
@@ -101,8 +107,8 @@ Open KB/Docs tasks assigned to you in Jira are automatically synced to the macOS
 That's it — the schedule survives reboots and runs without VS Code open.
 ```
 
-!!! warning "Token is stored in plain text"
-    Do not commit `jira_reminders.py` with a real token in it. Either keep the file in `.gitignore` or use a local environment variable and read it with `os.environ["JIRA_TOKEN"]`.
+!!! warning ".env is gitignored"
+    `.env` is never committed. Each teammate creates their own copy from `.env.example`. Pulling updates will never overwrite it.
 
 ### What gets synced
 
