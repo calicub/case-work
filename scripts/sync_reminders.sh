@@ -21,7 +21,38 @@ fi
 CASE_NUM=$(grep -m1 '^case_number:' "$FILE" | sed 's/case_number:[[:space:]]*//')
 [[ -z "$CASE_NUM" ]] && exit 0
 
-# Parse ## ▶️ Next Action section
+CURRENT_YEAR=$(date +%Y)
+LIST_NAME="Case Actions"
+
+# Reverse sync: if a reminder for this case was completed in Reminders, mark it done in the note first.
+completed_tasks=$(osascript << OSEOF
+tell application "Reminders"
+  if not (exists list "$LIST_NAME") then return ""
+  set caseList to list "$LIST_NAME"
+  set result to ""
+  set prefix to "[$CASE_NUM] "
+  repeat with r in (reminders of caseList whose completed is true)
+    set n to name of r
+    if n starts with prefix then
+      set taskName to text ((length of prefix) + 1) thru -1 of n
+      set result to result & taskName & "\n"
+    end if
+  end repeat
+  return result
+end tell
+OSEOF
+)
+
+if [[ -n "$completed_tasks" ]]; then
+  while IFS= read -r task; do
+    [[ -z "$task" ]] && continue
+    # Match open checkbox lines whose text starts with this task name (ignoring trailing date annotations)
+    escaped=$(printf '%s\n' "$task" | sed 's/[][\.*^$(){}/|+?]/\\&/g')
+    sed -i '' "s/^\\(- \\[ \\] \\)\(${escaped}\)/- [x] \2/" "$FILE"
+  done <<< "$completed_tasks"
+fi
+
+# Parse ## ▶️ Next Action section (after reverse-sync edits above)
 IN_SECTION=0
 OPEN_TASKS=()
 OPEN_DATES=()
@@ -63,9 +94,6 @@ while IFS= read -r line; do
 done < "$FILE"
 
 [[ ${#OPEN_TASKS[@]} -eq 0 && ${#DONE_TASKS[@]} -eq 0 ]] && exit 0
-
-CURRENT_YEAR=$(date +%Y)
-LIST_NAME="Case Actions"
 
 # make_date_as <due_str>
 # Outputs AppleScript lines that set variable `dueDate` from a M/D or M/D-HH:MM string.
@@ -116,7 +144,7 @@ make_date_as() {
 
     echo "  set t to \"$title\""
     echo "  set taskExists to false"
-    echo "  repeat with r in (reminders of caseList whose completed is false)"
+    echo "  repeat with r in (reminders of caseList)"
     echo "    if name of r is t then set taskExists to true"
     echo "  end repeat"
     echo "  if not taskExists then"
