@@ -48,7 +48,7 @@ if [[ -n "$completed_tasks" ]]; then
     [[ -z "$task" ]] && continue
     # Match open checkbox lines whose text starts with this task name (ignoring trailing date annotations)
     escaped=$(printf '%s\n' "$task" | sed 's/[][\.*^$(){}/|+?]/\\&/g')
-    sed -i '' "s/^\\(- \\[ \\] \\)\(${escaped}\)/- [x] \2/" "$FILE"
+    sed -i '' "s/^\\([[:space:]]*\\)- \\[ \\] \\(${escaped}\\)/\1- [x] \2/" "$FILE"
   done <<< "$completed_tasks"
 fi
 
