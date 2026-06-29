@@ -23,7 +23,7 @@
     {
       "label": "🖥️ Start Session Log",
       "type": "shell",
-      "command": "case_number=$(grep -m1 '^case_number:' '${file}' | sed 's/^case_number:[[:space:]]*//' | tr -d '\\r') && mkdir -p '${workspaceFolder}/docs/assets/files' && script -q '${workspaceFolder}/docs/assets/files/'\"${case_number}\"-terminal-session-$(date +%Y-%m-%d).txt && ${workspaceFolder}/.venv/bin/python3 '${workspaceFolder}/scripts/insert_files.py' '${file}'",
+      "command": "case_number=$(grep -m1 '^case_number:' '${file}' | sed 's/^case_number:[[:space:]]*//' | tr -d '\\r') && mkdir -p '${workspaceFolder}/docs/assets/files' && script -q '${workspaceFolder}/docs/assets/files/'\"${case_number}\"-terminal-session-$(date +%Y-%m-%d).txt && ${workspaceFolder}/.venv/bin/python3 '${workspaceFolder}/scripts/insert_assets.py' '${file}' --files",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -83,7 +83,7 @@
     {
       "label": "📎 Insert Customer Files",
       "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python3 scripts/insert_files.py '${file}'",
+      "command": "${workspaceFolder}/.venv/bin/python3 scripts/insert_assets.py '${file}' --files",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -98,7 +98,7 @@
     {
       "label": "📸 Insert Screenshots",
       "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python3 scripts/insert_screenshots.py '${file}'",
+      "command": "${workspaceFolder}/.venv/bin/python3 scripts/insert_assets.py '${file}' --screenshots",
       "options": {
         "cwd": "${workspaceFolder}"
       },
