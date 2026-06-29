@@ -24,8 +24,8 @@ Keep this tab open in your browser while working in VS Code.
 | Task | How to run | What it does |
 |------|-----------|--------------|
 | **Rebuild Dashboards** | `Ctrl+Shift+B` | Regenerates `dashboard.md` and all four section tables from your note frontmatter |
-| **📎 Insert Customer Files** | `Ctrl+Shift+P` → Run Task | Finds files at workspace root matching the case number, moves them to `docs/assets/files/`, inserts links into `## 📎 Customer Files` |
-| **📸 Insert Screenshots** | `Ctrl+Shift+P` → Run Task | Finds screenshots at workspace root matching the case number, moves them to `docs/assets/screenshots/`, inserts image blocks into `## 📸 Screenshots` |
+| **📎 Insert Customer Files** | `Ctrl+Shift+P` → Run Task | Finds files at workspace root matching the case number, moves them to `docs/assets/files/`, inserts links into `## 📎 Customer Files` — also runs automatically on save |
+| **📸 Insert Screenshots** | `Ctrl+Shift+P` → Run Task | Finds screenshots at workspace root matching the case number, moves them to `docs/assets/screenshots/`, inserts image blocks into `## 📸 Screenshots` — also runs automatically on save |
 | **📌 Append Terminal Block** | `Ctrl+Shift+;` | Reads clipboard and appends a timestamped code block to **🛠️ Steps Taken** in the active case note |
 | **🖥️ Start Session Log** | `Ctrl+Shift+P` → Run Task | Starts a `script` recording session — saves everything to `docs/assets/files/casenumber-terminal-session-date.txt` |
 | **📋 Copy Support Notes (Salesforce)** | `Ctrl+Shift+P` → Run Task | Converts the Remote Support Note at the cursor to Salesforce plain text and copies it to clipboard |
@@ -33,6 +33,7 @@ Keep this tab open in your browser while working in VS Code.
 | **📙 Zensical** | `Ctrl+Shift+P` → Run Task | Starts local server at `http://127.0.0.1:8000` — run once per session, leave it open |
 | **🛑 Stop Zensical** | `Ctrl+Shift+P` → Run Task | Kills the Zensical server process |
 | **🔔 Sync to Reminders** | Auto on `Cmd+S` | Pushes `▶️ Next Action` tasks to the macOS Reminders "Case Actions" list — active and followup only |
+| **📎📸 Insert Assets** | Auto on `Cmd+S` | Runs on every save — picks up any matching files and screenshots at the workspace root and inserts them into the note |
 | **⏰ Install Jira Reminders Schedule** | `Ctrl+Shift+P` → Run Task | One-time setup — installs a background schedule that syncs Jira KB/Docs tasks to Reminders at 09:30 and 12:30 daily |
 | **🔄 Run Jira Reminders Now** | `Ctrl+Shift+P` → Run Task | Manually triggers the Jira → Reminders sync without waiting for the schedule |
 
@@ -344,15 +345,16 @@ The **🏷️ Tags** page in the nav aggregates every tagged note across the who
       123456 - export.csv
       123456 - config.md
 
-2. Focus the case note tab in VS Code
+2. Focus the case note tab in VS Code and save (Cmd+S)
 
-3. Ctrl+Shift+P → Run Task → 📎 Insert Customer Files
+   → Files are picked up and inserted automatically.
+   → Or run manually: Ctrl+Shift+P → Run Task → 📎 Insert Customer Files
 
-4. Script moves the file to docs/assets/files/ and writes this into the note:
+3. Script moves the file to docs/assets/files/ and writes this into the note:
 
       [123456 - export.csv](../../assets/files/123456-export.csv)
 
-5. Ctrl+Shift+B → rebuild dashboards → browser auto-reloads
+4. Ctrl+Shift+B → rebuild dashboards → browser auto-reloads
 ```
 
 ---
@@ -383,7 +385,8 @@ Type any prefix in a markdown file and select from the suggestion list (`Ctrl+Sp
 | `kbi` | Keyboard Key | `<kbd>key</kbd>` inline tag |
 | `casedesc` | Case Description | Quote admonition block for pasting the Salesforce case description |
 | `remotenote` | Remote Support Notes | Full remote support session block with via · attendees · details · action plan |
-| `codeblock` | Code Block with Title | Fenced code block with language and title bar — tab stops: language → title → body |
+| `cbl` | Code Block (Log) | Titled fenced code block — cursor lands in title, Tab moves to body |
+| `cby` | Code Block (YAML) | Same as `cbl` with `yaml` language tag |
 
 !!! tip "Log file language"
     Use `log` or `text` as the language for log snippets — both skip syntax highlighting. `log` may subtly colorize timestamps and error levels depending on the theme.
@@ -470,18 +473,19 @@ Zensical renders them as inline SVGs — they scale with text and respect the cu
 1. Take screenshot → Automator renames it:  123456 - description.png
                                              saved to case-work/ root
 
-2. Focus the case note tab in VS Code
+2. Focus the case note tab in VS Code and save (Cmd+S)
 
-3. Ctrl+Shift+P → Run Task → 📸 Insert Screenshots
+   → Screenshots are picked up and inserted automatically.
+   → Or run manually: Ctrl+Shift+P → Run Task → 📸 Insert Screenshots
 
-4. Script moves image to docs/assets/screenshots/ and writes this into the note:
+3. Script moves image to docs/assets/screenshots/ and writes this into the note:
 
    ![123456 - description](../../assets/screenshots/123456-description.png){ loading=lazy }
    /// caption
    123456 - description
    ///
 
-5. Ctrl+Shift+B → rebuild dashboards → browser auto-reloads
+4. Ctrl+Shift+B → rebuild dashboards → browser auto-reloads
 ```
 
 ---
@@ -526,8 +530,7 @@ case-work/
 │   └── case-work.code-snippets          ← workspace snippets (remotenote, casedesc, etc.)
 ├── scripts/
 │   ├── dashboard.py                     ← regenerates all dashboards and index pages
-│   ├── insert_screenshots.py            ← moves & inserts screenshots into case notes
-│   ├── insert_files.py                  ← moves & inserts customer files into case notes
+│   ├── insert_assets.py                 ← moves & inserts screenshots and files into case notes (runs on save)
 │   ├── append_terminal_block.py         ← appends clipboard as timestamped code block
 │   ├── copy_salesforce_notes.py         ← converts remote support note to Salesforce plain text
 │   ├── copy_remote_steps.py             ← copies steps performed from remote support note to clipboard
@@ -592,5 +595,5 @@ Foam supports both `[[wikilinks]]` and standard `[text](path)` markdown links �
 
 - **`zensical.toml`** — Zensical's config is TOML, not the YAML `mkdocs.yml` used by plain MkDocs
 - **Files outside `docs/`** — not served by Zensical; always create case notes via the Foam template so they land in the right folder
-- **Screenshots outside `docs/`** — not served; the Insert Screenshots task moves them to `docs/assets/screenshots/` automatically
+- **Screenshots and files outside `docs/`** — not served by Zensical; drop them at the workspace root prefixed with the case number and they will be moved to `docs/assets/` automatically on the next save
 - **`${file}` in tasks** — always refers to the active VS Code editor tab, not the last-saved file
