@@ -27,6 +27,16 @@ created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUT
 
     ## 🔄 Follow-up
 
+    ## 🖥️ Environment Details
+
+    ??? info
+
+        **System Name:** N/A  
+        **System ID:** N/A  
+        **Product Version:** N/A  
+        **Component Versions:** N/A  
+        **Remote Access:** N/A
+
     ## 🛠️ Steps Taken
 
 === "📎 Customer Files"
