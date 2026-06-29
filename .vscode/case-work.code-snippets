@@ -29,6 +29,24 @@
     ],
     "description": "Insert case description admonition"
   },
+  "Code Block (Log)": {
+    "prefix": "cbl",
+    "body": [
+      "``` title=\"$1\"",
+      "$2",
+      "```"
+    ],
+    "description": "Insert a titled code block (default, for log entries)"
+  },
+  "Code Block (YAML)": {
+    "prefix": "cby",
+    "body": [
+      "```yaml title=\"$1\"",
+      "$2",
+      "```"
+    ],
+    "description": "Insert a titled YAML code block"
+  },
   "Remote Support Notes": {
     "prefix": "remotenote",
     "body": [
