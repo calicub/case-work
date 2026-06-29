@@ -90,12 +90,28 @@ def fmt_display(dt: Optional[datetime]) -> str:
 
 
 def build_applescript(tickets: list[dict]) -> str:
+    # Build an AppleScript list literal of active ticket keys e.g. {"KB-1", "KB-2"}
+    key_list = "{" + ", ".join(f'"{t["key"]}"' for t in tickets) + "}"
+
     lines = [
         'tell application "Reminders"',
         f'  if not (exists list "{LIST_NAME}") then',
         f'    make new list with properties {{name:"{LIST_NAME}"}}',
         "  end if",
         f'  set jiraList to list "{LIST_NAME}"',
+        "",
+        "  -- Mark complete any reminder whose Jira ticket is no longer open",
+        f"  set activeKeys to {key_list}",
+        "  repeat with r in (reminders of jiraList whose completed is false)",
+        "    set rName to name of r",
+        "    set isActive to false",
+        "    repeat with k in activeKeys",
+        '      if rName starts with ("[" & k & "]") then set isActive to true',
+        "    end repeat",
+        "    if not isActive then set completed of r to true",
+        "  end repeat",
+        "",
+        "  -- Create reminders for open tickets that don't already have one",
     ]
 
     for t in tickets:
