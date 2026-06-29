@@ -19,6 +19,19 @@ Keep this tab open in your browser while working in VS Code.
 
 ---
 
+## 🗂️ Workspaces
+
+Two `.code-workspace` files live in `.vscode/` — open them with **File → Open Workspace from File**.
+
+| File | Name | Shows |
+|------|------|-------|
+| `case-work-dev.code-workspace` | 📝 Notes (Dev Mode) | Everything — full project tree |
+| `case-work-view.code-workspace` | 📖 Case-work (Read/Edit) | `.vscode/` · `docs/assets/` · `docs/cases/` · `docs/meetings/` · `docs/pkb/` · `docs/guide.md` · `docs/tags.md` |
+
+The view workspace hides generated dashboards, config files, scripts, and other non-note content so the Explorer stays focused on case work.
+
+---
+
 ## ⌨️ Task Shortcuts
 
 | Task | How to run | What it does |
