@@ -41,7 +41,20 @@
       "comments": false,
       "strings": false
     },
+    "editor.formatOnSave": true,
     "editor.snippetSuggestions": "top",
     "editor.wordBasedSuggestions": "off"
+  },
+  "files.exclude": {
+    "docs/guide.md": true,
+    "docs/assets/stylesheets": true,
+    "docs/dashboards": true,
+    "docs/javascripts": true,
+    "docs/stylesheets": true,
+    "docs/index.md": true,
+    "docs/dashboard.md": true,
+    "docs/meetings.md": true,
+    "docs/pkb.md": true,
+    "docs/markdown.md": true
   }
 }

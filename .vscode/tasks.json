@@ -111,6 +111,21 @@
       }
     },
     {
+      "label": "🔁 Toggle File Visibility",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python3 scripts/toggle_view.py",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": true
+      }
+    },
+    {
       "label": "⏰ Install Jira Reminders Schedule",
       "type": "shell",
       "command": "zsh '${workspaceFolder}/setup/install_schedule.sh'",
