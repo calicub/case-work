@@ -33,10 +33,22 @@ def read_env():
     return result
 
 
-env = read_env()
-hide = env.get("HIDE_CLUTTER", "true").lower() not in ("false", "0", "no")
-
 settings = json.loads(SETTINGS.read_text())
+
+# Detect current state from settings.json and flip it
+currently_hidden = bool(settings.get("files.exclude"))
+hide = not currently_hidden
+
 settings["files.exclude"] = HIDDEN if hide else {}
 SETTINGS.write_text(json.dumps(settings, indent=2) + "\n")
+
+# Persist the new state to .env
+env_lines = []
+if ENV_FILE.exists():
+    for line in ENV_FILE.read_text().splitlines():
+        if not line.strip().startswith("HIDE_CLUTTER"):
+            env_lines.append(line)
+env_lines.append(f'HIDE_CLUTTER={"true" if hide else "false"}')
+ENV_FILE.write_text("\n".join(env_lines) + "\n")
+
 print(f"  HIDE_CLUTTER={str(hide).lower()} → files.exclude {'applied' if hide else 'cleared'}")
