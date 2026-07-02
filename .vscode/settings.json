@@ -28,7 +28,7 @@
       },
       {
         "match": "docs/cases/(active|followup|archive)/.+\\.md$",
-        "cmd": "${workspaceFolder}/.venv/bin/python3 ${workspaceFolder}/scripts/insert_assets.py ${file}"
+        "cmd": "/usr/bin/python3 ${workspaceFolder}/scripts/insert_assets.py ${file}"
       }
     ]
   },
