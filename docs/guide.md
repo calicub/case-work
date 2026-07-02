@@ -49,7 +49,7 @@ The view workspace hides generated dashboards, config files, scripts, and other 
 | **📎📸 Insert Assets** | Auto on `Cmd+S` | Runs on every save — picks up any matching files and screenshots at the workspace root and inserts them into the note |
 | **⏰ Install Jira Reminders Schedule** | `Ctrl+Shift+P` → Run Task | One-time setup — installs a background schedule that syncs Jira KB/Docs tasks to Reminders at 09:30 and 12:30 daily |
 | **🔄 Run Jira Reminders Now** | `Ctrl+Shift+P` → Run Task | Manually triggers the Jira → Reminders sync without waiting for the schedule |
-| **🔁 Toggle File Visibility** | `Ctrl+Shift+P` → Run Task | Alternates the Explorer between focused view (hides dashboards, stylesheets, config files) and full view (shows everything) — state is saved to `.env` so it persists across sessions |
+| **🔁 Toggle File Visibility** | `Ctrl+Shift+P` → Run Task | Alternates the Explorer between focused view (hides dashboards, stylesheets, config files) and full view (shows everything) — state is saved to `.env` so it persists across sessions; the exclusion list is also saved to `.env` as `FILES_EXCLUDE`, so edits made to `files.exclude` in `settings.json` are preserved across toggles |
 
 !!! warning "Active tab tip"
     The **case note tab must be focused** in VS Code (not the terminal) when running Insert Screenshots, Insert Customer Files, Copy Support Notes, or Append Terminal Block — VS Code passes whichever file is currently active.

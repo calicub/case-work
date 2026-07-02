@@ -45,5 +45,26 @@
     "editor.snippetSuggestions": "top",
     "editor.wordBasedSuggestions": "off"
   },
-  "files.exclude": {}
+  "files.exclude": {
+    ".cache": true,
+    ".claude": true,
+    ".foam": true,
+    ".venv": true,
+    "docs/guide.md": true,
+    "docs/assets/stylesheets": true,
+    "docs/assets/images": true,
+    "docs/dashboards": true,
+    "docs/javascripts": true,
+    "docs/index.md": true,
+    "docs/dashboard.md": true,
+    "docs/meetings.md": true,
+    "docs/pkb.md": true,
+    "overrides": true,
+    "scripts": true,
+    "setup": true,
+    "site": true,
+    ".env.example": true,
+    ".gitignore": true,
+    "zensical.toml": true
+  }
 }
