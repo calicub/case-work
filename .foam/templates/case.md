@@ -21,7 +21,9 @@ created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUT
 
     !!! quote "Case Description"
 
+        ```text
         ${5:Describe the issue}
+        ```
 
     ## 🔔 Next Action
 
