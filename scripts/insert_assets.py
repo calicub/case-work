@@ -157,13 +157,14 @@ def move_screenshots(screenshots):
 
 
 def build_image_block(images):
+    # No wrapping anchor on the <img> — the glightbox plugin (zensical.toml)
+    # auto-wraps every image in a `.glightbox` anchor at build time.
     lines = [f'    <div style="{GRID_STYLE}">']
     for img in images:
         encoded = quote(img.name)
         lines.append(
             f'    <figure style="margin:0">'
-            f'<a href="../../assets/screenshots/{encoded}" target="_blank">'
-            f'<img src="../../assets/screenshots/{encoded}" loading="lazy" alt="{img.stem}" style="{IMG_STYLE}"></a>'
+            f'<img src="../../assets/screenshots/{encoded}" loading="lazy" alt="{img.stem}" style="{IMG_STYLE}">'
             f'<figcaption style="{CAP_STYLE}">{img.stem}</figcaption></figure>'
         )
     lines.append("    </div>")

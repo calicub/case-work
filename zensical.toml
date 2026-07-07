@@ -62,7 +62,11 @@ nav = [
 #
 # Read more: https://zensical.org/docs/customization/#additional-css
 #
-extra_css = ["assets/stylesheets/extra.css"]
+extra_css = [
+  "assets/stylesheets/extra.css",
+  # Self-hosted GLightbox CSS — see note on extra_javascript below.
+  "assets/stylesheets/vendor/glightbox.min.css",
+]
 
 # With the `extra_javascript` option you can add your own JavaScript to your
 # project to customize the behavior according to your needs.
@@ -70,12 +74,29 @@ extra_css = ["assets/stylesheets/extra.css"]
 # The path provided should be relative to the "docs_dir".
 #
 # Read more: https://zensical.org/docs/customization/#additional-javascript
+#
+# tablesort.min.js and glightbox.min.js are vendored locally (docs/javascripts/vendor/)
+# instead of loaded from unpkg.com. Zensical's built-in tablesort/glightbox
+# integrations otherwise lazy-fetch those libraries from unpkg at click/runtime,
+# which silently fails with no error and no popup/sort if that CDN is unreachable
+# (e.g. on a restricted corporate network). Predefining `window.Tablesort` /
+# `window.GLightbox` via the local copies makes the theme skip that fetch.
 extra_javascript = [
   "javascripts/tabs.js",
   "javascripts/print-button.js",
-  "https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js",
+  "javascripts/vendor/tablesort.min.js",
   "javascripts/tablesort.js",
+  "javascripts/vendor/glightbox.min.js",
+  # Sets window.GLightboxOptions (loop: true) so Next/Prev wraps around
+  # endlessly through a case's screenshots instead of stopping at the ends.
+  "javascripts/glightbox-options.js",
 ]
+
+# GLightbox gives images a click-to-zoom lightbox popup. Applies to all
+# markdown images by default (no extra syntax needed in case notes).
+#
+# Read more: https://zensical.org/docs/authoring/images/#adding-a-lightbox
+[project.plugins.glightbox]
 
 # ----------------------------------------------------------------------------
 # Section for configuring theme options

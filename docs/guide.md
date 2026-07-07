@@ -502,6 +502,15 @@ Zensical renders them as inline SVGs — they scale with text and respect the cu
 4. Ctrl+Shift+B → rebuild dashboards → browser auto-reloads
 ```
 
+!!! tip "Click to zoom"
+    Click any screenshot thumbnail to open it full-size in a lightbox overlay. Once open, click or scroll on the image to zoom into fine detail, and use Next/Prev (or arrow keys) to page through every screenshot on the note — navigation loops endlessly, so you never hit a dead end at the first or last image.
+
+---
+
+## 🔽 Sortable Tables
+
+Any table in a note or dashboard can be sorted by clicking a column header — click again to reverse the order. This applies everywhere, including the auto-generated dashboard tables.
+
 ---
 
 ## 📊 Dashboard Rules
