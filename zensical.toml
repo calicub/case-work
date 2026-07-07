@@ -70,7 +70,12 @@ extra_css = ["assets/stylesheets/extra.css"]
 # The path provided should be relative to the "docs_dir".
 #
 # Read more: https://zensical.org/docs/customization/#additional-javascript
-extra_javascript = ["javascripts/tabs.js", "javascripts/print-button.js"]
+extra_javascript = [
+  "javascripts/tabs.js",
+  "javascripts/print-button.js",
+  "https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js",
+  "javascripts/tablesort.js",
+]
 
 # ----------------------------------------------------------------------------
 # Section for configuring theme options

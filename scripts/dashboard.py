@@ -10,8 +10,8 @@ BASE = Path(__file__).parent.parent / "docs"
 PRIORITY_RANK = {"P1": 0, "P2": 1, "P3": 2, "P4": 3}
 
 CASE_HEADER = (
-    "| Priority | Case # | Customer | Status | Note |\n"
-    "|----------|--------|----------|--------|------|\n"
+    "| Priority | Case # | Customer | Status | Note | Created |\n"
+    "|----------|--------|----------|--------|------|---------|\n"
 )
 
 def parse_frontmatter(path):
@@ -45,6 +45,16 @@ def priority_key(entry):
     return PRIORITY_RANK.get(entry.get("priority", ""), 9)
 
 
+def format_created_date(created):
+    if not created:
+        return "—"
+    date_part = created.split(" ")[0]
+    try:
+        return datetime.strptime(date_part, "%Y-%m-%d").strftime("%m-%d-%y")
+    except ValueError:
+        return created
+
+
 def case_rows(section, link_prefix="../", sort="priority"):
     folder = BASE / section
     if not folder.exists():
@@ -65,7 +75,7 @@ def case_rows(section, link_prefix="../", sort="priority"):
         link = f"[{num}]({link_prefix}{section}/{e['_file']})"
         rows.append(
             f"| {e.get('priority','—')} | {link} | {e.get('customer','—')} "
-            f"| {e.get('status','—')} | {e.get('note','—')} |"
+            f"| {e.get('status','—')} | {e.get('note','—')} | {format_created_date(e.get('created'))} |"
         )
     return rows
 
