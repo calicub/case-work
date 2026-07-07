@@ -32,6 +32,7 @@
       }
     ]
   },
+  "python.terminal.activateEnvironment": false,
   "editor.tabSize": 2,
   "terminal.integrated.scrollback": 10000,
   "explorer.autoReveal": false,
