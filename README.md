@@ -36,7 +36,9 @@ cd ~/case-work
 ./install.sh
 ```
 
-The installer asks before installing anything. It sets up Homebrew Python, VS Code and its extensions, the project's Python environment and your local config, then builds the site and opens VS Code. It's safe to run again, and `./install.sh --upgrade` updates everything later. Step-by-step manual instructions are in [docs/setup.md](docs/setup.md).
+The installer is the easy way to get started. If you're not comfortable running a script, follow the manual steps in [docs/setup.md](docs/setup.md) instead; they set up the same things.
+
+The installer asks before installing anything. It sets up Homebrew Python, VS Code and its extensions, the project's Python environment and your local config, then builds the site and opens VS Code. It's safe to run again, and `./install.sh --upgrade` updates everything later.
 
 Then in VS Code:
 

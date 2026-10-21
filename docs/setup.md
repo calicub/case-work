@@ -11,7 +11,7 @@ icon: lucide/wrench
 
 ## ⚡ Quick Setup (Recommended)
 
-The installer does almost everything for you.
+The installer is the easy way to start using Case Work: it does almost everything for you. If you'd rather not run a script, follow the [Manual Setup](#manual-setup) steps below instead. They set up exactly the same things, one at a time.
 
 **1. Get the project.** Open Terminal and run:
 
@@ -199,21 +199,21 @@ The workspace settings already point VS Code at `.venv/bin/python3`, so there's 
 
 ### 8. Initialize the Foam Workspace
 
-Foam needs VS Code opened on the workspace file, not just the folder, so the project settings, tasks and templates load.
+Open the `case-work` folder itself in VS Code. Foam, the tasks and the on-save hooks all load from its `.vscode/` folder.
 
-1. Create your VS Code settings, then open the workspace:
+1. Create your VS Code settings, then open the folder:
 
     ```bash
     cd ~/case-work
     .venv/bin/python3 scripts/sync_settings.py
-    code .vscode/case-work.code-workspace
+    code .
     ```
 
     **What the first command does:** Creates `.vscode/settings.json` from the tracked defaults in `.vscode/settings.default.json`. Your `settings.json` is gitignored, so VS Code prompts, the Toggle File Visibility task and your own tweaks never block `git pull`. Each dashboard rebuild adds any new default settings from future updates and leaves your changes alone.
 
-    Or in VS Code: **File → Open Workspace from File…** → `.vscode/case-work.code-workspace`.
+    Or in VS Code: **File → Open Folder…** → `case-work`.
 
-    **What it does:** Opens the repo root as a single workspace (the file points one level up from `.vscode/`) with the settings in `.vscode/settings.json` applied.
+    **What `code .` does:** Opens the project folder with the settings in `.vscode/settings.json` applied.
 
 2. When VS Code asks **"Do you trust the authors of the files in this folder?"**, choose **Yes, I trust the authors**. Tasks, Run on Save and the Python interpreter are disabled in Restricted Mode.
 
@@ -240,7 +240,7 @@ Foam needs VS Code opened on the workspace file, not just the folder, so the pro
 5. Optional: set your PKB tabs in `pkb-categories.yaml` now. See [Guide → Customizing PKB Tabs](guide.md#customizing-pkb-tabs).
 
 !!! tip "Reopening later"
-    VS Code lists the workspace under **File → Open Recent** as `case-work (Workspace)`. Always open that entry rather than the plain folder.
+    Use **File → Open Recent** → `~/case-work`, or run `code ~/case-work`. Open the `case-work` folder itself, not its parent or a subfolder, or the settings, tasks and on-save hooks won't load.
 
 ### 9. Verify Everything Works
 

@@ -170,5 +170,5 @@ cat <<EOF
 EOF
 
 if $OPEN && [[ -n "$CODE" && -x "$CODE" ]]; then
-  "$CODE" "$REPO/.vscode/case-work.code-workspace"
+  "$CODE" "$REPO"
 fi

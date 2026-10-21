@@ -21,7 +21,7 @@ Keep this tab open in your browser while working in VS Code.
 
 ## 🗂️ Workspace
 
-Open the project through `.vscode/case-work.code-workspace` (**File → Open Workspace from File**). See [Setup → Initialize the Foam Workspace](setup.md#8-initialize-the-foam-workspace) for first-time steps.
+Open the `case-work` folder itself in VS Code (**File → Open Folder…** or `code ~/case-work`). See [Setup → Initialize the Foam Workspace](setup.md#8-initialize-the-foam-workspace) for first-time steps.
 
 Use the **🔁 Toggle File Visibility** task to switch the Explorer between a focused view (notes only) and the full project tree.
 
@@ -604,7 +604,6 @@ case-work/
 │       ├── pkb.md                       ← PKB Note: topic overview (KBs, tickets, Confluence, docs)
 │       └── kb-article.md                ← KB Article: one specific issue for a topic or product
 ├── .vscode/
-│   ├── case-work.code-workspace         ← open this to start the Foam workspace
 │   ├── settings.default.json            ← default Foam/editor settings (tracked)
 │   ├── settings.json                    ← your copy, created from the defaults (gitignored)
 │   ├── tasks.json                       ← all Ctrl+Shift+P runnable tasks
