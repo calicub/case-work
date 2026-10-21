@@ -588,6 +588,8 @@ Rebuild dashboards after: creating a note · editing frontmatter · archiving a 
 
 ```
 case-work/
+├── install.sh                           ← one-step installer (./install.sh --help)
+├── requirements.txt                     ← Python packages for .venv (Zensical)
 ├── zensical.toml                        ← site config (TOML — not mkdocs.yml)
 ├── pkb-categories.yaml                  ← Knowledge Base tabs (see Customizing PKB Tabs)
 ├── overrides/                           ← Zensical theme overrides
@@ -655,7 +657,7 @@ case-work/
 # Tasks use the full path: .venv/bin/zensical and .venv/bin/python3
 
 # To upgrade Zensical:
-.venv/bin/pip install --upgrade zensical
+.venv/bin/pip install --upgrade -r requirements.txt   # or: ./install.sh --upgrade
 
 # Check current version:
 .venv/bin/zensical --version

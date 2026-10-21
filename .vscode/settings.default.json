@@ -30,6 +30,7 @@
     ]
   },
   "python.terminal.activateEnvironment": false,
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python3",
   "python.envFile": "",
   "editor.tabSize": 2,
   "terminal.integrated.scrollback": 10000,

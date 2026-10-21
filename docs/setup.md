@@ -6,12 +6,53 @@ icon: lucide/wrench
 
 ---
 
-## 🚀 Initial Setup (New Machine)
-
-Step-by-step setup for a fresh macOS install.
-
 !!! info "Reading this guide"
     Before the site is running, read this page on GitHub or in VS Code's Markdown preview (`Cmd+Shift+V`). Once it's running, the same page is under **Setup** in the site's top navigation.
+
+## ⚡ Quick Setup (Recommended)
+
+The installer does almost everything for you.
+
+**1. Get the project.** Open Terminal and run:
+
+```bash
+git clone https://github.com/calicub/case-work.git ~/case-work
+```
+
+If macOS says `git` needs the **command line developer tools**, click **Install**, wait for it to finish, then run the command again.
+
+**2. Run the installer:**
+
+```bash
+cd ~/case-work
+./install.sh
+```
+
+**What it does:** It asks before installing anything, then:
+
+- installs Homebrew, Homebrew's Python and VS Code if they're missing;
+- installs the Foam, Python and Run on Save extensions;
+- builds the project's Python environment (`.venv`) with Zensical;
+- creates your `.env` and `.vscode/settings.json`;
+- builds the site and opens the workspace in VS Code.
+
+It's safe to run again: finished steps are skipped and a broken `.venv` is rebuilt.
+
+**Success looks like:** Every step shows a ✓, and the output ends with `==> Done`.
+
+**3. Finish in VS Code** (the installer opens it):
+
+1. Click **Yes, I trust the authors**.
+2. `Cmd+Shift+P` → **Tasks: Run Task** → **🟢 Start Zensical**, then open <http://127.0.0.1:8000>.
+3. Using the Reminders sync? Open a case note, run **🔔 Sync Reminders Now** once, and click **Allow** when macOS asks.
+
+To update later, run `./install.sh --upgrade` from the `case-work/` root. Run `./install.sh --help` for all options.
+
+---
+
+## 🛠️ Manual Setup
+
+The same steps the installer runs, one at a time. Use these if the installer stops on an error, or if you want to see exactly what's set up.
 
 ### 1. Install Homebrew
 
@@ -83,7 +124,7 @@ Install the extensions this workspace uses (`Cmd+Shift+X` → search the ID → 
 `git clone` always creates a subfolder named after the repo inside the current directory. To put the workspace exactly where you want it, pass the target path as the second argument:
 
 ```bash
-git clone <repo-url> ~/case-work
+git clone https://github.com/calicub/case-work.git ~/case-work
 ```
 
 !!! warning "Don't nest the folder"
@@ -129,7 +170,7 @@ source .venv/bin/activate
 With the virtual environment active:
 
 ```bash
-pip install zensical
+pip install -r requirements.txt
 ```
 
 **What it does:** Downloads Zensical (the site generator) and its dependencies into `.venv`.
@@ -152,9 +193,9 @@ deactivate
 
 ### 7. Set the VS Code Python Interpreter
 
-`Ctrl+Shift+P` → **Python: Select Interpreter** → choose `.venv/bin/python3` (it will show the workspace `.venv` path).
+The workspace settings already point VS Code at `.venv/bin/python3`, so there's usually nothing to do here. If the status bar shows a different Python, or VS Code asks, choose the workspace `.venv`:
 
-This ensures all tasks and scripts use the project virtual environment automatically.
+`Ctrl+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`
 
 ### 8. Initialize the Foam Workspace
 
@@ -231,6 +272,9 @@ To check the same things from a terminal at the `case-work/` root (no activation
 
 ## 🔄 Upgrading
 
+!!! tip "One command"
+    `./install.sh --upgrade` from the `case-work/` root upgrades Zensical and the VS Code extensions, and repairs anything missing. The sections below cover upgrading each piece by hand.
+
 ### Homebrew
 
 Update Homebrew itself and all installed formulae:
@@ -259,7 +303,7 @@ brew upgrade python
     rm -rf .venv
     /opt/homebrew/bin/python3 -m venv .venv
     source .venv/bin/activate
-    pip install zensical
+    pip install -r requirements.txt
     deactivate
     ```
     Then re-point VS Code: `Ctrl+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`.
@@ -269,7 +313,7 @@ brew upgrade python
 Upgrade Zensical inside the project virtual environment:
 
 ```bash
-.venv/bin/pip install --upgrade zensical
+.venv/bin/pip install --upgrade -r requirements.txt
 ```
 
 No need to activate the venv first — the full path is enough.
@@ -292,7 +336,7 @@ Or update all extensions at once:
 
 ## Troubleshooting
 
-### `pip install zensical` fails, or `.venv` looks broken
+### `pip install` fails, or `.venv` looks broken
 
 **Cause:** The `.venv` was built on the wrong Python (usually Apple's 3.9.x from the Command Line Tools), or it was restored from a backup/older machine. A venv is tied to the Python that created it.
 
@@ -307,7 +351,7 @@ If `home` is not `/opt/homebrew/...`, rebuild it. `.venv` is gitignored, so noth
 ```bash
 rm -rf .venv
 /opt/homebrew/bin/python3 -m venv .venv
-.venv/bin/pip install zensical
+.venv/bin/pip install -r requirements.txt
 .venv/bin/zensical --version
 ```
 

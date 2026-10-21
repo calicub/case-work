@@ -26,22 +26,17 @@ Everything lives in plain Markdown files on your machine. There is no server, da
 ## Requirements
 
 - macOS (the Reminders sync, scheduler and clipboard helpers use macOS tools; the rest works anywhere VS Code and Python run)
-- Python 3 from Homebrew
-- VS Code with the Foam, Python and Run on Save extensions
+- Everything else (Homebrew, Python, VS Code and its extensions) is installed by `./install.sh`
 
 ## Quick start
 
-> **Setup guide:** [docs/setup.md](docs/setup.md) has the full step-by-step walkthrough.
-
 ```bash
-git clone <repo-url> ~/case-work
+git clone https://github.com/calicub/case-work.git ~/case-work
 cd ~/case-work
-/opt/homebrew/bin/python3 -m venv .venv
-.venv/bin/pip install zensical
-cp .env.example .env
-.venv/bin/python3 scripts/sync_settings.py
-code .vscode/case-work.code-workspace
+./install.sh
 ```
+
+The installer asks before installing anything. It sets up Homebrew Python, VS Code and its extensions, the project's Python environment and your local config, then builds the site and opens VS Code. It's safe to run again, and `./install.sh --upgrade` updates everything later. Step-by-step manual instructions are in [docs/setup.md](docs/setup.md).
 
 Then in VS Code:
 
