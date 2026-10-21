@@ -22,7 +22,7 @@ site_description = "A place to store and view all case work."
 # The site_author attribute. This is used in the HTML head element.
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_author
-site_author = "Mr. Barker"
+site_author = "CaliCub"
 
 # The site_url is the canonical URL for your site. When building online
 # documentation you should set this.

@@ -34,14 +34,30 @@ Use Homebrew to install Python 3:
 brew install python
 ```
 
-Verify:
+**What it does:** Installs a current Python at `/opt/homebrew/bin/python3`.
+
+Then make sure the shell picks the Homebrew Python instead of Apple's. Add this line to the end of `~/.zshrc`:
 
 ```bash
+export PATH="/opt/homebrew/bin:$PATH"
+```
+
+**What it does:** Puts `/opt/homebrew/bin` at the front of the search path, so `python3` resolves to Homebrew's version before macOS's built-in one (`/usr/bin/python3`, version 3.9.x).
+
+Open a new terminal tab (or run `source ~/.zshrc`), then verify:
+
+```bash
+which python3
 python3 --version
 ```
 
+**Success looks like:** `which` prints `/opt/homebrew/bin/python3` and the version is the one Homebrew installed (e.g. `Python 3.15.0`). If you see `/usr/bin/python3` or `3.9.6`, the PATH line is missing or the terminal was not reloaded.
+
 !!! note "System Python"
     macOS ships with a very old Python. Always use the Homebrew-installed `python3`.
+
+!!! tip "Optional aliases"
+    `alias python="python3"` and `alias pip="pip3"` in `~/.zshrc` are convenient but not required. The VS Code tasks call `.venv/bin/python3` directly, and an activated venv provides its own `pip`.
 
 ### 3. Install VS Code
 
@@ -51,25 +67,29 @@ Then install the `code` shell command so you can open projects from the terminal
 
 `Cmd+Shift+P` → **Shell Command: Install 'code' command in PATH**
 
-Install the **Foam** extension:
+Install the extensions this workspace uses (`Cmd+Shift+X` → search the ID → Install):
 
-`Cmd+Shift+X` → search `foam.foam-vscode` → Install
+| Extension | ID | Used for |
+| --------- | -- | -------- |
+| Foam | `foam.foam-vscode` | Note templates, links, graph |
+| Python | `ms-python.python` | Selecting the `.venv` interpreter |
+| Run on Save | `emeraldwalk.RunOnSave` | Reminders sync and asset insertion when you save a case note |
 
 ### 4. Clone / Copy the Workspace
 
 `git clone` always creates a subfolder named after the repo inside the current directory. To put the workspace exactly where you want it, pass the target path as the second argument:
 
 ```bash
-git clone <repo-url> ~/case-work-2.0
+git clone <repo-url> ~/case-work
 ```
 
 !!! warning "Don't nest the folder"
-    Running `git clone <repo-url>` inside an existing folder (e.g. `~/case-work-2.0/`) will create `~/case-work-2.0/case-work/` — one level deeper than intended. Always specify the full destination path.
+    Running `git clone <repo-url>` inside an existing folder (e.g. `~/case-work/`) will create `~/case-work/case-work/` — one level deeper than intended. Always specify the full destination path.
 
 Open the workspace in VS Code:
 
 ```bash
-code ~/case-work-2.0
+code ~/case-work
 ```
 
 ### 5. Create the Python Virtual Environment
@@ -77,14 +97,26 @@ code ~/case-work-2.0
 Run these commands from the `case-work/` root:
 
 ```bash
-python3 -m venv .venv
+/opt/homebrew/bin/python3 -m venv .venv
 ```
+
+**What it does:** Creates `.venv/`, a private copy of Python and pip just for this project, so packages never touch the system. Using the full Homebrew path guarantees the venv is built on the right Python even if your PATH is not set up yet.
+
+**Success looks like:** Check which Python the venv is based on:
+
+```bash
+cat .venv/pyvenv.cfg
+```
+
+`home` should be `/opt/homebrew/...` and `version` should match Homebrew's Python. If `home` is `/Library/Developer/CommandLineTools/...` or the version is `3.9.x`, the venv is built on the wrong Python — see [Troubleshooting](#troubleshooting).
 
 Activate it (you only need this for manual terminal use — tasks run it automatically):
 
 ```bash
 source .venv/bin/activate
 ```
+
+**Success looks like:** Your prompt gains a `(.venv)` prefix, and `which python3` points inside the project's `.venv/bin/`.
 
 ### 6. Install Zensical
 
@@ -94,11 +126,15 @@ With the virtual environment active:
 pip install zensical
 ```
 
+**What it does:** Downloads Zensical (the site generator) and its dependencies into `.venv`.
+
 Verify:
 
 ```bash
 zensical --version
 ```
+
+**Success looks like:** A version number prints (e.g. `0.0.71`) with no errors.
 
 Deactivate when done:
 
@@ -106,17 +142,63 @@ Deactivate when done:
 deactivate
 ```
 
+**Success looks like:** The `(.venv)` prefix disappears from your prompt.
+
 ### 7. Set the VS Code Python Interpreter
 
 `Ctrl+Shift+P` → **Python: Select Interpreter** → choose `.venv/bin/python3` (it will show the workspace `.venv` path).
 
 This ensures all tasks and scripts use the project virtual environment automatically.
 
-### 8. Verify Everything Works
+### 8. Initialize the Foam Workspace
 
-1. `Ctrl+Shift+P` → Run Task → **📙 Zensical** — should print a URL like `http://127.0.0.1:8000`
-2. Open that URL in your browser — you should see the case tracker home page
-3. `Ctrl+Shift+B` — should rebuild dashboards with no errors in the terminal panel
+Foam needs VS Code opened on the workspace file, not just the folder, so the project settings, tasks and templates load.
+
+1. Open the workspace:
+
+    ```bash
+    code ~/case-work/.vscode/case-work.code-workspace
+    ```
+
+    Or in VS Code: **File → Open Workspace from File…** → `.vscode/case-work.code-workspace`.
+
+    **What it does:** Opens the repo root as a single workspace (the file points one level up from `.vscode/`) with the settings in `.vscode/settings.json` applied.
+
+2. When VS Code asks **"Do you trust the authors of the files in this folder?"**, choose **Yes, I trust the authors**. Tasks, Run on Save and the Python interpreter are disabled in Restricted Mode.
+
+3. Create your local config from the example:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+    **What it does:** `.env` holds your personal settings (Jira URL/token, view toggles). It is gitignored, so your values never get committed. Leave the Jira values as-is if you don't use the [Jira reminders](guide.md#jira-reminders).
+
+4. Confirm Foam found the templates: `Cmd+Shift+P` → **Foam: Create New Note From Template**.
+
+    **Success looks like:** The list shows New Case, KB Article, PKB Note and the three meeting templates. Press `Esc` to close it without creating a note.
+
+5. Optional: set your PKB tabs in `pkb-categories.yaml` now. See [Guide → Customizing PKB Tabs](guide.md#customizing-pkb-tabs).
+
+!!! tip "Reopening later"
+    VS Code lists the workspace under **File → Open Recent** as `case-work (Workspace)`. Always open that entry rather than the plain folder.
+
+### 9. Verify Everything Works
+
+1. `Ctrl+Shift+B` — rebuilds the dashboards and starts the local site. Run this first on a new clone: the Dashboard, Meetings, Knowledge Base and Tags pages are generated, so they don't exist until the first rebuild.
+2. `Ctrl+Shift+P` → Run Task → **🟢 Start Zensical** — prints a URL like `http://127.0.0.1:8000` (use this to restart the site on its own)
+3. Open that URL in your browser — you should see the case tracker home page
+
+To check the same things from a terminal at the `case-work/` root (no activation needed):
+
+```bash
+.venv/bin/python3 scripts/dashboard.py
+.venv/bin/zensical build
+```
+
+**What they do:** The first regenerates the dashboards, Knowledge Base tabs and tags page from your notes. The second builds the full site into `site/`.
+
+**Success looks like:** The first ends with `Done.`; the second prints `No issues found` and `Build finished`.
 
 !!! tip "Virtual environment tip"
     Never install Zensical or project packages globally with `sudo pip`. Always install inside `.venv` so nothing conflicts with system Python.
@@ -151,7 +233,7 @@ brew upgrade python
     The `.venv` virtual environment is tied to the Python version it was created with. After a Python upgrade, rebuild the venv:
     ```bash
     rm -rf .venv
-    python3 -m venv .venv
+    /opt/homebrew/bin/python3 -m venv .venv
     source .venv/bin/activate
     pip install zensical
     deactivate
@@ -181,3 +263,28 @@ VS Code checks for updates automatically. To trigger a manual check:
 Or update all extensions at once:
 
 `Cmd+Shift+X` → **...** (top-right menu) → **Update All Extensions**
+
+---
+
+## Troubleshooting
+
+### `pip install zensical` fails, or `.venv` looks broken
+
+**Cause:** The `.venv` was built on the wrong Python (usually Apple's 3.9.x from the Command Line Tools), or it was restored from a backup/older machine. A venv is tied to the Python that created it.
+
+**Check:**
+
+```bash
+cat .venv/pyvenv.cfg
+```
+
+If `home` is not `/opt/homebrew/...`, rebuild it. `.venv` is gitignored, so nothing is lost:
+
+```bash
+rm -rf .venv
+/opt/homebrew/bin/python3 -m venv .venv
+.venv/bin/pip install zensical
+.venv/bin/zensical --version
+```
+
+**Success looks like:** A version number prints. Then re-select the interpreter in VS Code (`Ctrl+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`).

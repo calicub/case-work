@@ -19,16 +19,11 @@ Keep this tab open in your browser while working in VS Code.
 
 ---
 
-## 🗂️ Workspaces
+## 🗂️ Workspace
 
-Two `.code-workspace` files live in `.vscode/` — open them with **File → Open Workspace from File**.
+Open the project through `.vscode/case-work.code-workspace` (**File → Open Workspace from File**). See [Setup → Initialize the Foam Workspace](setup.md#8-initialize-the-foam-workspace) for first-time steps.
 
-| File | Name | Shows |
-|------|------|-------|
-| `case-work-dev.code-workspace` | 📝 Notes (Dev Mode) | Everything — full project tree |
-| `case-work-view.code-workspace` | 📖 Case-work (Read/Edit) | `.vscode/` · `docs/assets/` · `docs/cases/` · `docs/meetings/` · `docs/pkb/` · `docs/guide.md` · `docs/tags.md` |
-
-The view workspace hides generated dashboards, config files, scripts, and other non-note content so the Explorer stays focused on case work.
+Use the **🔁 Toggle File Visibility** task to switch the Explorer between a focused view (notes only) and the full project tree.
 
 ---
 
@@ -43,7 +38,7 @@ The view workspace hides generated dashboards, config files, scripts, and other 
 | **🖥️ Start Session Log** | `Ctrl+Shift+P` → Run Task | Starts a `script` recording session — saves everything to `docs/assets/files/casenumber-terminal-session-date.txt` |
 | **📋 Copy Support Notes (Salesforce)** | `Ctrl+Shift+P` → Run Task | Converts the Remote Support Note at the cursor to Salesforce plain text and copies it to clipboard |
 | **📋 Copy Prior Actions (Salesforce)** | `Ctrl+Shift+P` → Run Task | Copies the steps performed from the Remote Support Note at the cursor, formatted as `--- Month Nth ---` + `+ step` lines |
-| **📙 Zensical** | `Ctrl+Shift+P` → Run Task | Starts local server at `http://127.0.0.1:8000` — run once per session, leave it open |
+| **🟢 Start Zensical** | `Ctrl+Shift+P` → Run Task | Starts local server at `http://127.0.0.1:8000` — run once per session, leave it open |
 | **🛑 Stop Zensical** | `Ctrl+Shift+P` → Run Task | Kills the Zensical server process |
 | **🔔 Sync to Reminders** | Auto on `Cmd+S` | Pushes `▶️ Next Action` tasks to the macOS Reminders "Case Actions" list — active and followup only |
 | **📎📸 Insert Assets** | Auto on `Cmd+S` | Runs on every save — picks up any matching files and screenshots at the workspace root and inserts them into the note |
@@ -265,19 +260,6 @@ Then `Tab` through each field.
     **Page sections:** 🔍 Description · ▶️ Next Action · 🔄 Follow-up · 🛠️ Steps Taken
     **Attachment tabs (below Steps Taken):** 📎 Customer Files · 📸 Screenshots
 
-=== "🔄 Follow-up"
-
-    | # | Field |
-    |---|-------|
-    | auto | `case_number` |
-    | **1** | `customer` |
-    | **2** | `priority` |
-    | **3** | `status` |
-    | **4** | `follow_up_date` |
-    | **5** | `note` |
-    | **6** | Context body |
-    | **7** | First action item |
-
 === "🤝 1-on-1 Meeting"
 
     Saved to `docs/meetings/1on1/MM-DD-YY.md`
@@ -308,17 +290,41 @@ Then `Tab` through each field.
 
 === "📓 PKB Note"
 
+    **Use for:** a topic overview — the landing page for one area that collects the helpful KBs, engineering tickets, Confluence pages and doc links you keep coming back to.
+
     Saved to `docs/pkb/<slug>.md` — type a short descriptive name when prompted (e.g. `ldap-auth-troubleshooting`).
 
     | # | Field | Notes |
     |---|-------|-------|
     | **1** | `title` | Full readable title |
-    | **2** | `category` | Dropdown: Tools · Troubleshooting |
-    | **3** | `tags` | Comma-separated: `[kubernetes, ldap]` — see tag conventions below |
-    | **4** | Overview | Freeform notes and context |
-    | **5–13** | Table rows | KB link · Engineering ticket · Confluence · Doc ref rows |
+    | **2** | `category` | Dropdown from [`pkb-categories.yaml`](#customizing-pkb-tabs) — picks the Knowledge Base tab |
+    | **3–4** | `tags` | Product tag and topic tag — see tag conventions below |
+    | **5** | Overview | Freeform notes and context |
+    | **6–14** | Table rows | KB link · Engineering ticket · Confluence · Doc ref rows |
 
     **Page sections:** 📝 Overview · 📋 KB Articles · 🔧 Engineering Tickets · 📘 Confluence · 📄 Doc References
+
+=== "📄 KB Article"
+
+    **Use for:** a focused write-up of a specific issue for a specific topic or product — a how-to, reference, troubleshooting guide or concept explainer.
+
+    Saved to `docs/pkb/<slug>.md`, alongside PKB Notes, and listed on the same Knowledge Base tabs.
+
+    | # | Field | Notes |
+    |---|-------|-------|
+    | **1** | `title` | Full readable title |
+    | **2** | `category` | Dropdown from [`pkb-categories.yaml`](#customizing-pkb-tabs) |
+    | **3** | `type` | Dropdown: how-to · reference · troubleshooting · concept |
+    | **4–5** | `tags` | Product tag and topic tag |
+    | **6–17** | Body | Summary · Overview · your own sections · Common Issues · References · Related Articles |
+
+!!! question "PKB Note or KB Article?"
+    Both templates save to `docs/pkb/` and show up on the 📓 Knowledge Base page, but they do different jobs:
+
+    - **PKB Note** (`pkb.md`) is an **overview for a whole area**. It is mostly links: the KBs, engineering tickets, Confluence pages and docs that are useful for that area. Think "everything I know about where to look for X."
+    - **KB Article** (`kb-article.md`) is **one specific issue** for a specific topic or product, written out in full: background, the steps or explanation, common issues and fixes. Think "how to solve Y."
+
+    A PKB Note will often link to several KB Articles under the same category.
 
 ---
 
@@ -395,9 +401,9 @@ Type any prefix in a markdown file and select from the suggestion list (`Ctrl+Sp
 | Prefix | Name | Inserts |
 |--------|------|---------|
 | `today` | Date | `#### Month DD` heading with today's date |
-| `ustatus` | Update Case Status | Salesforce status dropdown: In-Progress · Waiting-for-Customer · etc. |
 | `kbi` | Keyboard Key | `<kbd>key</kbd>` inline tag |
 | `casedesc` | Case Description | Quote admonition block for pasting the Salesforce case description |
+| `emailresponse` | Customer's Email Response | Quote admonition block for pasting a customer's email reply |
 | `remotenote` | Remote Support Notes | Full remote support session block with via · attendees · details · action plan |
 | `cbl` | Code Block (Log) | Titled fenced code block — cursor lands in title, Tab moves to body |
 | `cby` | Code Block (YAML) | Same as `cbl` with `yaml` language tag |
@@ -513,6 +519,38 @@ Any table in a note or dashboard can be sorted by clicking a column header — c
 
 ---
 
+## 🗂️ Customizing PKB Tabs
+
+The tabs on the 📓 Knowledge Base page come from `pkb-categories.yaml` at the workspace root:
+
+```yaml
+categories:
+  - name: Tools
+  - name: Troubleshooting
+  - name: Kubernetes
+    icon: assets/images/kubernetes/logo.svg
+
+other_tab: Other
+```
+
+| Key | What it does |
+| --- | ------------ |
+| `name` | Tab label, and the value a note uses in its `category:` frontmatter (case-insensitive). Can't contain `,` or `\|`. |
+| `icon` | Optional. An image path relative to `docs/` (`.svg`, `.png`, …) or plain text such as an emoji (`icon: 🧰`). |
+| `other_tab` | Catch-all tab, always last, for notes whose category is missing or not listed. |
+
+To add, remove, rename or reorder tabs:
+
+1. Edit `pkb-categories.yaml` — tabs appear in the order listed.
+2. `Ctrl+Shift+B` to rebuild dashboards.
+
+The rebuild also rewrites the `category` dropdown in `.foam/templates/pkb.md` and `.foam/templates/kb-article.md`, so new notes always offer the same choices as the tabs.
+
+!!! warning "Renaming a category"
+    Existing notes keep their old `category:` value. Update those notes too, or they will move to the `other_tab` tab.
+
+---
+
 ## 📊 Dashboard Rules
 
 !!! danger "Do not edit dashboard files by hand"
@@ -536,23 +574,25 @@ Rebuild dashboards after: creating a note · editing frontmatter · archiving a 
 ```
 case-work/
 ├── zensical.toml                        ← site config (TOML — not mkdocs.yml)
+├── pkb-categories.yaml                  ← Knowledge Base tabs (see Customizing PKB Tabs)
 ├── overrides/                           ← Zensical theme overrides
 │   └── .icons/                          ← custom icon sets (use as :set-name: in notes)
 │       └── k8s/                         ← Kubernetes icons — symlinked from docs/assets/images/kubernetes/
 ├── .foam/
 │   └── templates/                       ← Foam note templates (one per note type)
 │       ├── case.md                      ← new support case
-│       ├── followup.md                  ← follow-up for an existing case
 │       ├── meeting-1on1.md              ← 1-on-1 meeting notes
 │       ├── meeting-team.md              ← team meeting notes
 │       ├── meeting-general.md           ← general meeting notes
-│       └── pkb.md                       ← personal knowledge base article
+│       ├── pkb.md                       ← PKB Note: topic overview (KBs, tickets, Confluence, docs)
+│       └── kb-article.md                ← KB Article: one specific issue for a topic or product
 ├── .vscode/
+│   ├── case-work.code-workspace         ← open this to start the Foam workspace
 │   ├── settings.json                    ← Foam config, editor settings, snippet support
 │   ├── tasks.json                       ← all Ctrl+Shift+P runnable tasks
 │   └── case-work.code-snippets          ← workspace snippets (remotenote, casedesc, etc.)
 ├── scripts/
-│   ├── dashboard.py                     ← regenerates all dashboards and index pages
+│   ├── dashboard.py                     ← regenerates all dashboards and index pages, syncs PKB template categories
 │   ├── insert_assets.py                 ← moves & inserts screenshots and files into case notes (runs on save)
 │   ├── append_terminal_block.py         ← appends clipboard as timestamped code block
 │   ├── copy_salesforce_notes.py         ← converts remote support note to Salesforce plain text
