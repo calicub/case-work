@@ -1,7 +1,7 @@
 # PKB categories
 #
 # Each entry becomes a tab on the 📓 Knowledge Base page, in this order.
-# Rebuild Dashboards (Ctrl+Shift+B) after editing. The rebuild also updates
+# Rebuild Dashboards (Cmd+Shift+B) after editing. The rebuild also updates
 # the `category` dropdown in the PKB Note and KB Article templates to match.
 #
 #   name  Tab label, and the value notes use in `category:` frontmatter.

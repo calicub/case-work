@@ -195,7 +195,7 @@ deactivate
 
 The project settings already point VS Code at `.venv/bin/python3`, so there's usually nothing to do here. If the status bar shows a different Python, or VS Code asks, choose the project's `.venv`:
 
-`Ctrl+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`
+`Cmd+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`
 
 ### 8. Open the Project in VS Code
 
@@ -252,9 +252,9 @@ Open the `case-work` folder itself in VS Code. Foam, the tasks and the on-save h
 
 ### 9. Verify Everything Works
 
-1. `Ctrl+Shift+P` → **Tasks: Run Task** → **🟢 Start Zensical**. It builds the dashboards first, then starts the local site and prints a URL like `http://127.0.0.1:8000`. Leave this terminal running.
+1. `Cmd+Shift+P` → **Tasks: Run Task** → **🟢 Start Zensical**. It builds the dashboards first, then starts the local site and prints a URL like `http://127.0.0.1:8000`. Leave this terminal running.
 2. Open that URL in your browser. You should see the case tracker home page, and the Dashboard, Meetings, Knowledge Base and Tags pages should all load.
-3. `Ctrl+Shift+B` (**Rebuild Dashboards**) should finish with `Done.` in the terminal. The open site picks up the change and reloads by itself.
+3. `Cmd+Shift+B` (**Rebuild Dashboards**) should finish with `Done.` in the terminal. The open site picks up the change and reloads by itself.
 
 !!! warning "Don't start the site with `zensical serve` on a new clone"
     The Dashboard, Meetings, Knowledge Base and Tags pages are generated from your notes, so they don't exist until the dashboards are built once. Running `zensical serve` by hand first gives broken links and 404s. The **🟢 Start Zensical** task handles this for you.
@@ -314,7 +314,7 @@ brew upgrade python
     pip install -r requirements.txt
     deactivate
     ```
-    Then re-point VS Code: `Ctrl+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`.
+    Then re-point VS Code: `Cmd+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`.
 
 ### Zensical
 
@@ -363,7 +363,7 @@ rm -rf .venv
 .venv/bin/zensical --version
 ```
 
-**Success looks like:** A version number prints. Then re-select the interpreter in VS Code (`Ctrl+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`).
+**Success looks like:** A version number prints. Then re-select the interpreter in VS Code (`Cmd+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`).
 
 ### `git pull` says local changes to `.vscode/settings.json` would be overwritten
 

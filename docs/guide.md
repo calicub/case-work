@@ -31,21 +31,21 @@ Use the **🔁 Toggle File Visibility** task to switch the Explorer between a fo
 
 | Task | How to run | What it does |
 |------|-----------|--------------|
-| **Rebuild Dashboards** | `Ctrl+Shift+B` | Regenerates the Dashboard, Meetings, Knowledge Base and Tags pages from your note frontmatter. A running site reloads by itself, with no restart needed |
-| **📎 Insert Customer Files** | `Ctrl+Shift+P` → Run Task | Finds files at project root matching the case number, moves them to `docs/assets/files/`, inserts links into `## 📎 Customer Files` — also runs automatically on save |
-| **📸 Insert Screenshots** | `Ctrl+Shift+P` → Run Task | Finds screenshots at project root matching the case number, moves them to `docs/assets/screenshots/`, inserts image blocks into `## 📸 Screenshots` — also runs automatically on save |
+| **Rebuild Dashboards** | `Cmd+Shift+B` | Regenerates the Dashboard, Meetings, Knowledge Base and Tags pages from your note frontmatter. A running site reloads by itself, with no restart needed |
+| **📎 Insert Customer Files** | `Cmd+Shift+P` → Run Task | Finds files at project root matching the case number, moves them to `docs/assets/files/`, inserts links into `## 📎 Customer Files` — also runs automatically on save |
+| **📸 Insert Screenshots** | `Cmd+Shift+P` → Run Task | Finds screenshots at project root matching the case number, moves them to `docs/assets/screenshots/`, inserts image blocks into `## 📸 Screenshots` — also runs automatically on save |
 | **📌 Append Terminal Block** | `Ctrl+Shift+;` | Reads clipboard and appends a timestamped code block to **🛠️ Steps Taken** in the active case note |
-| **🖥️ Start Session Log** | `Ctrl+Shift+P` → Run Task | Starts a `script` recording session — saves everything to `docs/assets/files/casenumber-terminal-session-date.txt` |
-| **📋 Copy Support Notes (Salesforce)** | `Ctrl+Shift+P` → Run Task | Converts the Remote Support Note at the cursor to Salesforce plain text and copies it to clipboard |
-| **📋 Copy Prior Actions (Salesforce)** | `Ctrl+Shift+P` → Run Task | Copies the steps performed from the Remote Support Note at the cursor, formatted as `--- Month Nth ---` + `+ step` lines |
-| **🟢 Start Zensical** | `Ctrl+Shift+P` → Run Task | Builds the dashboards, then starts the local site at `http://127.0.0.1:8000` — run once per session and leave it open |
-| **🛑 Stop Zensical** | `Ctrl+Shift+P` → Run Task | Kills the Zensical server process |
+| **🖥️ Start Session Log** | `Cmd+Shift+P` → Run Task | Starts a `script` recording session — saves everything to `docs/assets/files/casenumber-terminal-session-date.txt` |
+| **📋 Copy Support Notes (Salesforce)** | `Cmd+Shift+P` → Run Task | Converts the Remote Support Note at the cursor to Salesforce plain text and copies it to clipboard |
+| **📋 Copy Prior Actions (Salesforce)** | `Cmd+Shift+P` → Run Task | Copies the steps performed from the Remote Support Note at the cursor, formatted as `--- Month Nth ---` + `+ step` lines |
+| **🟢 Start Zensical** | `Cmd+Shift+P` → Run Task | Builds the dashboards, then starts the local site at `http://127.0.0.1:8000` — run once per session and leave it open |
+| **🛑 Stop Zensical** | `Cmd+Shift+P` → Run Task | Kills the Zensical server process |
 | **🔔 Sync to Reminders** | Auto on `Cmd+S` | Pushes `🔔 Next Action` tasks to the macOS Reminders "Case Actions" list — active and followup only |
-| **🔔 Sync Reminders Now** | `Ctrl+Shift+P` → Run Task | Runs the Reminders sync on the open case note and keeps the output visible — use it to test the sync or see why it failed |
+| **🔔 Sync Reminders Now** | `Cmd+Shift+P` → Run Task | Runs the Reminders sync on the open case note and keeps the output visible — use it to test the sync or see why it failed |
 | **📎📸 Insert Assets** | Auto on `Cmd+S` | Runs on every save — picks up any matching files and screenshots at the project root and inserts them into the note |
-| **⏰ Install Jira Reminders Schedule** | `Ctrl+Shift+P` → Run Task | One-time setup — installs a background schedule that syncs Jira KB/Docs tasks to Reminders at 09:30 and 12:30 daily |
-| **🔄 Run Jira Reminders Now** | `Ctrl+Shift+P` → Run Task | Manually triggers the Jira → Reminders sync without waiting for the schedule |
-| **🔁 Toggle File Visibility** | `Ctrl+Shift+P` → Run Task | Alternates the Explorer between focused view (hides dashboards, stylesheets, config files) and full view (shows everything) — state is saved to `.env` so it persists across sessions; the exclusion list is also saved to `.env` as `FILES_EXCLUDE`, so edits made to `files.exclude` in `settings.json` are preserved across toggles |
+| **⏰ Install Jira Reminders Schedule** | `Cmd+Shift+P` → Run Task | One-time setup — installs a background schedule that syncs Jira KB/Docs tasks to Reminders at 09:30 and 12:30 daily |
+| **🔄 Run Jira Reminders Now** | `Cmd+Shift+P` → Run Task | Manually triggers the Jira → Reminders sync without waiting for the schedule |
+| **🔁 Toggle File Visibility** | `Cmd+Shift+P` → Run Task | Alternates the Explorer between focused view (hides dashboards, stylesheets, config files) and full view (shows everything) — state is saved to `.env` so it persists across sessions; the exclusion list is also saved to `.env` as `FILES_EXCLUDE`, so edits made to `files.exclude` in `settings.json` are preserved across toggles |
 
 !!! warning "Active tab tip"
     The **case note tab must be focused** in VS Code (not the terminal) when running Insert Screenshots, Insert Customer Files, Copy Support Notes, or Append Terminal Block — VS Code passes whichever file is currently active.
@@ -96,7 +96,7 @@ The `@` annotation is stripped from the Reminders title — only the task text i
 
 The first time the sync runs, macOS asks whether **Visual Studio Code** may control **Reminders**. Click **Allow** (or **OK**). Until you do, nothing reaches Reminders.
 
-The easiest way to trigger that prompt is to open a case note that has a task under **🔔 Next Action**, then run **🔔 Sync Reminders Now** (`Ctrl+Shift+P` → Run Task). The terminal shows `Reminders synced.` or the reason it failed.
+The easiest way to trigger that prompt is to open a case note that has a task under **🔔 Next Action**, then run **🔔 Sync Reminders Now** (`Cmd+Shift+P` → Run Task). The terminal shows `Reminders synced.` or the reason it failed.
 
 **Troubleshooting**
 
@@ -126,7 +126,7 @@ Open KB/Docs tasks assigned to you in Jira are automatically synced to the macOS
    JIRA_JQL is optional — the default query above is used if you leave it out.
    Adjust it if you want to filter by component, project, or other criteria.
 
-2. Ctrl+Shift+P → Run Task → ⏰ Install Jira Reminders Schedule
+2. Cmd+Shift+P → Run Task → ⏰ Install Jira Reminders Schedule
    You should see: ✅  Schedule installed.
 
 That's it — the schedule survives reboots and runs without VS Code open.
@@ -185,7 +185,7 @@ The middle number is the last exit code — `0` means the last run succeeded. An
 **Trigger a test run immediately:**
 
 ```
-Ctrl+Shift+P → Run Task → 🔄 Run Jira Reminders Now
+Cmd+Shift+P → Run Task → 🔄 Run Jira Reminders Now
 ```
 
 Output appears in the VS Code terminal panel. Check Reminders.app for a "Jira Tasks" list afterward.
@@ -260,7 +260,7 @@ Record an entire terminal session (useful for long cluster investigations):
 ```
 1. Focus the case note tab so VS Code knows which case you're on
 
-2. Ctrl+Shift+P → Run Task → 🖥️ Start Session Log
+2. Cmd+Shift+P → Run Task → 🖥️ Start Session Log
    A new terminal opens with script recording active
 
 3. Do your work — everything typed and output is captured
@@ -278,7 +278,7 @@ Record an entire terminal session (useful for long cluster investigations):
 
 ## 📋 Templates
 
-New note: `Ctrl+Shift+P` → **Foam: Create New Note From Template** → pick a template.
+New note: `Cmd+Shift+P` → **Foam: Create New Note From Template** → pick a template.
 **Type the case number (or a short name for PKB notes) at Foam's *Title of my New Note* prompt** — it becomes the filename and, for cases, auto-fills `case_number`.
 Then `Tab` through each field.
 
@@ -406,13 +406,13 @@ The **🏷️ Tags** page in the nav aggregates every tagged note across the who
 2. Focus the case note tab in VS Code and save (Cmd+S)
 
    → Files are picked up and inserted automatically.
-   → Or run manually: Ctrl+Shift+P → Run Task → 📎 Insert Customer Files
+   → Or run manually: Cmd+Shift+P → Run Task → 📎 Insert Customer Files
 
 3. Script moves the file to docs/assets/files/ and writes this into the note:
 
       [123456 - export.csv](../../assets/files/123456-export.csv)
 
-4. Ctrl+Shift+B → rebuild dashboards → browser auto-reloads
+4. Cmd+Shift+B → rebuild dashboards → browser auto-reloads
 ```
 
 ---
@@ -424,7 +424,7 @@ The **🏷️ Tags** page in the nav aggregates every tagged note across the who
 
 2. Place your cursor anywhere inside the ### 📓 Remote Support block
 
-3. Ctrl+Shift+P → Run Task → 📋 Copy Support Notes (Salesforce)
+3. Cmd+Shift+P → Run Task → 📋 Copy Support Notes (Salesforce)
 
 4. Plain text version is copied to clipboard — paste directly into Salesforce
    A preview is also printed in the terminal panel
@@ -521,7 +521,7 @@ Zensical renders them as inline SVGs — they scale with text and respect the cu
 1. Place SVG files in `overrides/.icons/<set-name>/`
    — subdirectories are supported: `overrides/.icons/<set-name>/<sub>/icon.svg` → `:set-name-sub-icon:`
 2. Symlinks work — point them at the source SVGs to avoid duplication
-3. Restart Zensical (`Ctrl+Shift+B`) — no config changes needed
+3. Restart the site: `Cmd+Shift+P` → **Tasks: Run Task** → **🟢 Start Zensical** — no config changes needed
 
 ---
 
@@ -534,7 +534,7 @@ Zensical renders them as inline SVGs — they scale with text and respect the cu
 2. Focus the case note tab in VS Code and save (Cmd+S)
 
    → Screenshots are picked up and inserted automatically.
-   → Or run manually: Ctrl+Shift+P → Run Task → 📸 Insert Screenshots
+   → Or run manually: Cmd+Shift+P → Run Task → 📸 Insert Screenshots
 
 3. Script moves image to docs/assets/screenshots/ and writes this into the note:
 
@@ -543,7 +543,7 @@ Zensical renders them as inline SVGs — they scale with text and respect the cu
    123456 - description
    ///
 
-4. Ctrl+Shift+B → rebuild dashboards → browser auto-reloads
+4. Cmd+Shift+B → rebuild dashboards → browser auto-reloads
 ```
 
 !!! tip "Click to zoom"
@@ -580,7 +580,7 @@ other_tab: Other
 To add, remove, rename or reorder tabs:
 
 1. Edit `pkb-categories.yaml` — tabs appear in the order listed.
-2. `Ctrl+Shift+B` to rebuild dashboards.
+2. `Cmd+Shift+B` to rebuild dashboards.
 
 The rebuild also rewrites the `category` dropdown in `.foam/templates/pkb.md` and `.foam/templates/kb-article.md`, so new notes always offer the same choices as the tabs.
 
@@ -593,7 +593,7 @@ The rebuild also rewrites the `category` dropdown in `.foam/templates/pkb.md` an
 
 !!! danger "Do not edit dashboard files by hand"
     `docs/dashboard.md` and everything in `docs/dashboards/` are **auto-generated**.
-    Any manual edits will be overwritten the next time you run `Ctrl+Shift+B`.
+    Any manual edits will be overwritten the next time you run `Cmd+Shift+B`.
 
 | Dashboard | Source folder | Sort order |
 |-----------|--------------|------------|
@@ -629,7 +629,7 @@ case-work/
 ├── .vscode/
 │   ├── settings.default.json            ← default Foam/editor settings (tracked)
 │   ├── settings.json                    ← your copy, created from the defaults (gitignored)
-│   ├── tasks.json                       ← all Ctrl+Shift+P runnable tasks
+│   ├── tasks.json                       ← all Cmd+Shift+P runnable tasks
 │   └── case-work.code-snippets          ← project snippets (remotenote, casedesc, etc.)
 ├── scripts/
 │   ├── dashboard.py                     ← regenerates all dashboards and index pages, syncs PKB template categories
@@ -686,7 +686,7 @@ case-work/
 ```
 
 Set VS Code's Python interpreter to `.venv/bin/python3`:
-`Ctrl+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`
+`Cmd+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`
 
 ---
 
