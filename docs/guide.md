@@ -31,14 +31,14 @@ Use the **🔁 Toggle File Visibility** task to switch the Explorer between a fo
 
 | Task | How to run | What it does |
 |------|-----------|--------------|
-| **Rebuild Dashboards** | `Ctrl+Shift+B` | Regenerates `dashboard.md` and all four section tables from your note frontmatter |
+| **Rebuild Dashboards** | `Ctrl+Shift+B` | Regenerates the Dashboard, Meetings, Knowledge Base and Tags pages from your note frontmatter. A running site reloads by itself, with no restart needed |
 | **📎 Insert Customer Files** | `Ctrl+Shift+P` → Run Task | Finds files at workspace root matching the case number, moves them to `docs/assets/files/`, inserts links into `## 📎 Customer Files` — also runs automatically on save |
 | **📸 Insert Screenshots** | `Ctrl+Shift+P` → Run Task | Finds screenshots at workspace root matching the case number, moves them to `docs/assets/screenshots/`, inserts image blocks into `## 📸 Screenshots` — also runs automatically on save |
 | **📌 Append Terminal Block** | `Ctrl+Shift+;` | Reads clipboard and appends a timestamped code block to **🛠️ Steps Taken** in the active case note |
 | **🖥️ Start Session Log** | `Ctrl+Shift+P` → Run Task | Starts a `script` recording session — saves everything to `docs/assets/files/casenumber-terminal-session-date.txt` |
 | **📋 Copy Support Notes (Salesforce)** | `Ctrl+Shift+P` → Run Task | Converts the Remote Support Note at the cursor to Salesforce plain text and copies it to clipboard |
 | **📋 Copy Prior Actions (Salesforce)** | `Ctrl+Shift+P` → Run Task | Copies the steps performed from the Remote Support Note at the cursor, formatted as `--- Month Nth ---` + `+ step` lines |
-| **🟢 Start Zensical** | `Ctrl+Shift+P` → Run Task | Starts local server at `http://127.0.0.1:8000` — run once per session, leave it open |
+| **🟢 Start Zensical** | `Ctrl+Shift+P` → Run Task | Builds the dashboards, then starts the local site at `http://127.0.0.1:8000` — run once per session and leave it open |
 | **🛑 Stop Zensical** | `Ctrl+Shift+P` → Run Task | Kills the Zensical server process |
 | **🔔 Sync to Reminders** | Auto on `Cmd+S` | Pushes `▶️ Next Action` tasks to the macOS Reminders "Case Actions" list — active and followup only |
 | **📎📸 Insert Assets** | Auto on `Cmd+S` | Runs on every save — picks up any matching files and screenshots at the workspace root and inserts them into the note |
@@ -241,7 +241,7 @@ Record an entire terminal session (useful for long cluster investigations):
 ## 📋 Templates
 
 New note: `Ctrl+Shift+P` → **Foam: Create New Note From Template** → pick a template.
-**Type the case/KB number when prompted** — it becomes the filename and auto-fills `case_number`.
+**Type the case number (or a short name for PKB notes) at Foam's *Title of my New Note* prompt** — it becomes the filename and, for cases, auto-fills `case_number`.
 Then `Tab` through each field.
 
 === "🎫 New Case"
@@ -599,6 +599,7 @@ case-work/
 │   ├── copy_remote_steps.py             ← copies steps performed from remote support note to clipboard
 │   ├── sync_reminders.sh               ← syncs ▶️ Next Action tasks to macOS Reminders on save
 │   └── toggle_view.py                  ← toggles Explorer between focused and full view via files.exclude
+├── setup/                               ← Jira reminders schedule files (the setup guide is docs/setup.md)
 └── docs/                                ← Zensical serves everything from here
     ├── index.md                         ← home page
     ├── dashboard.md                     ← tabbed case dashboard (auto-generated)

@@ -31,6 +31,8 @@ Everything lives in plain Markdown files on your machine. There is no server, da
 
 ## Quick start
 
+> **Setup guide:** [docs/setup.md](docs/setup.md) has the full step-by-step walkthrough. The top-level `setup/` folder only holds files for the optional Jira reminders schedule.
+
 ```bash
 git clone <repo-url> ~/case-work
 cd ~/case-work
@@ -43,11 +45,11 @@ code .vscode/case-work.code-workspace
 Then in VS Code:
 
 1. Trust the workspace when prompted.
-2. `Ctrl+Shift+B` rebuilds the dashboards.
-3. Run the **🟢 Start Zensical** task and open <http://127.0.0.1:8000>.
+2. Run the **🟢 Start Zensical** task (`Cmd+Shift+P` → **Tasks: Run Task**). It builds the dashboards, then serves the site at <http://127.0.0.1:8000>.
+3. After editing notes, `Ctrl+Shift+B` rebuilds the dashboards. The open site reloads by itself.
 4. `Cmd+Shift+P` → **Foam: Create New Note From Template** to start your first note.
 
-The full walkthrough is in [docs/setup.md](docs/setup.md). Daily use, templates, tasks and customization are covered in [docs/guide.md](docs/guide.md).
+Daily use, templates, tasks and customization are covered in [docs/guide.md](docs/guide.md).
 
 ## Customizing
 

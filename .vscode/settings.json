@@ -16,9 +16,6 @@
     "**/site/**": true
   },
   "search.followSymlinks": false,
-  "extensions.autoUpdate": false,
-  "telemetry.telemetryLevel": "off",
-  "update.mode": "none",
   "editor.wordWrap": "on",
   "emeraldwalk.runonsave": {
     "commands": [
@@ -33,6 +30,7 @@
     ]
   },
   "python.terminal.activateEnvironment": false,
+  "python.envFile": "",
   "editor.tabSize": 2,
   "terminal.integrated.scrollback": 10000,
   "explorer.autoReveal": false,

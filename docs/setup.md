@@ -10,6 +10,11 @@ icon: lucide/wrench
 
 Step-by-step setup for a fresh macOS install.
 
+!!! info "You're in the right place"
+    This page (`docs/setup.md`) is the setup guide. The top-level `setup/` folder is something else: it holds the files for the optional Jira reminders schedule, and you never need to open it.
+
+    Before the site is running, read this page on GitHub or in VS Code's Markdown preview (`Cmd+Shift+V`). Once it's running, the same page is under **Setup** in the site's top navigation.
+
 ### 1. Install Homebrew
 
 Open Terminal and run:
@@ -102,6 +107,9 @@ Run these commands from the `case-work/` root:
 
 **What it does:** Creates `.venv/`, a private copy of Python and pip just for this project, so packages never touch the system. Using the full Homebrew path guarantees the venv is built on the right Python even if your PATH is not set up yet.
 
+!!! note "VS Code prompt"
+    If VS Code is already open on the project, it may notice the new environment and ask whether to use it for this workspace. Choose **Yes**. That does the same thing as step 7.
+
 **Success looks like:** Check which Python the venv is based on:
 
 ```bash
@@ -178,6 +186,14 @@ Foam needs VS Code opened on the workspace file, not just the folder, so the pro
 
     **Success looks like:** The list shows New Case, KB Article, PKB Note and the three meeting templates. Press `Esc` to close it without creating a note.
 
+    When you do create a note, Foam asks for a title with the placeholder *Title of my New Note* (Foam's built-in text, which can't be changed). What you type becomes the file name:
+
+    | Template | Type at the title prompt |
+    | -------- | ------------------------ |
+    | New Case | The case number, e.g. `00123456` |
+    | PKB Note / KB Article | A short name, e.g. `ldap-auth-troubleshooting` |
+    | Meetings | Anything. The file is named by today's date |
+
 5. Optional: set your PKB tabs in `pkb-categories.yaml` now. See [Guide → Customizing PKB Tabs](guide.md#customizing-pkb-tabs).
 
 !!! tip "Reopening later"
@@ -185,9 +201,12 @@ Foam needs VS Code opened on the workspace file, not just the folder, so the pro
 
 ### 9. Verify Everything Works
 
-1. `Ctrl+Shift+B` — rebuilds the dashboards and starts the local site. Run this first on a new clone: the Dashboard, Meetings, Knowledge Base and Tags pages are generated, so they don't exist until the first rebuild.
-2. `Ctrl+Shift+P` → Run Task → **🟢 Start Zensical** — prints a URL like `http://127.0.0.1:8000` (use this to restart the site on its own)
-3. Open that URL in your browser — you should see the case tracker home page
+1. `Ctrl+Shift+P` → **Tasks: Run Task** → **🟢 Start Zensical**. It builds the dashboards first, then starts the local site and prints a URL like `http://127.0.0.1:8000`. Leave this terminal running.
+2. Open that URL in your browser. You should see the case tracker home page, and the Dashboard, Meetings, Knowledge Base and Tags pages should all load.
+3. `Ctrl+Shift+B` (**Rebuild Dashboards**) should finish with `Done.` in the terminal. The open site picks up the change and reloads by itself.
+
+!!! warning "Don't start the site with `zensical serve` on a new clone"
+    The Dashboard, Meetings, Knowledge Base and Tags pages are generated from your notes, so they don't exist until the dashboards are built once. Running `zensical serve` by hand first gives broken links and 404s. The **🟢 Start Zensical** task handles this for you.
 
 To check the same things from a terminal at the `case-work/` root (no activation needed):
 
