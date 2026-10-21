@@ -709,7 +709,6 @@ Rebuild dashboards after: creating a note · editing frontmatter · archiving a 
 case-work/
 ├── README.md                            ← project overview and quick start
 ├── LICENSE                              ← MIT license, plus third-party licenses
-├── ISSUES.md                            ← known issues and ideas (not part of the site)
 ├── .env.example                         ← template for your .env (Jira, view toggles)
 ├── install.sh                           ← one-step installer (./install.sh --help)
 ├── requirements.txt                     ← Python packages for .venv (Zensical)
@@ -742,7 +741,6 @@ case-work/
 │   ├── copy_remote_steps.py             ← copies steps performed from remote support note to clipboard
 │   ├── jira_reminders.py                ← syncs Jira tickets to macOS Reminders (optional integration)
 │   ├── migrate_image_layout.py          ← one-off: converts old screenshot blocks to the lightbox layout
-│   ├── toggle_terminal.py               ← applies AUTO_CLOSE_TERMINAL from .env to tasks.json
 │   ├── sync_reminders.sh               ← syncs 🔔 Next Action tasks to macOS Reminders on save
 │   └── toggle_view.py                  ← toggles Explorer between focused and full view via files.exclude
 ├── integrations/                        ← setup scripts and config for optional integrations
