@@ -40,7 +40,8 @@ Use the **🔁 Toggle File Visibility** task to switch the Explorer between a fo
 | **📋 Copy Prior Actions (Salesforce)** | `Ctrl+Shift+P` → Run Task | Copies the steps performed from the Remote Support Note at the cursor, formatted as `--- Month Nth ---` + `+ step` lines |
 | **🟢 Start Zensical** | `Ctrl+Shift+P` → Run Task | Builds the dashboards, then starts the local site at `http://127.0.0.1:8000` — run once per session and leave it open |
 | **🛑 Stop Zensical** | `Ctrl+Shift+P` → Run Task | Kills the Zensical server process |
-| **🔔 Sync to Reminders** | Auto on `Cmd+S` | Pushes `▶️ Next Action` tasks to the macOS Reminders "Case Actions" list — active and followup only |
+| **🔔 Sync to Reminders** | Auto on `Cmd+S` | Pushes `🔔 Next Action` tasks to the macOS Reminders "Case Actions" list — active and followup only |
+| **🔔 Sync Reminders Now** | `Ctrl+Shift+P` → Run Task | Runs the Reminders sync on the open case note and keeps the output visible — use it to test the sync or see why it failed |
 | **📎📸 Insert Assets** | Auto on `Cmd+S` | Runs on every save — picks up any matching files and screenshots at the workspace root and inserts them into the note |
 | **⏰ Install Jira Reminders Schedule** | `Ctrl+Shift+P` → Run Task | One-time setup — installs a background schedule that syncs Jira KB/Docs tasks to Reminders at 09:30 and 12:30 daily |
 | **🔄 Run Jira Reminders Now** | `Ctrl+Shift+P` → Run Task | Manually triggers the Jira → Reminders sync without waiting for the schedule |
@@ -53,10 +54,10 @@ Use the **🔁 Toggle File Visibility** task to switch the Explorer between a fo
 
 ## 🔔 Reminders Sync
 
-Action items in the **▶️ Next Action** section of any active or follow-up case note are automatically synced to the macOS **Reminders** app whenever you save the file.
+Action items in the **🔔 Next Action** section of any active or follow-up case note are automatically synced to the macOS **Reminders** app whenever you save the file.
 
 ```
-1. Add tasks under ## ▶️ Next Action using standard checkboxes:
+1. Add tasks under ## 🔔 Next Action using standard checkboxes:
 
       - [ ] Call customer to confirm reproduction steps
       - [ ] Open engineering ticket
@@ -90,6 +91,20 @@ The `@` annotation is stripped from the Reminders title — only the task text i
 
 !!! tip "Duplicate prevention"
     Saving multiple times is safe — the script checks for existing reminders before creating new ones.
+
+**First run: allow access to Reminders**
+
+The first time the sync runs, macOS asks whether **Visual Studio Code** may control **Reminders**. Click **Allow** (or **OK**). Until you do, nothing reaches Reminders.
+
+The easiest way to trigger that prompt is to open a case note that has a task under **🔔 Next Action**, then run **🔔 Sync Reminders Now** (`Ctrl+Shift+P` → Run Task). The terminal shows `Reminders synced.` or the reason it failed.
+
+**Troubleshooting**
+
+| Symptom | Fix |
+| ------- | --- |
+| Nothing happens on save | Check the **Run on Save** extension (`emeraldwalk.RunOnSave`) is installed and the workspace is trusted. Its output is under **View → Output → Run On Save**. |
+| `Not authorized to send Apple events to Reminders` / `-1743` | System Settings → Privacy & Security → **Automation** → Visual Studio Code → turn on **Reminders**. If VS Code isn't listed, run `tccutil reset AppleEvents com.microsoft.VSCode` in Terminal, restart VS Code, and run **🔔 Sync Reminders Now** again to get the prompt back. |
+| Task is skipped | Tasks must be unchecked `- [ ]` lines under the **🔔 Next Action** heading, in a note in `docs/cases/active/` or `docs/cases/followup/` with a `case_number` in its frontmatter. |
 
 ---
 
@@ -257,7 +272,7 @@ Then `Tab` through each field.
     | **6** | Next action | First action item |
     | done | Customer Files tab | Cursor lands here; run Insert Customer Files task when ready |
 
-    **Page sections:** 🔍 Description · ▶️ Next Action · 🔄 Follow-up · 🛠️ Steps Taken
+    **Page sections:** 🔍 Description · 🔔 Next Action · 🔄 Follow-up · 🛠️ Steps Taken
     **Attachment tabs (below Steps Taken):** 📎 Customer Files · 📸 Screenshots
 
 === "🤝 1-on-1 Meeting"
@@ -597,7 +612,7 @@ case-work/
 │   ├── append_terminal_block.py         ← appends clipboard as timestamped code block
 │   ├── copy_salesforce_notes.py         ← converts remote support note to Salesforce plain text
 │   ├── copy_remote_steps.py             ← copies steps performed from remote support note to clipboard
-│   ├── sync_reminders.sh               ← syncs ▶️ Next Action tasks to macOS Reminders on save
+│   ├── sync_reminders.sh               ← syncs 🔔 Next Action tasks to macOS Reminders on save
 │   └── toggle_view.py                  ← toggles Explorer between focused and full view via files.exclude
 ├── integrations/                        ← setup scripts and config for optional integrations (Jira reminders)
 └── docs/                                ← Zensical serves everything from here

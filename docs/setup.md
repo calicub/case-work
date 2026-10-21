@@ -217,6 +217,9 @@ To check the same things from a terminal at the `case-work/` root (no activation
 
 **Success looks like:** The first ends with `Done.`; the second prints `No issues found` and `Build finished`.
 
+!!! tip "Using the Reminders sync?"
+    macOS asks once for permission before VS Code can add reminders. See [Guide → Reminders Sync](guide.md#reminders-sync) to trigger the prompt and test it.
+
 !!! tip "Virtual environment tip"
     Never install Zensical or project packages globally with `sudo pip`. Always install inside `.venv` so nothing conflicts with system Python.
 

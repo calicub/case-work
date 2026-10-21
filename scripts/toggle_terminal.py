@@ -8,7 +8,7 @@ TASKS = ROOT / ".vscode" / "tasks.json"
 ENV_FILE = ROOT / ".env"
 
 # Tasks that should never auto-close regardless of the flag
-NEVER_CLOSE = {"🖥️ Start Session Log", "⏰ Install Jira Reminders Schedule", "🟢 Start Zensical"}
+NEVER_CLOSE = {"🖥️ Start Session Log", "🔔 Sync Reminders Now", "⏰ Install Jira Reminders Schedule", "🟢 Start Zensical"}
 
 
 def read_env():

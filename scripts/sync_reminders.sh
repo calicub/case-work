@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Parses ## ▶️ Next Action from a case note and syncs tasks to macOS Reminders.
+# Parses ## 🔔 Next Action from a case note and syncs tasks to macOS Reminders.
 # Only processes files in docs/cases/active/ or docs/cases/followup/.
 # Archive is intentionally excluded — never process it.
 #
@@ -11,6 +11,26 @@
 FILE="$1"
 
 [[ -z "$FILE" || ! -f "$FILE" ]] && exit 0
+
+# Accept relative paths when run by hand
+FILE="$(cd "$(dirname "$FILE")" && pwd)/$(basename "$FILE")"
+
+# Run osascript, and explain the common failure instead of failing silently.
+run_osascript() {
+  local out err status errfile
+  errfile=$(mktemp)
+  out=$(osascript 2>"$errfile")
+  status=$?
+  err=$(cat "$errfile"); rm -f "$errfile"
+  if [[ $status -ne 0 ]]; then
+    echo "Reminders sync failed: $err" >&2
+    if [[ "$err" == *"-1743"* || "$err" == *"Not authorized"* ]]; then
+      echo "macOS blocked access to Reminders. Allow it in System Settings → Privacy & Security → Automation (Visual Studio Code → Reminders), then save the note again." >&2
+    fi
+    exit 1
+  fi
+  printf '%s' "$out"
+}
 
 # Guard: only active and followup
 if [[ "$FILE" != */docs/cases/active/* && "$FILE" != */docs/cases/followup/* ]]; then
@@ -25,7 +45,7 @@ CURRENT_YEAR=$(date +%Y)
 LIST_NAME="Case Actions"
 
 # Reverse sync: if a reminder for this case was completed in Reminders, mark it done in the note first.
-completed_tasks=$(osascript << OSEOF
+completed_tasks=$(run_osascript << OSEOF
 tell application "Reminders"
   if not (exists list "$LIST_NAME") then return ""
   set caseList to list "$LIST_NAME"
@@ -41,7 +61,7 @@ tell application "Reminders"
   return output
 end tell
 OSEOF
-)
+) || exit 1
 
 if [[ -n "$completed_tasks" ]]; then
   while IFS= read -r task; do
@@ -52,7 +72,7 @@ if [[ -n "$completed_tasks" ]]; then
   done <<< "$completed_tasks"
 fi
 
-# Parse ## ▶️ Next Action section (after reverse-sync edits above)
+# Parse ## 🔔 Next Action section (after reverse-sync edits above)
 IN_SECTION=0
 OPEN_TASKS=()
 OPEN_DATES=()
@@ -171,4 +191,4 @@ make_date_as() {
   done
 
   echo "end tell"
-} | osascript
+} | run_osascript

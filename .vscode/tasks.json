@@ -81,6 +81,21 @@
       }
     },
     {
+      "label": "🔔 Sync Reminders Now",
+      "type": "shell",
+      "command": "bash '${workspaceFolder}/scripts/sync_reminders.sh' '${file}' && echo 'Reminders synced.'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": false
+      }
+    },
+    {
       "label": "📎 Insert Customer Files",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/bin/python3 scripts/insert_assets.py '${file}' --files",
@@ -159,7 +174,9 @@
       "label": "🟢 Start Zensical",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/bin/python3 scripts/dashboard.py && ${workspaceFolder}/.venv/bin/zensical serve",
-      "dependsOn": ["🛑 Stop Zensical"],
+      "dependsOn": [
+        "🛑 Stop Zensical"
+      ],
       "options": {
         "cwd": "${workspaceFolder}"
       },
