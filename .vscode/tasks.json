@@ -111,6 +111,21 @@
       }
     },
     {
+      "label": "📸 Capture Screenshot",
+      "type": "shell",
+      "command": "bash '${workspaceFolder}/scripts/capture_screenshot.sh' '${file}'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": false
+      }
+    },
+    {
       "label": "📸 Insert Screenshots",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/bin/python3 scripts/insert_assets.py '${file}' --screenshots",

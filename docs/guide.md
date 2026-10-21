@@ -33,6 +33,7 @@ Use the **🔁 Toggle File Visibility** task to switch the Explorer between a fo
 |------|-----------|--------------|
 | **Rebuild Dashboards** | `Cmd+Shift+B` | Regenerates the Dashboard, Meetings, Knowledge Base and Tags pages from your note frontmatter. A running site reloads by itself, with no restart needed |
 | **📎 Insert Customer Files** | `Cmd+Shift+P` → Run Task | Finds files at project root matching the case number, moves them to `docs/assets/files/`, inserts links into `## 📎 Customer Files` — also runs automatically on save |
+| **📸 Capture Screenshot** | `Cmd+Shift+P` → Run Task | Opens the macOS screenshot selector and adds the capture to the open case note — see [Screenshot Workflow](#screenshot-workflow) |
 | **📸 Insert Screenshots** | `Cmd+Shift+P` → Run Task | Finds screenshots at project root matching the case number, moves them to `docs/assets/screenshots/`, inserts image blocks into `## 📸 Screenshots` — also runs automatically on save |
 | **📌 Append Terminal Block** | `Ctrl+Shift+;` | Reads clipboard and appends a timestamped code block to **🛠️ Steps Taken** in the active case note |
 | **🖥️ Start Session Log** | `Cmd+Shift+P` → Run Task | Starts a `script` recording session — saves everything to `docs/assets/files/casenumber-terminal-session-date.txt` |
@@ -412,7 +413,7 @@ The **🏷️ Tags** page in the nav aggregates every tagged note across the who
 
       [123456 - export.csv](../../assets/files/123456-export.csv)
 
-4. Cmd+Shift+B → rebuild dashboards → browser auto-reloads
+   The running site reloads on its own.
 ```
 
 ---
@@ -527,24 +528,40 @@ Zensical renders them as inline SVGs — they scale with text and respect the cu
 
 ## 📸 Screenshot Workflow
 
+**Easiest: capture straight into the note**
+
 ```
-1. Take screenshot → Automator renames it:  123456 - description.png
-                                             saved to case-work/ root
+1. Click into the case note in VS Code
 
-2. Focus the case note tab in VS Code and save (Cmd+S)
+2. Cmd+Shift+P → Run Task → 📸 Capture Screenshot
 
-   → Screenshots are picked up and inserted automatically.
+3. Drag to select an area (Space captures a window, Esc cancels)
+
+   → The image is saved as 123456-screenshot-<date-time>.png, moved to
+     docs/assets/screenshots/ and added to the note's 📸 Screenshots tab.
+```
+
+The first time, macOS asks to let **Visual Studio Code** record the screen. Allow it in System Settings → Privacy & Security → **Screen & System Audio Recording**, then quit and reopen VS Code. If captures come out showing only your desktop wallpaper, that permission is still off.
+
+**Any other image**
+
+```
+1. Put the image in the case-work/ folder (the project root), with a name that
+   starts with the case number followed by a space, dash or underscore:
+
+      123456 - login error.png
+      123456_settings.jpg
+
+   macOS names screenshots "Screenshot <date> at <time>.png" and saves them to
+   the Desktop, so rename and move them first.
+
+2. Save the case note (Cmd+S)
+
+   → Matching images are picked up and inserted automatically.
    → Or run manually: Cmd+Shift+P → Run Task → 📸 Insert Screenshots
-
-3. Script moves image to docs/assets/screenshots/ and writes this into the note:
-
-   ![123456 - description](../../assets/screenshots/123456-description.png){ loading=lazy }
-   /// caption
-   123456 - description
-   ///
-
-4. Cmd+Shift+B → rebuild dashboards → browser auto-reloads
 ```
+
+Either way, the image is moved to `docs/assets/screenshots/` (spaces become dashes) and shown as a thumbnail grid in the note's **📸 Screenshots** tab. The running site reloads on its own. Supported types: `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`.
 
 !!! tip "Click to zoom"
     Click any screenshot thumbnail to open it full-size in a lightbox overlay. Once open, click or scroll on the image to zoom into fine detail, and use Next/Prev (or arrow keys) to page through every screenshot on the note — navigation loops endlessly, so you never hit a dead end at the first or last image.
@@ -634,6 +651,9 @@ case-work/
 ├── scripts/
 │   ├── dashboard.py                     ← regenerates all dashboards and index pages, syncs PKB template categories
 │   ├── insert_assets.py                 ← moves & inserts screenshots and files into case notes (runs on save)
+│   ├── capture_screenshot.sh            ← takes a screenshot for the open case note and inserts it
+│   ├── install_keybindings.py           ← adds the Ctrl+Shift+; shortcut to your VS Code shortcuts
+│   ├── sync_settings.py                 ← creates/updates .vscode/settings.json from the defaults
 │   ├── append_terminal_block.py         ← appends clipboard as timestamped code block
 │   ├── copy_salesforce_notes.py         ← converts remote support note to Salesforce plain text
 │   ├── copy_remote_steps.py             ← copies steps performed from remote support note to clipboard

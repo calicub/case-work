@@ -5,7 +5,6 @@
 .DS_store
 site
 .cache
-!.gitkeep
 *__pycache__*
 docs/cases/active/*.md
 docs/cases/archive/*.md
@@ -23,3 +22,4 @@ docs/meetings.md
 docs/pkb.md
 docs/tags.md
 docs/cases/templates/*.md
+!.gitkeep
