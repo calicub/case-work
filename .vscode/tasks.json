@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "🚀Rebuild Dashboards",
+      "label": "🚀 Rebuild Dashboards",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/bin/python3 scripts/dashboard.py",
       "options": {

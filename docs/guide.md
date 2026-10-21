@@ -521,7 +521,7 @@ Zensical renders them as inline SVGs — they scale with text and respect the cu
 
 1. Place SVG files in `overrides/.icons/<set-name>/`
    — subdirectories are supported: `overrides/.icons/<set-name>/<sub>/icon.svg` → `:set-name-sub-icon:`
-2. Symlinks work — point them at the source SVGs to avoid duplication
+2. Copy the SVG files in rather than symlinking them. A symlink points at a path on your Mac, so it breaks for anyone who clones the project
 3. Restart the site: `Cmd+Shift+P` → **Tasks: Run Task** → **🟢 Start Zensical** — no config changes needed
 
 ---
@@ -707,13 +707,17 @@ Rebuild dashboards after: creating a note · editing frontmatter · archiving a 
 
 ```
 case-work/
+├── README.md                            ← project overview and quick start
+├── LICENSE                              ← MIT license, plus third-party licenses
+├── ISSUES.md                            ← known issues and ideas (not part of the site)
+├── .env.example                         ← template for your .env (Jira, view toggles)
 ├── install.sh                           ← one-step installer (./install.sh --help)
 ├── requirements.txt                     ← Python packages for .venv (Zensical)
 ├── zensical.toml                        ← site config (TOML — not mkdocs.yml)
 ├── pkb-categories.yaml                  ← Knowledge Base tabs (see Customizing PKB Tabs)
 ├── overrides/                           ← Zensical theme overrides
 │   └── .icons/                          ← custom icon sets (use as :set-name: in notes)
-│       └── k8s/                         ← Kubernetes icons — symlinked from docs/assets/images/kubernetes/
+│       └── k8s/                         ← official Kubernetes icons (Apache-2.0 / CC-BY-4.0, see LICENSE)
 ├── .foam/
 │   └── templates/                       ← Foam note templates (one per note type)
 │       ├── case.md                      ← new support case
@@ -736,9 +740,15 @@ case-work/
 │   ├── append_terminal_block.py         ← appends clipboard as timestamped code block
 │   ├── copy_salesforce_notes.py         ← converts remote support note to Salesforce plain text
 │   ├── copy_remote_steps.py             ← copies steps performed from remote support note to clipboard
+│   ├── jira_reminders.py                ← syncs Jira tickets to macOS Reminders (optional integration)
+│   ├── migrate_image_layout.py          ← one-off: converts old screenshot blocks to the lightbox layout
+│   ├── toggle_terminal.py               ← applies AUTO_CLOSE_TERMINAL from .env to tasks.json
 │   ├── sync_reminders.sh               ← syncs 🔔 Next Action tasks to macOS Reminders on save
 │   └── toggle_view.py                  ← toggles Explorer between focused and full view via files.exclude
-├── integrations/                        ← setup scripts and config for optional integrations (Jira reminders)
+├── integrations/                        ← setup scripts and config for optional integrations
+│   ├── install_schedule.sh              ← installs the Jira reminders schedule
+│   ├── com.casework.jira-reminders.plist ← Jira reminders schedule template
+│   └── Rename Screenshot.workflow       ← Finder Quick Action that adds a case number to screenshots
 └── docs/                                ← Zensical serves everything from here
     ├── index.md                         ← home page
     ├── dashboard.md                     ← tabbed case dashboard (auto-generated)
@@ -747,7 +757,6 @@ case-work/
     ├── tags.md                          ← tag index across all notes (auto-generated)
     ├── guide.md                         ← this page
     ├── setup.md                         ← setup and upgrade instructions
-    ├── markdown.md                      ← markdown syntax reference
     ├── cases/                           ← all case lifecycle notes
     │   ├── active/                      ← open cases in progress
     │   ├── followup/                    ← cases awaiting action or response
@@ -760,7 +769,8 @@ case-work/
     │   ├── 1on1/                        ← 1-on-1 notes with manager
     │   ├── team/                        ← team meeting notes
     │   └── general/                     ← all other meeting notes
-    ├── pkb/                             ← personal KB articles (category set in frontmatter)
+    ├── pkb/                             ← PKB Notes and KB Articles (category set in frontmatter)
+    │   └── markdown.md                  ← Markdown syntax reference (example note)
     ├── assets/                          ← static assets served by Zensical
     │   ├── files/                       ← customer-provided files (moved here by script)
     │   ├── screenshots/                 ← case screenshots (moved here by script)

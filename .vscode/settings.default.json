@@ -21,11 +21,11 @@
     "commands": [
       {
         "match": "docs/cases/(active|followup)/.+\\.md$",
-        "cmd": "bash ${workspaceFolder}/scripts/sync_reminders.sh ${file}"
+        "cmd": "bash '${workspaceFolder}/scripts/sync_reminders.sh' '${file}'"
       },
       {
         "match": "docs/cases/(active|followup|archive)/.+\\.md$",
-        "cmd": "${workspaceFolder}/.venv/bin/python3 ${workspaceFolder}/scripts/insert_assets.py ${file}"
+        "cmd": "'${workspaceFolder}/.venv/bin/python3' '${workspaceFolder}/scripts/insert_assets.py' '${file}'"
       }
     ]
   },

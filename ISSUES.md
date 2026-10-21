@@ -20,6 +20,11 @@ Backlog of known problems and possible improvements for the case-work setup that
 
 ## Enhancements
 
-- Implement GLightbox for image galleries
-- Dashboards should be able to be sorted and filtered by colum
-- Add date created/modified to the dashboard (Active) - this will most likely require additional fields in the header of the note
+- Dashboards: filter by column (sorting is done)
+- Dashboards: show date modified (date created is done)
+
+## Done
+
+- GLightbox for image galleries (2026-07-07)
+- Sortable dashboard columns (2026-07-07)
+- Date created on the dashboards (2026-07-07)
