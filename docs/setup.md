@@ -160,11 +160,15 @@ This ensures all tasks and scripts use the project virtual environment automatic
 
 Foam needs VS Code opened on the workspace file, not just the folder, so the project settings, tasks and templates load.
 
-1. Open the workspace:
+1. Create your VS Code settings, then open the workspace:
 
     ```bash
-    code ~/case-work/.vscode/case-work.code-workspace
+    cd ~/case-work
+    .venv/bin/python3 scripts/sync_settings.py
+    code .vscode/case-work.code-workspace
     ```
+
+    **What the first command does:** Creates `.vscode/settings.json` from the tracked defaults in `.vscode/settings.default.json`. Your `settings.json` is gitignored, so VS Code prompts, the Toggle File Visibility task and your own tweaks never block `git pull`. Each dashboard rebuild adds any new default settings from future updates and leaves your changes alone.
 
     Or in VS Code: **File → Open Workspace from File…** → `.vscode/case-work.code-workspace`.
 
@@ -308,3 +312,19 @@ rm -rf .venv
 ```
 
 **Success looks like:** A version number prints. Then re-select the interpreter in VS Code (`Ctrl+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`).
+
+### `git pull` says local changes to `.vscode/settings.json` would be overwritten
+
+**Cause:** Clones made before `settings.json` became a personal, gitignored file still have it tracked. Any change from VS Code or the Toggle File Visibility task blocks the pull.
+
+**Fix** (run from the `case-work/` root; it keeps your current settings):
+
+```bash
+cp .vscode/settings.json /tmp/my-vscode-settings.json
+git checkout -- .vscode/settings.json
+git pull
+cp /tmp/my-vscode-settings.json .vscode/settings.json
+.venv/bin/python3 scripts/sync_settings.py
+```
+
+**Success looks like:** `git pull` finishes, and `git status` no longer lists `.vscode/settings.json`, now or after future changes.

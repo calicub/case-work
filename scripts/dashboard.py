@@ -8,6 +8,8 @@ from datetime import datetime
 
 import yaml
 
+from sync_settings import ensure_settings
+
 BASE = Path(__file__).parent.parent / "docs"
 
 PRIORITY_RANK = {"P1": 0, "P2": 1, "P3": 2, "P4": 3}
@@ -293,6 +295,7 @@ def write_meetings_page():
 
 
 if __name__ == "__main__":
+    ensure_settings(quiet=True)
     print("Rebuilding dashboards...")
 
     # Combined tabbed dashboard — links relative to docs/

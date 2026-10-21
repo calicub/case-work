@@ -39,6 +39,7 @@ cd ~/case-work
 /opt/homebrew/bin/python3 -m venv .venv
 .venv/bin/pip install zensical
 cp .env.example .env
+.venv/bin/python3 scripts/sync_settings.py
 code .vscode/case-work.code-workspace
 ```
 
@@ -56,6 +57,7 @@ Daily use, templates, tasks and customization are covered in [docs/guide.md](doc
 - **Knowledge base tabs**: edit `pkb-categories.yaml`, then rebuild. The template dropdowns update to match.
 - **Templates**: `.foam/templates/`.
 - **Snippets**: `.vscode/case-work.code-snippets`.
+- **VS Code settings**: edit `.vscode/settings.json`, your own gitignored copy. Defaults live in `.vscode/settings.default.json`; new defaults are added to your copy on each rebuild, and your changes are kept.
 - **Site look and navigation**: `zensical.toml`.
 - **Personal settings** (Jira, Explorer toggles): `.env` (gitignored).
 

@@ -3,6 +3,8 @@
 import json
 from pathlib import Path
 
+from sync_settings import ensure_settings
+
 ROOT = Path(__file__).parent.parent
 SETTINGS = ROOT / ".vscode" / "settings.json"
 ENV_FILE = ROOT / ".env"
@@ -43,6 +45,7 @@ def write_env(updates: dict):
     ENV_FILE.write_text("\n".join(lines) + "\n")
 
 
+ensure_settings(quiet=True)
 env = read_env()
 settings = json.loads(SETTINGS.read_text())
 

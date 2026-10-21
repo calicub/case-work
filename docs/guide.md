@@ -603,7 +603,8 @@ case-work/
 │       └── kb-article.md                ← KB Article: one specific issue for a topic or product
 ├── .vscode/
 │   ├── case-work.code-workspace         ← open this to start the Foam workspace
-│   ├── settings.json                    ← Foam config, editor settings, snippet support
+│   ├── settings.default.json            ← default Foam/editor settings (tracked)
+│   ├── settings.json                    ← your copy, created from the defaults (gitignored)
 │   ├── tasks.json                       ← all Ctrl+Shift+P runnable tasks
 │   └── case-work.code-snippets          ← workspace snippets (remotenote, casedesc, etc.)
 ├── scripts/

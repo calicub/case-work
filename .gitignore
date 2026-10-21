@@ -1,6 +1,7 @@
 .venv
 .env
 .claude
+.vscode/settings.json
 .DS_store
 site
 .cache
