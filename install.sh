@@ -131,7 +131,9 @@ elif [[ -d "$QA_SRC" ]]; then
   if confirm "Install the Rename Screenshot Quick Action (adds the case number to selected screenshots in Finder)?"; then
     mkdir -p "$HOME/Library/Services"
     cp -R "$QA_SRC" "$QA_DEST"
-    ok "Installed. Right-click screenshots in Finder → Quick Actions → Rename Screenshot"
+    ok "Installed"
+    warn "Turn it on: in Finder, right-click a file → Quick Actions → Customize… → check Rename Screenshot"
+    warn "First use: click Allow when macOS asks to let it control Finder"
     warn "Optional shortcut: System Settings → Keyboard → Keyboard Shortcuts… → Services → Rename Screenshot"
   else
     warn "Skipped Quick Action"

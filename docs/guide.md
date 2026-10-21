@@ -546,14 +546,16 @@ The first time, macOS asks to let **Visual Studio Code** record the screen. Allo
 **Any other image**
 
 ```
-1. Put the image in the case-work/ folder (the project root), with a name that
-   starts with the case number followed by a space, dash or underscore:
+1. Put the image in docs/assets/screenshots/ (or the case-work/ project root),
+   with a name that starts with the case number followed by a space, dash or
+   underscore:
 
       123456 - login error.png
       123456_settings.jpg
 
    macOS names screenshots "Screenshot <date> at <time>.png" and saves them to
-   the Desktop, so rename and move them first.
+   the Desktop. The two sections below change where they're saved and add the
+   case number in one step.
 
 2. Save the case note (Cmd+S)
 
@@ -561,35 +563,35 @@ The first time, macOS asks to let **Visual Studio Code** record the screen. Allo
    → Or run manually: Cmd+Shift+P → Run Task → 📸 Insert Screenshots
 ```
 
-Either way, the image is moved to `docs/assets/screenshots/` (spaces become dashes) and shown as a thumbnail grid in the note's **📸 Screenshots** tab. The running site reloads on its own. Supported types: `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`.
+Either way, the image ends up in `docs/assets/screenshots/` with spaces turned into dashes, and is shown as a thumbnail grid in the note's **📸 Screenshots** tab. The running site reloads on its own. Supported types: `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`.
 
 ### Save Mac screenshots to the project
 
-Point macOS's screenshot tool (`Cmd+Shift+3`, `Cmd+Shift+4`, `Cmd+Shift+5`) at the `case-work` folder so new screenshots land where the script looks for them:
+Point macOS's screenshot tool (`Cmd+Shift+3`, `Cmd+Shift+4`, `Cmd+Shift+5`) at the project's screenshots folder, so new screenshots land where the script looks for them:
 
 1. Press `Cmd+Shift+5`.
 2. Click **Options** → under **Save to**, choose **Other Location…**.
-3. Select your `case-work` folder and click **Choose**.
+3. Go to `case-work/docs/assets/screenshots`, select the `screenshots` folder and click **Choose**.
 
 Or from Terminal:
 
 ```bash
-defaults write com.apple.screencapture location ~/case-work
+defaults write com.apple.screencapture location ~/case-work/docs/assets/screenshots
 killall SystemUIServer
 ```
 
-**What it does:** Every new screenshot is saved to `case-work/` instead of the Desktop. Screenshots still need the case number at the start of their name, so pair this with the Quick Action below.
+**What it does:** Every new screenshot is saved to `case-work/docs/assets/screenshots/` instead of the Desktop. Screenshots still need the case number at the start of their name, so pair this with the Quick Action below.
 
 To go back to the Desktop, choose **Desktop** in the same menu, or run `defaults delete com.apple.screencapture location && killall SystemUIServer`.
 
 !!! info "Kept out of git"
-    Files at the project root whose names start with a number (`123456 - …`) or with `Screenshot`, `Screen Shot` or `Screen Recording` are gitignored, so screenshots and customer files waiting there are never committed by accident.
+    Everything in `docs/assets/screenshots/` and `docs/assets/files/` is gitignored. So are files at the project root whose names start with a number (`123456 - …`) or with `Screenshot`, `Screen Shot` or `Screen Recording`. Screenshots and customer files are never committed by accident.
 
 ### Rename screenshots with a Quick Action
 
 A Finder Quick Action adds the case number to one or more selected screenshots in one step: `Screenshot 2026-10-21 at 12.27.00 PM.png` becomes `123456 - Screenshot 2026-10-21 at 12.27.00 PM.png`. The original timestamp is kept.
 
-**Install it:** `./install.sh` offers to install it for you. To install it by hand, copy `integrations/Rename Screenshot.workflow` into `~/Library/Services/` (in Finder: **Go → Go to Folder…** → `~/Library/Services`), or double-click the file and choose **Install**. Then skip to [assigning a shortcut](#assign-a-keyboard-shortcut-optional).
+**Install it:** `./install.sh` offers to install it for you. To install it by hand, copy `integrations/Rename Screenshot.workflow` into `~/Library/Services/` (in Finder: **Go → Go to Folder…** → `~/Library/Services`), or double-click the file and choose **Install**. Then [turn it on](#turn-it-on-in-finder).
 
 **Or build it yourself**
 
@@ -614,7 +616,16 @@ Automator's built-in **Rename Finder Items** action can't ask for the prefix, so
     end run
     ```
 
-5. Save it as **Rename Screenshot**. It appears in Finder's right-click menu under **Quick Actions**.
+5. Save it as **Rename Screenshot**.
+
+#### Turn it on in Finder
+
+A newly installed Quick Action may not show up until you switch it on:
+
+1. In Finder, right-click any file → **Quick Actions** → **Customize…**.
+2. Check **Rename Screenshot** and close the window.
+
+The first time you use it, macOS asks whether it may control Finder. Click **Allow** (or **OK**); without that, nothing gets renamed. If you clicked **Don't Allow**, turn it back on in System Settings → Privacy & Security → **Automation**.
 
 #### Assign a keyboard shortcut (optional)
 
@@ -624,7 +635,7 @@ Automator's built-in **Rename Finder Items** action can't ask for the prefix, so
 
 **Using it**
 
-1. In Finder, select one or more screenshots in `case-work/`.
+1. In Finder, select one or more screenshots in `case-work/docs/assets/screenshots/`.
 2. Press your shortcut (or right-click → **Quick Actions** → **Rename Screenshot**).
 3. Type the case number and click **Rename**.
 4. Save the case note in VS Code (`Cmd+S`) and the screenshots are inserted.

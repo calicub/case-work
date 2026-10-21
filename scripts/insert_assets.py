@@ -120,7 +120,7 @@ def run_files(note_path, case_number):
     moved = move_files(at_root)
     all_files = moved + in_dir
 
-    referenced = already_referenced(note_path, r"files/([^)\s]+)")
+    referenced = already_referenced(note_path, r"files/([^)\s\"']+)")
     new_files = [
         f for f in all_files
         if quote(f.name) not in referenced and f.name not in referenced
@@ -133,7 +133,8 @@ def run_files(note_path, case_number):
     print(f"📎  Inserting {len(new_files)} file(s):")
     for f in new_files:
         print(f"  {f.name}")
-    update_note(note_path, FILES_SECTION, build_file_block(new_files))
+    # Rebuild the tab from every file for this case, so earlier links are kept.
+    update_note(note_path, FILES_SECTION, build_file_block(sorted(all_files, key=lambda f: f.name)))
 
 
 # --- Screenshots ---
@@ -177,6 +178,19 @@ def build_image_block(images):
     return lines
 
 
+def tidy_name(img, referenced):
+    """Give an image saved straight into screenshots/ a clean name, unless a note already links to it."""
+    clean = clean_name(img.name)
+    if clean == img.name or quote(img.name) in referenced or img.name in referenced:
+        return img
+    dest = img.with_name(clean)
+    if dest.exists():
+        return img
+    img.rename(dest)
+    print(f"  Renamed: {img.name}  →  {dest.name}")
+    return dest
+
+
 def run_screenshots(note_path, case_number):
     print(f"🔍  Searching for screenshots matching '{case_number}'...")
     at_root, in_dir = find_screenshots(case_number)
@@ -186,9 +200,10 @@ def run_screenshots(note_path, case_number):
         return
 
     moved = move_screenshots(at_root)
+    referenced = already_referenced(note_path, r"screenshots/([^)\s\"']+)")
+    in_dir = [tidy_name(img, referenced) for img in in_dir]
     all_images = moved + in_dir
 
-    referenced = already_referenced(note_path, r"screenshots/([^)\s]+)")
     new_images = [
         img for img in all_images
         if quote(img.name) not in referenced and img.name not in referenced
@@ -201,7 +216,8 @@ def run_screenshots(note_path, case_number):
     print(f"📸  Inserting {len(new_images)} screenshot(s):")
     for img in new_images:
         print(f"  {img.name}")
-    update_note(note_path, SCREENSHOTS_SECTION, build_image_block(new_images))
+    # Rebuild the tab from every screenshot for this case, so earlier ones are kept.
+    update_note(note_path, SCREENSHOTS_SECTION, build_image_block(sorted(all_images, key=lambda f: f.name)))
 
 
 # --- Entry point ---
