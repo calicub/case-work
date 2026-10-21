@@ -3,6 +3,7 @@
 .claude
 .DS_store
 site
+.cache
 !.gitkeep
 *__pycache__*
 docs/cases/active/*.md

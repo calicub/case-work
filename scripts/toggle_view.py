@@ -12,12 +12,10 @@ DEFAULT_HIDDEN = {
     "docs/assets/stylesheets": True,
     "docs/dashboards": True,
     "docs/javascripts": True,
-    "docs/stylesheets": True,
     "docs/index.md": True,
     "docs/dashboard.md": True,
     "docs/meetings.md": True,
     "docs/pkb.md": True,
-    "docs/markdown.md": True,
 }
 
 

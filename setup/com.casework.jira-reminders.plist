@@ -15,7 +15,7 @@
   <array>
     <string>/bin/zsh</string>
     <string>-c</string>
-    <string>source ~/.zprofile 2>/dev/null; source ~/.zshrc 2>/dev/null; python3 REPO_PATH/scripts/jira_reminders.py >> /tmp/jira-reminders.log 2>&1</string>
+    <string>source ~/.zprofile 2>/dev/null; source ~/.zshrc 2>/dev/null; REPO_PATH/.venv/bin/python3 REPO_PATH/scripts/jira_reminders.py >> /tmp/jira-reminders.log 2>&amp;1</string>
   </array>
 
   <!-- Run at 09:30 and 12:30 every day -->
