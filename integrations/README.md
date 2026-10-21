@@ -8,6 +8,7 @@ This folder holds the setup scripts and configuration for optional integrations 
 | ---- | ----------- | ------- |
 | `install_schedule.sh` | Jira reminders | Installs or reinstalls the schedule (run via the **⏰ Install Jira Reminders Schedule** task) |
 | `com.casework.jira-reminders.plist` | Jira reminders | macOS launchd job template (the installer fills in the repo path) |
+| `Rename Screenshot.workflow` | Finder | Quick Action that adds a case number to selected screenshots; `install.sh` copies it to `~/Library/Services` |
 
 See [Jira Reminders](../docs/guide.md#jira-reminders) in the guide.
 

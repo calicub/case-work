@@ -121,6 +121,23 @@ else
   warn "VS Code not found. Install it from https://code.visualstudio.com, then run this script again."
 fi
 
+# ---------- 4b. Finder Quick Action ----------
+step "Rename Screenshot Quick Action"
+QA_SRC="$REPO/integrations/Rename Screenshot.workflow"
+QA_DEST="$HOME/Library/Services/Rename Screenshot.workflow"
+if [[ -d "$QA_DEST" ]]; then
+  ok "Already installed"
+elif [[ -d "$QA_SRC" ]]; then
+  if confirm "Install the Rename Screenshot Quick Action (adds the case number to selected screenshots in Finder)?"; then
+    mkdir -p "$HOME/Library/Services"
+    cp -R "$QA_SRC" "$QA_DEST"
+    ok "Installed. Right-click screenshots in Finder → Quick Actions → Rename Screenshot"
+    warn "Optional shortcut: System Settings → Keyboard → Keyboard Shortcuts… → Services → Rename Screenshot"
+  else
+    warn "Skipped Quick Action"
+  fi
+fi
+
 # ---------- 5. Project Python environment ----------
 step "Project environment (.venv)"
 if [[ -x .venv/bin/python3 ]]; then

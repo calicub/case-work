@@ -563,6 +563,74 @@ The first time, macOS asks to let **Visual Studio Code** record the screen. Allo
 
 Either way, the image is moved to `docs/assets/screenshots/` (spaces become dashes) and shown as a thumbnail grid in the note's **📸 Screenshots** tab. The running site reloads on its own. Supported types: `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`.
 
+### Save Mac screenshots to the project
+
+Point macOS's screenshot tool (`Cmd+Shift+3`, `Cmd+Shift+4`, `Cmd+Shift+5`) at the `case-work` folder so new screenshots land where the script looks for them:
+
+1. Press `Cmd+Shift+5`.
+2. Click **Options** → under **Save to**, choose **Other Location…**.
+3. Select your `case-work` folder and click **Choose**.
+
+Or from Terminal:
+
+```bash
+defaults write com.apple.screencapture location ~/case-work
+killall SystemUIServer
+```
+
+**What it does:** Every new screenshot is saved to `case-work/` instead of the Desktop. Screenshots still need the case number at the start of their name, so pair this with the Quick Action below.
+
+To go back to the Desktop, choose **Desktop** in the same menu, or run `defaults delete com.apple.screencapture location && killall SystemUIServer`.
+
+!!! info "Kept out of git"
+    Files at the project root whose names start with a number (`123456 - …`) or with `Screenshot`, `Screen Shot` or `Screen Recording` are gitignored, so screenshots and customer files waiting there are never committed by accident.
+
+### Rename screenshots with a Quick Action
+
+A Finder Quick Action adds the case number to one or more selected screenshots in one step: `Screenshot 2026-10-21 at 12.27.00 PM.png` becomes `123456 - Screenshot 2026-10-21 at 12.27.00 PM.png`. The original timestamp is kept.
+
+**Install it:** `./install.sh` offers to install it for you. To install it by hand, copy `integrations/Rename Screenshot.workflow` into `~/Library/Services/` (in Finder: **Go → Go to Folder…** → `~/Library/Services`), or double-click the file and choose **Install**. Then skip to [assigning a shortcut](#assign-a-keyboard-shortcut-optional).
+
+**Or build it yourself**
+
+Automator's built-in **Rename Finder Items** action can't ask for the prefix, so the Quick Action uses a short AppleScript.
+
+1. Open **Automator** and choose **New Document** → **Quick Action**.
+2. At the top, set **Workflow receives current** to **files or folders**, and **in** to **Finder**.
+3. Search for **Run AppleScript** in the actions list and drag it into the workflow.
+4. Delete the default script and paste this:
+
+    ```applescript
+    on run {input, parameters}
+        set answer to display dialog "Enter filename prefix:" default answer "" buttons {"Cancel", "Rename"} default button "Rename"
+        set prefix to text returned of answer
+        tell application "Finder"
+            repeat with f in input
+                set oldName to name of f
+                set name of f to prefix & " - " & oldName
+            end repeat
+        end tell
+        return input
+    end run
+    ```
+
+5. Save it as **Rename Screenshot**. It appears in Finder's right-click menu under **Quick Actions**.
+
+#### Assign a keyboard shortcut (optional)
+
+1. Open **System Settings** → **Keyboard** → **Keyboard Shortcuts…**.
+2. Select **Services** in the sidebar and find **Rename Screenshot** under **Files and Folders** (it may be under **General** instead).
+3. Check the box next to it, double-click the shortcut area on the right, and press your key combination.
+
+**Using it**
+
+1. In Finder, select one or more screenshots in `case-work/`.
+2. Press your shortcut (or right-click → **Quick Actions** → **Rename Screenshot**).
+3. Type the case number and click **Rename**.
+4. Save the case note in VS Code (`Cmd+S`) and the screenshots are inserted.
+
+If the shortcut does nothing, make sure Finder is the active app and the files are selected. Shortcuts already used by another app won't fire.
+
 !!! tip "Click to zoom"
     Click any screenshot thumbnail to open it full-size in a lightbox overlay. Once open, click or scroll on the image to zoom into fine detail, and use Next/Prev (or arrow keys) to page through every screenshot on the note — navigation loops endlessly, so you never hit a dead end at the first or last image.
 

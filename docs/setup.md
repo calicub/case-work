@@ -32,6 +32,7 @@ cd ~/case-work
 
 - installs Homebrew, Homebrew's Python and VS Code if they're missing;
 - installs the Foam, Python and Run on Save extensions, and offers to add the `Ctrl+Shift+;` keyboard shortcut for Append Terminal Block;
+- offers to install the **Rename Screenshot** Finder Quick Action;
 - builds the project's Python environment (`.venv`) with Zensical;
 - creates your `.env` and `.vscode/settings.json`;
 - builds the site and opens the project folder in VS Code.

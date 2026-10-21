@@ -66,6 +66,12 @@ def update_note(note_path, section, block_lines):
     print(f"  Updated '{section}'.")
 
 
+def clean_name(name):
+    """'123456 - Screenshot 12.27.00\u202fPM.png' -> '123456-Screenshot-12.27.00-PM.png'."""
+    name = re.sub(r"\s+", "-", name)        # any whitespace, incl. macOS's narrow no-break space
+    return re.sub(r"-{2,}", "-", name)       # ' - ' would otherwise become '---'
+
+
 # --- Files ---
 
 def find_files(case_number):
@@ -87,7 +93,7 @@ def move_files(files):
     FILES_DIR.mkdir(exist_ok=True)
     moved = []
     for src in files:
-        dest = FILES_DIR / src.name.replace(" ", "-")
+        dest = FILES_DIR / clean_name(src.name)
         src.rename(dest)
         moved.append(dest)
         print(f"  Moved: {src.name}  →  files/{dest.name}")
@@ -149,7 +155,7 @@ def move_screenshots(screenshots):
     SCREENSHOTS_DIR.mkdir(exist_ok=True)
     moved = []
     for src in screenshots:
-        dest = SCREENSHOTS_DIR / src.name.replace(" ", "-")
+        dest = SCREENSHOTS_DIR / clean_name(src.name)
         src.rename(dest)
         moved.append(dest)
         print(f"  Moved: {src.name}  →  screenshots/{dest.name}")

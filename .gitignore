@@ -22,4 +22,9 @@ docs/meetings.md
 docs/pkb.md
 docs/tags.md
 docs/cases/templates/*.md
+# Files waiting at the project root to be moved into a case note
+/[0-9]*
+/Screenshot*
+/Screen Shot*
+/Screen Recording*
 !.gitkeep
