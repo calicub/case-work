@@ -31,7 +31,7 @@ cd ~/case-work
 **What it does:** It asks before installing anything, then:
 
 - installs Homebrew, Homebrew's Python and VS Code if they're missing;
-- installs the Foam, Python and Run on Save extensions;
+- installs the Foam, Python and Run on Save extensions, and offers to add the `Ctrl+Shift+;` keyboard shortcut for Append Terminal Block;
 - builds the project's Python environment (`.venv`) with Zensical;
 - creates your `.env` and `.vscode/settings.json`;
 - builds the site and opens the project folder in VS Code.
@@ -237,7 +237,15 @@ Open the `case-work` folder itself in VS Code. Foam, the tasks and the on-save h
     | PKB Note / KB Article | A short name, e.g. `ldap-auth-troubleshooting` |
     | Meetings | Anything. The file is named by today's date |
 
-5. Optional: set your PKB tabs in `pkb-categories.yaml` now. See [Guide → Customizing PKB Tabs](guide.md#customizing-pkb-tabs).
+5. Optional: add the `Ctrl+Shift+;` shortcut for **📌 Append Terminal Block**. VS Code only reads keyboard shortcuts from your user settings, so run this once per Mac:
+
+    ```bash
+    python3 scripts/install_keybindings.py
+    ```
+
+    See [Guide → Append Terminal Block](guide.md#append-terminal-block) to add it by hand instead.
+
+6. Optional: set your PKB tabs in `pkb-categories.yaml` now. See [Guide → Customizing PKB Tabs](guide.md#customizing-pkb-tabs).
 
 !!! tip "Reopening later"
     Use **File → Open Recent** → `~/case-work`, or run `code ~/case-work`. Open the `case-work` folder itself, not its parent or a subfolder, or the settings, tasks and on-save hooks won't load.

@@ -111,6 +111,12 @@ if [[ -n "$CODE" && -x "$CODE" ]]; then
       "$CODE" --install-extension "$ext" >/dev/null 2>&1 && ok "Extension $ext" || warn "Couldn't install $ext; install it from the Extensions view"
     fi
   done
+  # VS Code only reads keyboard shortcuts from user settings, so add ours there.
+  if confirm "Add the Ctrl+Shift+; shortcut (Append Terminal Block) to your VS Code keyboard shortcuts?"; then
+    "$PY" scripts/install_keybindings.py | sed 's/^  /  ✓ /' || warn "Couldn't add the shortcut; see 'Append Terminal Block' in docs/guide.md to add it by hand"
+  else
+    warn "Skipped keyboard shortcut. Run the 📌 Append Terminal Block task from Cmd+Shift+P instead"
+  fi
 else
   warn "VS Code not found. Install it from https://code.visualstudio.com, then run this script again."
 fi

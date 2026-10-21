@@ -230,6 +230,29 @@ Capture a snippet of terminal output directly into **🛠️ Steps Taken**:
 5. Switch back to the terminal and continue working
 ```
 
+!!! warning "Click into the note first"
+    Step 3 matters: the shortcut appends to whichever file is active in the editor. If nothing seems to happen, click inside the case note and press the shortcut again. In the terminal, copy with **Cmd+C**. **Ctrl+C** stops the running command instead.
+
+**Setting up the shortcut**
+
+VS Code only reads keyboard shortcuts from your own user settings, not from a project folder, so `Ctrl+Shift+;` has to be added once per Mac. `./install.sh` offers to do it for you. To add it yourself, run:
+
+```bash
+python3 scripts/install_keybindings.py
+```
+
+Or add it by hand: `Cmd+Shift+P` → **Preferences: Open Keyboard Shortcuts (JSON)**, then add this entry inside the `[ ]`:
+
+```json
+{
+  "key": "ctrl+shift+;",
+  "command": "workbench.action.tasks.runTask",
+  "args": "📌 Append Terminal Block"
+}
+```
+
+Without the shortcut, run the task instead: `Cmd+Shift+P` → **Tasks: Run Task** → **📌 Append Terminal Block**.
+
 ### Session Logging
 
 Record an entire terminal session (useful for long cluster investigations):
