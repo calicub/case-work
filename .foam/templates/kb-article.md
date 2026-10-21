@@ -1,10 +1,10 @@
 ---
 foam_template:
   name: "KB Article"
-  description: "General knowledge base article — how-to, reference, or troubleshooting"
+  description: "Focused article on a specific issue for a specific topic or product — how-to, reference, or troubleshooting"
   filepath: "docs/pkb/$FOAM_SLUG.md"
 title: ${1:Title}
-category: ${2|Tools,Troubleshooting,Kubernetes,General|}
+category: ${2|Tools,Troubleshooting,Kubernetes,Other|}
 type: ${3|how-to,reference,troubleshooting,concept|}
 tags:
   - ${4:product-tag}

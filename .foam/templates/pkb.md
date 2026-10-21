@@ -1,10 +1,10 @@
 ---
 foam_template:
   name: "PKB Note"
-  description: "Personal knowledge base note"
+  description: "Topic overview — collects the helpful KBs, engineering tickets, Confluence pages and doc links for one area"
   filepath: "docs/pkb/$FOAM_SLUG.md"
 title: ${1:Title}
-category: ${2|Tools,Troubleshooting,Kubernetes|}
+category: ${2|Tools,Troubleshooting,Kubernetes,Other|}
 tags:
   - ${3:product-tag}
   - ${4:topic-tag}
@@ -15,30 +15,30 @@ created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE
 
 ## 📝 Overview
 
-${4:Notes and context}
+${5:Notes and context}
 
 ## 📋 KB Articles
 
 | KB Link | Notes |
 | ------- | ----- |
-| ${5:link} | ${6:note} |
+| ${6:link} | ${7:note} |
 
 ## 🔧 Engineering Tickets
 
 | Ticket # | Fixed Version | Notes |
 | ----- | ------------- | ----- |
-| ${7:PROJ-1234} | ${8:version} | ${9:note} |
+| ${8:PROJ-1234} | ${9:version} | ${10:note} |
 
 ## 📘 Confluence
 
 | Link | Description |
 | ---- | ----------- |
-| ${10:link} | ${11:description} |
+| ${11:link} | ${12:description} |
 
 ## 📄 Doc References
 
 | Link | Description |
 | ---- | ----------- |
-| ${12:link} | ${13:description} |
+| ${13:link} | ${14:description} |
 
 $0

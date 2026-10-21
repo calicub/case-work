@@ -2,8 +2,11 @@
 """Regenerate dashboard tables from case/kb frontmatter."""
 
 import re
+import sys
 from pathlib import Path
 from datetime import datetime
+
+import yaml
 
 BASE = Path(__file__).parent.parent / "docs"
 
@@ -113,12 +116,58 @@ def write_section_dashboard(filename, title, header, rows):
     )
     print(f"  {filename}: {len(rows)} entries")
 
+PKB_CONFIG = BASE.parent / "pkb-categories.yaml"
+PKB_TEMPLATES = [
+    BASE.parent / ".foam" / "templates" / "pkb.md",
+    BASE.parent / ".foam" / "templates" / "kb-article.md",
+]
+IMAGE_EXTS = (".svg", ".png", ".jpg", ".jpeg", ".gif", ".webp")
 
-PKB_CATEGORIES = ["Tools", "Troubleshooting", "Kubernetes", "Other"]
 
-PKB_TAB_LABELS = {
-    "Kubernetes": '<img src="assets/images/kubernetes/logo.svg" style="height:1em;vertical-align:middle;margin-right:4px;"> Kubernetes',
-}
+def load_pkb_config():
+    """Read PKB tabs from pkb-categories.yaml. Returns (categories, labels)."""
+    if not PKB_CONFIG.exists():
+        print(f"  {PKB_CONFIG.name} not found, using a single 'Other' tab")
+        return ["Other"], {}
+    data = yaml.safe_load(PKB_CONFIG.read_text(encoding="utf-8")) or {}
+    other = str(data.get("other_tab") or "Other").strip()
+    categories, labels = [], {}
+    for item in data.get("categories") or []:
+        if isinstance(item, str):
+            item = {"name": item}
+        name = str(item.get("name", "")).strip()
+        if not name:
+            continue
+        if "," in name or "|" in name:
+            sys.exit(f"{PKB_CONFIG.name}: category '{name}' can't contain ',' or '|'")
+        categories.append(name)
+        icon = str(item.get("icon") or "").strip()
+        if icon.lower().endswith(IMAGE_EXTS):
+            labels[name] = (
+                f'<img src="{icon}" style="height:1em;vertical-align:middle;'
+                f'margin-right:4px;"> {name}'
+            )
+        elif icon:
+            labels[name] = f"{icon} {name}"
+    categories.append(other)
+    return categories, labels
+
+
+def sync_template_categories():
+    """Make the `category` dropdown in the PKB templates match the config."""
+    choices = ",".join(PKB_CATEGORIES)
+    pattern = re.compile(r"^(category: \$\{\d+\|)[^|}]*(\|\})", re.MULTILINE)
+    for path in PKB_TEMPLATES:
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8")
+        new = pattern.sub(lambda m: f"{m.group(1)}{choices}{m.group(2)}", text)
+        if new != text:
+            path.write_text(new, encoding="utf-8")
+            print(f"  {path.name}: category dropdown updated")
+
+
+PKB_CATEGORIES, PKB_TAB_LABELS = load_pkb_config()
 
 PKB_HEADER = (
     "| Title | Tags | Created |\n"
@@ -130,12 +179,13 @@ def pkb_rows(category):
     folder = BASE / "pkb"
     if not folder.exists():
         return []
-    known = {c.lower() for c in PKB_CATEGORIES if c != "Other"}
+    other = PKB_CATEGORIES[-1]
+    known = {c.lower() for c in PKB_CATEGORIES[:-1]}
     entries = []
     for f in sorted(folder.glob("*.md")):
         fm = parse_frontmatter(f)
         file_cat = fm.get("category", "").lower()
-        if category == "Other":
+        if category == other:
             if file_cat not in known:
                 fm["_file"] = f.name
                 entries.append(fm)
@@ -261,6 +311,7 @@ if __name__ == "__main__":
     write_meetings_page()
 
     print("Rebuilding PKB dashboard...")
+    sync_template_categories()
     write_pkb_dashboard()
 
     print("Rebuilding tags page...")
