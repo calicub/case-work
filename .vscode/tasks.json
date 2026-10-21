@@ -128,7 +128,7 @@
     {
       "label": "⏰ Install Jira Reminders Schedule",
       "type": "shell",
-      "command": "zsh '${workspaceFolder}/setup/install_schedule.sh'",
+      "command": "zsh '${workspaceFolder}/integrations/install_schedule.sh'",
       "options": {
         "cwd": "${workspaceFolder}"
       },

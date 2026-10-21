@@ -5,7 +5,7 @@
 set -euo pipefail
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-PLIST_SRC="$REPO/setup/com.casework.jira-reminders.plist"
+PLIST_SRC="$REPO/integrations/com.casework.jira-reminders.plist"
 PLIST_DEST="$HOME/Library/LaunchAgents/com.casework.jira-reminders.plist"
 
 # Unload any existing version first (ignore error if not loaded)

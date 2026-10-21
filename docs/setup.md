@@ -10,9 +10,7 @@ icon: lucide/wrench
 
 Step-by-step setup for a fresh macOS install.
 
-!!! info "You're in the right place"
-    This page (`docs/setup.md`) is the setup guide. The top-level `setup/` folder is something else: it holds the files for the optional Jira reminders schedule, and you never need to open it.
-
+!!! info "Reading this guide"
     Before the site is running, read this page on GitHub or in VS Code's Markdown preview (`Cmd+Shift+V`). Once it's running, the same page is under **Setup** in the site's top navigation.
 
 ### 1. Install Homebrew

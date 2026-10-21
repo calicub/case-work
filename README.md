@@ -31,7 +31,7 @@ Everything lives in plain Markdown files on your machine. There is no server, da
 
 ## Quick start
 
-> **Setup guide:** [docs/setup.md](docs/setup.md) has the full step-by-step walkthrough. The top-level `setup/` folder only holds files for the optional Jira reminders schedule.
+> **Setup guide:** [docs/setup.md](docs/setup.md) has the full step-by-step walkthrough.
 
 ```bash
 git clone <repo-url> ~/case-work

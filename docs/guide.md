@@ -599,7 +599,7 @@ case-work/
 │   ├── copy_remote_steps.py             ← copies steps performed from remote support note to clipboard
 │   ├── sync_reminders.sh               ← syncs ▶️ Next Action tasks to macOS Reminders on save
 │   └── toggle_view.py                  ← toggles Explorer between focused and full view via files.exclude
-├── setup/                               ← Jira reminders schedule files (the setup guide is docs/setup.md)
+├── integrations/                        ← setup scripts and config for optional integrations (Jira reminders)
 └── docs/                                ← Zensical serves everything from here
     ├── index.md                         ← home page
     ├── dashboard.md                     ← tabbed case dashboard (auto-generated)
