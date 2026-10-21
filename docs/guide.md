@@ -19,9 +19,9 @@ Keep this tab open in your browser while working in VS Code.
 
 ---
 
-## 🗂️ Workspace
+## 🗂️ Opening the Project
 
-Open the `case-work` folder itself in VS Code (**File → Open Folder…** or `code ~/case-work`). See [Setup → Initialize the Foam Workspace](setup.md#8-initialize-the-foam-workspace) for first-time steps.
+Open the `case-work` folder itself in VS Code (**File → Open Folder…** or `code ~/case-work`). See [Setup → Open the Project in VS Code](setup.md#8-open-the-project-in-vs-code) for first-time steps.
 
 Use the **🔁 Toggle File Visibility** task to switch the Explorer between a focused view (notes only) and the full project tree.
 
@@ -32,8 +32,8 @@ Use the **🔁 Toggle File Visibility** task to switch the Explorer between a fo
 | Task | How to run | What it does |
 |------|-----------|--------------|
 | **Rebuild Dashboards** | `Ctrl+Shift+B` | Regenerates the Dashboard, Meetings, Knowledge Base and Tags pages from your note frontmatter. A running site reloads by itself, with no restart needed |
-| **📎 Insert Customer Files** | `Ctrl+Shift+P` → Run Task | Finds files at workspace root matching the case number, moves them to `docs/assets/files/`, inserts links into `## 📎 Customer Files` — also runs automatically on save |
-| **📸 Insert Screenshots** | `Ctrl+Shift+P` → Run Task | Finds screenshots at workspace root matching the case number, moves them to `docs/assets/screenshots/`, inserts image blocks into `## 📸 Screenshots` — also runs automatically on save |
+| **📎 Insert Customer Files** | `Ctrl+Shift+P` → Run Task | Finds files at project root matching the case number, moves them to `docs/assets/files/`, inserts links into `## 📎 Customer Files` — also runs automatically on save |
+| **📸 Insert Screenshots** | `Ctrl+Shift+P` → Run Task | Finds screenshots at project root matching the case number, moves them to `docs/assets/screenshots/`, inserts image blocks into `## 📸 Screenshots` — also runs automatically on save |
 | **📌 Append Terminal Block** | `Ctrl+Shift+;` | Reads clipboard and appends a timestamped code block to **🛠️ Steps Taken** in the active case note |
 | **🖥️ Start Session Log** | `Ctrl+Shift+P` → Run Task | Starts a `script` recording session — saves everything to `docs/assets/files/casenumber-terminal-session-date.txt` |
 | **📋 Copy Support Notes (Salesforce)** | `Ctrl+Shift+P` → Run Task | Converts the Remote Support Note at the cursor to Salesforce plain text and copies it to clipboard |
@@ -42,7 +42,7 @@ Use the **🔁 Toggle File Visibility** task to switch the Explorer between a fo
 | **🛑 Stop Zensical** | `Ctrl+Shift+P` → Run Task | Kills the Zensical server process |
 | **🔔 Sync to Reminders** | Auto on `Cmd+S` | Pushes `🔔 Next Action` tasks to the macOS Reminders "Case Actions" list — active and followup only |
 | **🔔 Sync Reminders Now** | `Ctrl+Shift+P` → Run Task | Runs the Reminders sync on the open case note and keeps the output visible — use it to test the sync or see why it failed |
-| **📎📸 Insert Assets** | Auto on `Cmd+S` | Runs on every save — picks up any matching files and screenshots at the workspace root and inserts them into the note |
+| **📎📸 Insert Assets** | Auto on `Cmd+S` | Runs on every save — picks up any matching files and screenshots at the project root and inserts them into the note |
 | **⏰ Install Jira Reminders Schedule** | `Ctrl+Shift+P` → Run Task | One-time setup — installs a background schedule that syncs Jira KB/Docs tasks to Reminders at 09:30 and 12:30 daily |
 | **🔄 Run Jira Reminders Now** | `Ctrl+Shift+P` → Run Task | Manually triggers the Jira → Reminders sync without waiting for the schedule |
 | **🔁 Toggle File Visibility** | `Ctrl+Shift+P` → Run Task | Alternates the Explorer between focused view (hides dashboards, stylesheets, config files) and full view (shows everything) — state is saved to `.env` so it persists across sessions; the exclusion list is also saved to `.env` as `FILES_EXCLUDE`, so edits made to `files.exclude` in `settings.json` are preserved across toggles |
@@ -376,7 +376,7 @@ The **🏷️ Tags** page in the nav aggregates every tagged note across the who
 ## 📎 Customer Files Workflow
 
 ```
-1. Save the customer's file anywhere at the workspace root, prefixed with the case number:
+1. Save the customer's file anywhere at the project root, prefixed with the case number:
       123456 - export.csv
       123456 - config.md
 
@@ -536,7 +536,7 @@ Any table in a note or dashboard can be sorted by clicking a column header — c
 
 ## 🗂️ Customizing PKB Tabs
 
-The tabs on the 📓 Knowledge Base page come from `pkb-categories.yaml` at the workspace root:
+The tabs on the 📓 Knowledge Base page come from `pkb-categories.yaml` at the project root:
 
 ```yaml
 categories:
@@ -607,7 +607,7 @@ case-work/
 │   ├── settings.default.json            ← default Foam/editor settings (tracked)
 │   ├── settings.json                    ← your copy, created from the defaults (gitignored)
 │   ├── tasks.json                       ← all Ctrl+Shift+P runnable tasks
-│   └── case-work.code-snippets          ← workspace snippets (remotenote, casedesc, etc.)
+│   └── case-work.code-snippets          ← project snippets (remotenote, casedesc, etc.)
 ├── scripts/
 │   ├── dashboard.py                     ← regenerates all dashboards and index pages, syncs PKB template categories
 │   ├── insert_assets.py                 ← moves & inserts screenshots and files into case notes (runs on save)
@@ -669,7 +669,7 @@ Set VS Code's Python interpreter to `.venv/bin/python3`:
 
 ## 🔗 Links in Notes
 
-Foam supports both `[[wikilinks]]` and standard `[text](path)` markdown links — both show up in the graph and backlinks panel. This workspace defaults Foam's autocomplete to insert `[text](path)` style links (`foam.completion.link.style: markdown`).
+Foam supports both `[[wikilinks]]` and standard `[text](path)` markdown links — both show up in the graph and backlinks panel. This project defaults Foam's autocomplete to insert `[text](path)` style links (`foam.completion.link.style: markdown`).
 
 ---
 
@@ -677,5 +677,5 @@ Foam supports both `[[wikilinks]]` and standard `[text](path)` markdown links �
 
 - **`zensical.toml`** — Zensical's config is TOML, not the YAML `mkdocs.yml` used by plain MkDocs
 - **Files outside `docs/`** — not served by Zensical; always create case notes via the Foam template so they land in the right folder
-- **Screenshots and files outside `docs/`** — not served by Zensical; drop them at the workspace root prefixed with the case number and they will be moved to `docs/assets/` automatically on the next save
+- **Screenshots and files outside `docs/`** — not served by Zensical; drop them at the project root prefixed with the case number and they will be moved to `docs/assets/` automatically on the next save
 - **`${file}` in tasks** — always refers to the active VS Code editor tab, not the last-saved file

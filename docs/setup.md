@@ -34,7 +34,7 @@ cd ~/case-work
 - installs the Foam, Python and Run on Save extensions;
 - builds the project's Python environment (`.venv`) with Zensical;
 - creates your `.env` and `.vscode/settings.json`;
-- builds the site and opens the workspace in VS Code.
+- builds the site and opens the project folder in VS Code.
 
 It's safe to run again: finished steps are skipped and a broken `.venv` is rebuilt.
 
@@ -111,7 +111,7 @@ Then install the `code` shell command so you can open projects from the terminal
 
 `Cmd+Shift+P` → **Shell Command: Install 'code' command in PATH**
 
-Install the extensions this workspace uses (`Cmd+Shift+X` → search the ID → Install):
+Install the extensions this project uses (`Cmd+Shift+X` → search the ID → Install):
 
 | Extension | ID | Used for |
 | --------- | -- | -------- |
@@ -119,9 +119,9 @@ Install the extensions this workspace uses (`Cmd+Shift+X` → search the ID → 
 | Python | `ms-python.python` | Selecting the `.venv` interpreter |
 | Run on Save | `emeraldwalk.RunOnSave` | Reminders sync and asset insertion when you save a case note |
 
-### 4. Clone / Copy the Workspace
+### 4. Clone / Copy the Project
 
-`git clone` always creates a subfolder named after the repo inside the current directory. To put the workspace exactly where you want it, pass the target path as the second argument:
+`git clone` always creates a subfolder named after the repo inside the current directory. To put the project exactly where you want it, pass the target path as the second argument:
 
 ```bash
 git clone https://github.com/calicub/case-work.git ~/case-work
@@ -130,7 +130,7 @@ git clone https://github.com/calicub/case-work.git ~/case-work
 !!! warning "Don't nest the folder"
     Running `git clone <repo-url>` inside an existing folder (e.g. `~/case-work/`) will create `~/case-work/case-work/` — one level deeper than intended. Always specify the full destination path.
 
-Open the workspace in VS Code:
+Open the project folder in VS Code:
 
 ```bash
 code ~/case-work
@@ -147,7 +147,7 @@ Run these commands from the `case-work/` root:
 **What it does:** Creates `.venv/`, a private copy of Python and pip just for this project, so packages never touch the system. Using the full Homebrew path guarantees the venv is built on the right Python even if your PATH is not set up yet.
 
 !!! note "VS Code prompt"
-    If VS Code is already open on the project, it may notice the new environment and ask whether to use it for this workspace. Choose **Yes**. That does the same thing as step 7.
+    If VS Code is already open on the project, it may notice the new environment and ask whether to use it for this project. Choose **Yes**. That does the same thing as step 7.
 
 **Success looks like:** Check which Python the venv is based on:
 
@@ -193,11 +193,11 @@ deactivate
 
 ### 7. Set the VS Code Python Interpreter
 
-The workspace settings already point VS Code at `.venv/bin/python3`, so there's usually nothing to do here. If the status bar shows a different Python, or VS Code asks, choose the workspace `.venv`:
+The project settings already point VS Code at `.venv/bin/python3`, so there's usually nothing to do here. If the status bar shows a different Python, or VS Code asks, choose the project's `.venv`:
 
 `Ctrl+Shift+P` → **Python: Select Interpreter** → `.venv/bin/python3`
 
-### 8. Initialize the Foam Workspace
+### 8. Open the Project in VS Code
 
 Open the `case-work` folder itself in VS Code. Foam, the tasks and the on-save hooks all load from its `.vscode/` folder.
 

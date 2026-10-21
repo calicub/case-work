@@ -3,7 +3,7 @@
 #
 # Installs what's missing (Homebrew Python, VS Code, extensions), builds the
 # project's Python environment, creates your local config, builds the site and
-# opens the workspace. Safe to run again at any time; finished steps are skipped.
+# opens the project in VS Code. Safe to run again at any time; finished steps are skipped.
 #
 # Usage:
 #   ./install.sh              install / repair

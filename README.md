@@ -10,7 +10,7 @@ Everything lives in plain Markdown files on your machine. There is no server, da
 - **Dashboards** for active, follow-up and archived cases, rebuilt from that frontmatter with one shortcut.
 - **Personal knowledge base (PKB)** with tabs you define in `pkb-categories.yaml`, plus two templates: a topic overview (PKB Note) and a focused write-up of one issue (KB Article).
 - **Meeting notes** for 1-on-1, team and general meetings.
-- **Screenshots and customer files**: drop a file in the workspace root with the case number as a prefix, and it is moved and linked into the note when you save.
+- **Screenshots and customer files**: drop a file in the project root with the case number as a prefix, and it is moved and linked into the note when you save.
 - **Terminal helpers**: paste clipboard output as a timestamped code block, or record a whole terminal session.
 - **macOS Reminders sync** for next-action checklists, plus an optional Jira-to-Reminders sync.
 - **Tags page** across every note, plus sortable tables, a screenshot lightbox and Kubernetes icons you can use in notes.
